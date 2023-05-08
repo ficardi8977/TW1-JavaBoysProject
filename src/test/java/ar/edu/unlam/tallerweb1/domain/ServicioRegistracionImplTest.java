@@ -13,6 +13,7 @@ public class ServicioRegistracionImplTest {
     public void alIngresarUnCorreoValidoMeDevuelveVerdadero(){
         Boolean esValido = servicioRegistracion.esValido("fittipaldi.h@gmail.com");
         entoncesMiCorreo(esValido);
+
     }
 
     @Test
