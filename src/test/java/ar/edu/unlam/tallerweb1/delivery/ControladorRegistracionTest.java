@@ -12,7 +12,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ControladorRegistracionTest {
+public class
+ControladorRegistracionTest {
     public static final String CORREO = "fittipaldi.h@gmail.com";
     public static final String CORREO_INVALIDO = "Fitti";
     public static final String CLAVE = "asdfg";
