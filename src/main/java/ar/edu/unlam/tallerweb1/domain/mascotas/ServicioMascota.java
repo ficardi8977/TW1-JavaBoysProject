@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface ServicioMascota {
     List<Mascota> ObtenerMascotasPorTipo(long idTipoMascota);
+    Mascota ObtenerDetalle(long id);
 }

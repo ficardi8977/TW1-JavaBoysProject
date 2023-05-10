@@ -27,26 +27,55 @@ public class ControladorMascotaTest {
     public void getMascotaPorTipo_Ok()
     {
         Integer tipo = 1;
-        this.dadoQueExisteMascotas(tipo);
+        this.dadoQueExisteMascotasDeTipo(tipo);
         ModelAndView result = this.controladorMascotas.getMascotaPorTipo(tipo);
-        assertThat(result.getModel().values().size()).isEqualTo(1);
+        assertThat(result.getModel().get("mascotas")).isNotNull();
+        assertThat(result.getModel().get("mascotas").toString()).isNotEqualTo("[]");
     }
     @Test
     public void getMascotaPorTipo_NotOk()
     {
         Integer tipo = 2;
-        this.dadoQueNoExisteMascotas(tipo);
+        this.dadoQueNoExisteMascotasDeTipo(tipo);
         ModelAndView result = this.controladorMascotas.getMascotaPorTipo(tipo);
-        //revisar como comparar con un not ok de mascotas por tipo.
-        //assertThat(result.getModel().values().size()).isEqualTo(0);
+        assertThat(result.getModel().get("mascotas")).isNotNull();
+        //pregunto por lista vacia
+        assertThat(result.getModel().get("mascotas").toString()).isEqualTo("[]");
     }
-    private void dadoQueExisteMascotas(Integer tipo) {
+
+    @Test
+    public void getMascotaDetalle_Ok()
+    {
+        long id = 1;
+        this.dadoQueExisteMascotas(id);
+        ModelAndView result = this.controladorMascotas.getDetalle(id);
+        assertThat(result.getModel().get("mascotas")).isNotNull();
+    }
+
+    @Test
+    public void getMascotaDetalle_NoEncontrado()
+    {
+        long id = 2;
+        this.dadoQueNoExisteMascotas(id);
+        ModelAndView result = this.controladorMascotas.getDetalle(id);
+        assertThat(result.getModel().get("mascotas")).isNull();
+    }
+
+    private void dadoQueExisteMascotasDeTipo(Integer tipo) {
         List<Mascota> listaDeMascotas = new ArrayList<Mascota>();
         listaDeMascotas.add(new Mascota());
         when(this.servicioMascota.ObtenerMascotasPorTipo(tipo)).thenReturn(listaDeMascotas);
     }
-    private void dadoQueNoExisteMascotas(Integer tipo) {
+    private void dadoQueNoExisteMascotasDeTipo(Integer tipo) {
         List<Mascota> listaDeMascotas = new ArrayList<Mascota>();
         when(this.servicioMascota.ObtenerMascotasPorTipo(tipo)).thenReturn(listaDeMascotas);
+    }
+
+    private void dadoQueExisteMascotas(long id) {
+        Mascota mascota = new Mascota();
+        when(this.servicioMascota.ObtenerDetalle(id)).thenReturn(mascota);
+    }
+    private void dadoQueNoExisteMascotas(long id) {
+        when(this.servicioMascota.ObtenerDetalle(id)).thenReturn(null);
     }
 }

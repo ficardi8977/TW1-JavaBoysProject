@@ -11,8 +11,8 @@
 <body>
 <div class = "container">
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <form:form action="mascotas/tipoMascota" method="GET">
-            <input name="idTipoMascota" id="idTipoMascota" type="number" class="form-control"/>
+        <form:form action="mascota/detalle" method="GET">
+            <input name="id" id="id" type="number" class="form-control"/>
             <button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Buscar</button>
         </form:form>
     </div>

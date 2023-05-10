@@ -21,6 +21,10 @@ public class ServicioMascotaImpl implements ServicioMascota {
     public List<Mascota> ObtenerMascotasPorTipo(long idTipoMascota) {
         return repositorioMascota.BuscarMascotasPorTipo(idTipoMascota);
     }
+    @Override
+    public Mascota ObtenerDetalle(long id) {
+        return repositorioMascota.BuscarDetalle(id);
+    }
 
 
 

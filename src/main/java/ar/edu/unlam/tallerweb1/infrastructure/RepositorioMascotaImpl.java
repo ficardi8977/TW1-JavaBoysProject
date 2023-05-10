@@ -29,6 +29,13 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
+    public Mascota BuscarDetalle(long id) {
+        return (Mascota)this.sessionFactory.getCurrentSession()
+                .createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", id)).uniqueResult();
+    }
+
+    @Override
     public void Guardar(Mascota mascota) {
         this.sessionFactory.getCurrentSession().save(mascota);
     }

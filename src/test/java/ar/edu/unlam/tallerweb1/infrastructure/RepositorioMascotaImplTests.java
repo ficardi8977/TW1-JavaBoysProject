@@ -48,12 +48,34 @@ public class RepositorioMascotaImplTests extends SpringTest {
     @Rollback
     public void ObtenerMascotasPorTipo_NoEncontrado()
     {
-        long idTipoMascotaNoExistente = 3;
+        long idTipoMascotaNoExistente = 12;
         TipoMascota tipoMascotaNoExistente = new TipoMascota();
         tipoMascotaNoExistente.setId(idTipoMascotaNoExistente);
 
         List<Mascota> mascotas = this.repositorioMascota.BuscarMascotasPorTipo(tipoMascotaNoExistente.getId());
         assertThat(mascotas.size()).isEqualTo(0);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void ObtenerMascotasDetalle_Encontrado()
+    {
+        long idParametro = 1;
+
+        Mascota mascota = this.repositorioMascota.BuscarDetalle(idParametro);
+        assertThat(mascota).isNotNull();
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void ObtenerMascotasDetalle_NoEncontrado()
+    {
+        long idMascotaParametro = 3;
+
+        Mascota mascota = this.repositorioMascota.BuscarDetalle(idMascotaParametro);
+        assertThat(mascota).isNull();
     }
 
     private TipoMascota existeUnaMascotaDeTipoMascota()
@@ -80,5 +102,6 @@ public class RepositorioMascotaImplTests extends SpringTest {
         repositorioMascota.Guardar(mascota);
         return mascota;
     }
+
 }
 

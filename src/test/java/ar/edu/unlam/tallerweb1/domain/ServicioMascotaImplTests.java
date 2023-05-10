@@ -29,6 +29,7 @@ public class ServicioMascotaImplTests {
         this.mascotasList.add(new Mascota());
         long idTipoMascota = 1;
         when(this.repositorio.BuscarMascotasPorTipo(idTipoMascota)).thenReturn(mascotasList);
+        when(this.repositorio.BuscarDetalle(1)).thenReturn(mascotasList.get(0));
         this.servicioMascota = new ServicioMascotaImpl(this.repositorio);
 
     }
@@ -45,6 +46,21 @@ public class ServicioMascotaImplTests {
         long idTipoMascota = 2;
         List<Mascota> resultList = this.servicioMascota.ObtenerMascotasPorTipo(idTipoMascota);
         assertThat(resultList.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void ObtenerMascotaDetalleEncontrado(){
+
+        long id = 1;
+        Mascota result  = this.servicioMascota.ObtenerDetalle(id);
+        assertThat(result).isNotNull();
+
+    }
+    @Test
+    public void ObtenerMascotaDetalleNoEncontrado(){
+        long id = 2;
+        Mascota result = this.servicioMascota.ObtenerDetalle(id);
+        assertThat(result).isNull();
     }
 
 }

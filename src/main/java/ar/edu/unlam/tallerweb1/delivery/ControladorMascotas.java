@@ -20,12 +20,31 @@ public class ControladorMascotas {
 
         this.servicioMascota = servicioMascota;
     }
+
+    @RequestMapping(path = "/homeMascotas")
+    public ModelAndView homeMascotas() {
+
+        ModelMap modelo = new ModelMap();
+        modelo.put("datosLogin", new DatosLogin());
+        return new ModelAndView("pruebaMascotas", modelo);
+    }
+
     @RequestMapping(path = "/mascotas/tipoMascota", method = RequestMethod.GET)
     public ModelAndView getMascotaPorTipo(Integer idTipoMascota) {
         ModelMap model = new ModelMap();
-        int request = 1;
-        List<Mascota> result = this.servicioMascota.ObtenerMascotasPorTipo(request);
+        List<Mascota> result = this.servicioMascota.ObtenerMascotasPorTipo(idTipoMascota);
         model.put("mascotas", result);
+
+        // mapeada con la home pero faltaria definir con cual es
+        return new ModelAndView("redirect:/home",model);
+    }
+
+    @RequestMapping(path = "/mascota/detalle", method = RequestMethod.GET)
+    public ModelAndView getDetalle(long id) {
+        ModelMap model = new ModelMap();
+        Mascota result = this.servicioMascota.ObtenerDetalle(id);
+        model.put("mascotas", result);
+
         // mapeada con la home pero faltaria definir con cual es
         return new ModelAndView("redirect:/home",model);
     }

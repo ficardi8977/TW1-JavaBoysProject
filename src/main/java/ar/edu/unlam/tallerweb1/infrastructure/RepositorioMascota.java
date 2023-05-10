@@ -8,6 +8,9 @@ import java.util.List;
 public interface RepositorioMascota {
 
     public List<Mascota> BuscarMascotasPorTipo(Long idTipoMascota);
+
+    public Mascota BuscarDetalle(long id);
+
     void Guardar(Mascota mascota);
 
     //void modificar(Mascota mascota);
