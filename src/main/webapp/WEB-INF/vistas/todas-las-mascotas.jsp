@@ -21,7 +21,7 @@
 <c:if test="${not empty mascotas}">
   <c:forEach  var="mascota" items="${mascotas}">
   <div class="card" style="width: 18rem;">
-    <img src="${mascota.imagen}" class="card-img-top" alt="Mascota....">
+    <img src="../img/${mascota.imagen}" class="card-img-top" alt="Mascota....">
     <div class="card-body">
       <h5 class="card-title">${mascota.nombre}</h5>
       <p class="card-text">Latitud: ${mascota.latitud}</p>
