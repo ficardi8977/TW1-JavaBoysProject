@@ -15,6 +15,7 @@ import java.util.List;
 public class ControladorMascotas {
 
     private ServicioMascota servicioMascota;
+
     @Autowired
     public ControladorMascotas(ServicioMascota servicioMascota) {
 
@@ -36,7 +37,7 @@ public class ControladorMascotas {
         model.put("mascotas", result);
 
         // mapeada con la home pero faltaria definir con cual es
-        return new ModelAndView("redirect:/home",model);
+        return new ModelAndView("redirect:/home", model);
     }
 
     @RequestMapping(path = "/mascota/detalle", method = RequestMethod.GET)
@@ -46,6 +47,19 @@ public class ControladorMascotas {
         model.put("mascotas", result);
 
         // mapeada con la home pero faltaria definir con cual es
-        return new ModelAndView("redirect:/home",model);
+        return new ModelAndView("redirect:/home", model);
+    }
+
+    @RequestMapping(path = "/buscar-mascotas")
+    public ModelAndView irABuscarMascotas() {
+        return new ModelAndView("pruebaMascotas");
+    }
+
+    @RequestMapping(path = "/mascotas/usuario")
+    public ModelAndView getMascotaPorIdUsuario(Long idUsuario) {
+        ModelMap model = new ModelMap();
+        List<Mascota> result = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
+        model.put("mascotas", result);
+        return new ModelAndView("redirect:/home", model);
     }
 }

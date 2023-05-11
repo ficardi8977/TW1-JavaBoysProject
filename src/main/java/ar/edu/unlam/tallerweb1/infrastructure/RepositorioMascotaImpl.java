@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 @Transactional
-<<<<<<< HEAD
 public class RepositorioMascotaImpl implements  RepositorioMascota{
     private SessionFactory sessionFactory;
     @Autowired

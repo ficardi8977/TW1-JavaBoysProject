@@ -60,6 +60,22 @@ public class ControladorMascotaTest {
         ModelAndView result = this.controladorMascotas.getDetalle(id);
         assertThat(result.getModel().get("mascotas")).isNull();
     }
+    @Test
+    public void buscarMascotaPorIdUsuarioIncorrecto(){
+        Long idUsuario = 1l;
+        Long idUsuarioIncorrecto = 2l;
+        dadoQueExisteMascota(idUsuario);
+        ModelAndView mav = this.controladorMascotas.getMascotaPorIdUsuario(idUsuarioIncorrecto);
+        assertThat(mav.getModel().get("mascotas").toString()).isEqualTo("[]");
+    }
+
+    private void dadoQueExisteMascota(Long idUsuario) {
+        List<Mascota> mascotas = new ArrayList<>();
+        Mascota mascota = new Mascota();
+        mascota.setIdUsuario(idUsuario);
+        mascotas.add(mascota);
+        when(this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario)).thenReturn(mascotas);
+    }
 
     private void dadoQueExisteMascotasDeTipo(Integer tipo) {
         List<Mascota> listaDeMascotas = new ArrayList<Mascota>();
@@ -82,24 +98,7 @@ public class ControladorMascotaTest {
     public void buscarMascotaPorIdUsuario(){
         Long idUsuario = 1l;
         dadoQueExisteMascota(idUsuario);
-        ModelAndView mav = this.controladorMascota.getMascotaPorIdUsuario(idUsuario);
+        ModelAndView mav = this.controladorMascotas.getMascotaPorIdUsuario(idUsuario);
         assertThat(mav.getModel().get("mascotas")).isNotNull();
-    }
-
-    @Test
-    public void buscarMascotaPorIdUsuarioIncorrecto(){
-        Long idUsuario = 1l;
-        Long idUsuarioIncorrecto = 2l;
-        dadoQueExisteMascota(idUsuario);
-        ModelAndView mav = this.controladorMascota.getMascotaPorIdUsuario(idUsuarioIncorrecto);
-        assertThat(mav.getModel().get("mascotas").toString()).isEqualTo("[]");
-    }
-
-    private void dadoQueExisteMascota(Long idUsuario) {
-        List<Mascota> mascotas = new ArrayList<>();
-        Mascota mascota = new Mascota();
-        mascota.setIdUsuario(idUsuario);
-        mascotas.add(mascota);
-        when(this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario)).thenReturn(mascotas);
     }
 }
