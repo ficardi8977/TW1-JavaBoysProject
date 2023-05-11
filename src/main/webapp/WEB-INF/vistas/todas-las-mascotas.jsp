@@ -19,15 +19,18 @@
 
 
 <c:if test="${not empty mascotas}">
-  <div>${mascotas}</div>
+  <c:forEach  var="mascota" items="${mascotas}">
   <div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
+    <img src="${mascota.imagen}" class="card-img-top" alt="Mascota....">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <h5 class="card-title">${mascota.nombre}</h5>
+      <p class="card-text">Latitud: ${mascota.latitud}</p>
+      <p class="card-text">Longitud: ${mascota.longitud}</p>
+      <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
+      <a href="#" class="btn btn-primary">detalles</a>
     </div>
   </div>
+  </c:forEach>
 </c:if>
 
 <c:if test="${empty mascotas}">
