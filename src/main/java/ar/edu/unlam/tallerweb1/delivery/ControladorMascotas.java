@@ -15,7 +15,6 @@ import java.util.List;
 public class ControladorMascotas {
 
     private ServicioMascota servicioMascota;
-
     @Autowired
     public ControladorMascotas(ServicioMascota servicioMascota) {
 
@@ -28,6 +27,14 @@ public class ControladorMascotas {
         ModelMap modelo = new ModelMap();
         modelo.put("datosLogin", new DatosLogin());
         return new ModelAndView("pruebaMascotas", modelo);
+    }
+
+    @RequestMapping(path = "/mascotas", method = RequestMethod.GET)
+    public ModelAndView getTodasLasMascotas() {
+        ModelMap model = new ModelMap();
+        List<Mascota> result = this.servicioMascota.ObtenerTodasLasMascotas();
+        model.put("mascotas", result);
+        return new ModelAndView("todas-las-mascotas",model);
     }
 
     @RequestMapping(path = "/mascotas/tipoMascota", method = RequestMethod.GET)
@@ -62,4 +69,5 @@ public class ControladorMascotas {
         model.put("mascotas", result);
         return new ModelAndView("redirect:/home", model);
     }
+
 }

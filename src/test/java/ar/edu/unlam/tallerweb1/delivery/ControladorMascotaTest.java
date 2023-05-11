@@ -18,9 +18,8 @@ public class ControladorMascotaTest {
     private ServicioMascota servicioMascota;
 
     @Before
-    public void init()
-    {
-        this.servicioMascota = mock(ServicioMascotaImpl.class);
+    public void init(){
+        this.servicioMascota = mock(ServicioMascota.class);
         controladorMascotas = new ControladorMascotas(this.servicioMascota);
     }
     @Test
@@ -85,6 +84,21 @@ public class ControladorMascotaTest {
     private void dadoQueNoExisteMascotasDeTipo(Integer tipo) {
         List<Mascota> listaDeMascotas = new ArrayList<Mascota>();
         when(this.servicioMascota.ObtenerMascotasPorTipo(tipo)).thenReturn(listaDeMascotas);
+    }
+
+    @Test
+    public void alIngresarATodasLasMascotasMeMuestraLaPantallaDeTodasLasMascotas(){
+        ModelAndView mav = cuandoMeVoyATodasLasMascotas();
+        entoncesMeLlevaALaPantallaDeTodasLasMascotas(mav);
+
+    }
+
+    private void entoncesMeLlevaALaPantallaDeTodasLasMascotas(ModelAndView mav) {
+        assertThat(mav.getViewName()).isEqualTo("todas-las-mascotas");
+    }
+
+    private ModelAndView cuandoMeVoyATodasLasMascotas() {
+        return controladorMascotas.getTodasLasMascotas();
     }
 
     private void dadoQueExisteMascotas(long id) {

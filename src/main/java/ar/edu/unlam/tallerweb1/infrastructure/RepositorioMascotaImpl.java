@@ -41,6 +41,11 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
+    public List<Mascota> TodasLasMascotas() {
+        return (List<Mascota>) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class).list();
+    }
+
+    @Override
     public void guardar(Mascota mascota) {
         this.sessionFactory.getCurrentSession().save(mascota);
     }

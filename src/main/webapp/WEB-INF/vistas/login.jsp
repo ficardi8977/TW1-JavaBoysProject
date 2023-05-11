@@ -24,8 +24,7 @@
 					
 					<button class="btn btn-lg btn-primary btn-block" Type="Submit"/>Login</button>
 				</form:form>
-				<a href="registrarme"	>Registrarme</a>
-				<a href="buscar-mascotas" >Buscar Mascotas</a>
+				<a href="registrarme">Registrarme</a>
 				<%--Bloque que es visible si el elemento error no esta vacio	--%>
 				<c:if test="${not empty error}">
 			        <h4><span>${error}</span></h4>

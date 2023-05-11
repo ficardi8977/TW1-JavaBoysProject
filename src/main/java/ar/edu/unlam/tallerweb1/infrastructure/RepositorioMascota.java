@@ -13,6 +13,8 @@ public interface RepositorioMascota {
 
     void Guardar(Mascota mascota);
 
+    List<Mascota> TodasLasMascotas();
+
     //void modificar(Mascota mascota);
     void guardar(Mascota mascota);
 

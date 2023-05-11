@@ -102,6 +102,15 @@ public class RepositorioMascotaImplTests extends SpringTest {
         repositorioMascota.Guardar(mascota);
         return mascota;
     }
-
+    @Test
+    @Transactional
+    @Rollback
+    public void ObtenerTodasLasMascotas(){
+        List<Mascota> mascotaList = repositorioMascota.TodasLasMascotas();
+        verificoQueLaListaNoEsteVacia(mascotaList);
+    }
+    private void verificoQueLaListaNoEsteVacia(List<Mascota> mascotaList) {
+        assertThat(mascotaList.size()).isGreaterThanOrEqualTo(1);
+    }
 }
 
