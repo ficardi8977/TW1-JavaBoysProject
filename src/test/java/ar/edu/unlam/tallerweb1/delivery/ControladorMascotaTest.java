@@ -78,4 +78,28 @@ public class ControladorMascotaTest {
     private void dadoQueNoExisteMascotas(long id) {
         when(this.servicioMascota.ObtenerDetalle(id)).thenReturn(null);
     }
+    @Test
+    public void buscarMascotaPorIdUsuario(){
+        Long idUsuario = 1l;
+        dadoQueExisteMascota(idUsuario);
+        ModelAndView mav = this.controladorMascota.getMascotaPorIdUsuario(idUsuario);
+        assertThat(mav.getModel().get("mascotas")).isNotNull();
+    }
+
+    @Test
+    public void buscarMascotaPorIdUsuarioIncorrecto(){
+        Long idUsuario = 1l;
+        Long idUsuarioIncorrecto = 2l;
+        dadoQueExisteMascota(idUsuario);
+        ModelAndView mav = this.controladorMascota.getMascotaPorIdUsuario(idUsuarioIncorrecto);
+        assertThat(mav.getModel().get("mascotas").toString()).isEqualTo("[]");
+    }
+
+    private void dadoQueExisteMascota(Long idUsuario) {
+        List<Mascota> mascotas = new ArrayList<>();
+        Mascota mascota = new Mascota();
+        mascota.setIdUsuario(idUsuario);
+        mascotas.add(mascota);
+        when(this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario)).thenReturn(mascotas);
+    }
 }

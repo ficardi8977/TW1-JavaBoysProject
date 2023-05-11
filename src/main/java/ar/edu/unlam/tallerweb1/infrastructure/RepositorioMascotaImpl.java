@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 @Transactional
+<<<<<<< HEAD
 public class RepositorioMascotaImpl implements  RepositorioMascota{
     private SessionFactory sessionFactory;
     @Autowired
@@ -40,4 +41,14 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
         this.sessionFactory.getCurrentSession().save(mascota);
     }
 
+    @Override
+    public void guardar(Mascota mascota) {
+        this.sessionFactory.getCurrentSession().save(mascota);
+    }
+
+    @Override
+    public List buscarMascotasPorIdUsuario(Long idUsuario) {
+        return this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
+                .add(Restrictions.eq("idUsuario", idUsuario)).list();
+    }
 }

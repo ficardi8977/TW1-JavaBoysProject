@@ -14,4 +14,7 @@ public interface RepositorioMascota {
     void Guardar(Mascota mascota);
 
     //void modificar(Mascota mascota);
+    void guardar(Mascota mascota);
+
+    List<Mascota> buscarMascotasPorIdUsuario(Long idUsuario);
 }
