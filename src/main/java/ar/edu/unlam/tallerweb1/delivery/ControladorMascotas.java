@@ -44,7 +44,7 @@ public class ControladorMascotas {
         model.put("mascotas", result);
 
         // mapeada con la home pero faltaria definir con cual es
-        return new ModelAndView("redirect:/home", model);
+        return new ModelAndView("todas-las-mascotas", model);
     }
 
     @RequestMapping(path = "/mascota/detalle", method = RequestMethod.GET)
@@ -54,7 +54,7 @@ public class ControladorMascotas {
         model.put("mascotas", result);
 
         // mapeada con la home pero faltaria definir con cual es
-        return new ModelAndView("redirect:/home", model);
+        return new ModelAndView("todas-las-mascotas", model);
     }
 
     @RequestMapping(path = "/buscar-mascotas")
