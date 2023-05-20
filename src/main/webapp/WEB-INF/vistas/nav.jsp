@@ -14,6 +14,10 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/mascotas/tipoMascota">Tipo Mascotas</a>
+                        <a class="nav-link" href="homeMascotas">Mascotas por usuario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pruebaMascotas">Mascotas por Tipo de mascota</a>
                     </li>
                 </ul>
                 <!-- <form class="d-flex" role="search">
