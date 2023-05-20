@@ -51,10 +51,10 @@ public class ControladorMascotas {
     public ModelAndView getDetalle(long id) {
         ModelMap model = new ModelMap();
         Mascota result = this.servicioMascota.ObtenerDetalle(id);
-        model.put("mascotas", result);
+        model.put("mascota", result);
 
         // mapeada con la home pero faltaria definir con cual es
-        return new ModelAndView("redirect:/home", model);
+        return new ModelAndView("detalle-mascota", model);
     }
 
     @RequestMapping(path = "/buscar-mascotas")
@@ -63,7 +63,7 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/usuario")
-    public ModelAndView getMascotaPorIdUsuario(Long idUsuario) {
+    public ModelAndView getMascotaPorIdUsuario(long idUsuario) {
         ModelMap model = new ModelMap();
         List<Mascota> result = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         model.put("mascotas", result);
