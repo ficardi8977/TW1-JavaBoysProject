@@ -16,7 +16,7 @@
                         <a class="nav-link" href="homeMascotas">Mascotas por usuario</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pruebaMascotas">Mascotas por Tipo de mascota</a>
+                        <a class="nav-link" href="refugios">Refugios</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">

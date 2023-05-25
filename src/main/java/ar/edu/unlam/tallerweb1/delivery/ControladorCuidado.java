@@ -25,6 +25,7 @@ public class ControladorCuidado {
     public ModelAndView getTodosLosRefugios() {
         ModelMap model = new ModelMap();
         List<Cuidado> result = this.servicioCuidado.ObtenerTodosLosRefugios();
+        model.put("cuidados", result);
         return new ModelAndView("todos-los-refugios",model);
     }
 }
