@@ -32,5 +32,6 @@ public class ControladorTipoMascota {
 
         model.put("tiposMascota", result);
         return new ModelAndView("todas-las-mascotas",model);
+
     }
 }
