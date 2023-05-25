@@ -35,7 +35,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Test
     @Transactional
     @Rollback
-    public void obtenerMascotasPorIdUsuario(){
+    public void ObtenerMascotasPorIdUsuario(){
 
         List<Mascota> mascotasEncontradas = buscoLasMascotasPorIdUsuario(idUsuario);
 

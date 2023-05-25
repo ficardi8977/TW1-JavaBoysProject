@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
-import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascotaImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,7 +47,7 @@ public class ControladorMascotaTest {
         long id = 1;
         this.dadoQueExisteMascotas(id);
         ModelAndView result = this.controladorMascotas.getDetalle(id);
-        assertThat(result.getModel().get("mascotas")).isNotNull();
+        assertThat(result.getModel().get("mascota")).isNotNull();
     }
 
     @Test
