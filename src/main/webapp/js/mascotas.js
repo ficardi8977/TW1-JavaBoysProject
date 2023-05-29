@@ -19,7 +19,11 @@ async function mostrarTiposMascotas() {
     try {
         const tiposMascotas = await obtenerTiposMascotas();
         tiposMascotasContainer.innerHTML = '';
-
+        // creando label
+        const label = document.createElement('label');
+        label.textContent = "Tipo de Mascota";
+        tiposMascotasContainer.appendChild(label);
+        // creando select
         const selectElement = document.createElement('select');
         selectElement.id = "tipoMascotaSelector"
         selectElement.value = "tipoMascotaSelector"
