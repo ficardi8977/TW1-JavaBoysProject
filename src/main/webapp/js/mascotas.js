@@ -60,7 +60,7 @@ function cargarHomeConFiltros(idTipoMascota, idEstado) {
         data: parametros,
         success: function (mascotas) {
             $("#contenido-home").empty(); // borramos contenido de cards
-            var contenidoHtml ='<div className="cards-container">'
+            var contenidoHtml ='<div class="cards-container">'
             $.each(mascotas, function(index, mascota) {
                 var cardHtml = `<div class="card">
                     <img src="img/${mascota.imagen}" class="card-img-top" alt="Mascota...">
