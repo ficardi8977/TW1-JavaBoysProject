@@ -6,6 +6,7 @@ import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,8 @@ public class ControladorTipoMascotaTest {
         var result = this.controladorTipoMascota.Listar();
         // verificar
         assertThat(result).isNotNull();
-        //assertThat(result.getModel().get("tiposMascota").toString()).isNotEqualTo("[]");
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getBody().size()).isEqualTo(1);
     }
     @Test
     public void Listar_SinDatos()
@@ -46,7 +48,8 @@ public class ControladorTipoMascotaTest {
         var result = this.controladorTipoMascota.Listar();
         // verificar
         assertThat(result).isNotNull();
-        //assertThat(result.getModel().get("tiposMascota").toString()).isEqualTo("[]");
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getBody().size()).isEqualTo(0);
     }
 
     private void datoQueExisteTipoMacota(long idTipoMascota) {
