@@ -1,14 +1,13 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
-import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
-import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.tipoMascota.ServicioTipoMascota;
 import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -25,13 +24,8 @@ public class ControladorTipoMascota {
     }
 
     @RequestMapping(path = "/tipoMascota")
-    public ModelAndView Listar() {
-
-        ModelMap model = new ModelMap();
+    public ResponseEntity<List<TipoMascota>> Listar() {
         List<TipoMascota> result = this.servicioTipoMascota.Listar();
-
-        model.put("tiposMascota", result);
-        return new ModelAndView("todas-las-mascotas",model);
-
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

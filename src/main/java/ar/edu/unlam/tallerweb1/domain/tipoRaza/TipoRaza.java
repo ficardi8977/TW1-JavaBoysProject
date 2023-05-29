@@ -11,7 +11,7 @@ public class TipoRaza {
     private Long id;
     private String nombre;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdTipoMascota")
     private TipoMascota tipoMascota;
 
