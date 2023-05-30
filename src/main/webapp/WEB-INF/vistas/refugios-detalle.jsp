@@ -14,33 +14,31 @@
 </jsp:include>
 
 <div class = "container">
-  <h1>Bienvenidos a  todos los Refugios</h1>
+  <h1>Refugio detalle</h1>
 </div>
 
-
-<c:if test="${not empty cuidados}">
+<c:if test="${not empty refugio}">
 <div class="container-fluid d-flex">
-  <c:forEach  var="cuidado" items="${cuidados}">
   <div class="row">
     <div class="col-4">
       <div class="card d-inline-block m-3"  style="width: 400px">
-        <img src="../img/${cuidado.imagen}" class="card-img-top" alt="Refugio....">
+        <img src="../img/${refugio.imagen}" class="card-img-top" alt="Refugio....">
         <div class="card-body">
-          <h5 class="card-title">${cuidado.nombre}</h5>
-          <p class="card-text">Email: ${cuidado.email}</p>
-          <p class="card-text">Direccion: ${cuidado.direccion}</p>
-          <p class="card-text">Telefono: ${cuidado.telefono}</p>
-          <a href="refugio/${cuidado.id}" class="btn btn-primary">detalles</a>
+          <h5 class="card-title">${refugio.nombre}</h5>
+          <p class="card-text">Email: ${refugio.email}</p>
+          <p class="card-text">Direccion: ${refugio.direccion}</p>
+          <p class="card-text">Telefono: ${refugio.telefono}</p>
+            <p class="card-text">Latitud: ${refugio.latitud}</p>
+            <p class="card-text">Longitud: ${refugio.longitud}</p>
         </div>
       </div>
       </div>
     </div>
-  </c:forEach>
 </div>
 </c:if>
 
-<c:if test="${empty cuidados}">
-  <h3><span>No hay Refugios</span></h3>
+<c:if test="${empty refugio}">
+  <h3><span>No hay Refugio</span></h3>
   <br>
 </c:if>
 

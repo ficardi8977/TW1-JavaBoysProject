@@ -17,4 +17,9 @@ public class ServicioCuidadoImpl implements ServicioCuidado {
     public List<Cuidado> ObtenerTodosLosRefugios() {
         return repositorioCuidado.TodosLosRefugios();
     }
+
+    @Override
+    public Cuidado ObtenerDetalleRefugio(long id) {
+        return repositorioCuidado.BuscarDetalleRefugio(id);
+    }
 }

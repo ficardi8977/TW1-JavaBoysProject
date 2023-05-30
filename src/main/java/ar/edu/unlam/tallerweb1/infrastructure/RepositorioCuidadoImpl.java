@@ -27,4 +27,13 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
                 .createAlias("tipocuidado","tipoCuidado")
                 .add(Restrictions.eq("tipoCuidado.nombre","Refugio")).list();
     }
+
+    @Override
+    public Cuidado BuscarDetalleRefugio(long id) {
+        return (Cuidado)this.sessionFactory.getCurrentSession()
+                .createCriteria(Cuidado.class)
+                .createAlias("tipocuidado","tipoCuidado")
+                .add(Restrictions.eq("tipoCuidado.nombre","Refugio"))
+                .add(Restrictions.eq("id",id)).uniqueResult();
+    }
 }

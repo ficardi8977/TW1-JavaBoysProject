@@ -27,6 +27,7 @@ public class ServicioCuidadoImplTests {
         this.cuidadoList= new ArrayList<>();
         this.cuidadoList.add(new Cuidado());
         when(this.repositorioCuidado.TodosLosRefugios()).thenReturn(cuidadoList);
+        when(this.repositorioCuidado.BuscarDetalleRefugio(1)).thenReturn(cuidadoList.get(0));
         this.servicioCuidado = new ServicioCuidadoImpl(this.repositorioCuidado);
     }
 
@@ -36,6 +37,18 @@ public class ServicioCuidadoImplTests {
         assertThat(resultList.size()).isGreaterThanOrEqualTo(1);
     }
 
+    @Test
+    public void ObtenerRefugioDetalleEncontrado(){
+        long id = 1;
+        Cuidado refugio  = this.servicioCuidado.ObtenerDetalleRefugio(id);
+        assertThat(refugio).isNotNull();
+    }
+    @Test
+    public void ObtenerRefugioDetalleNoEncontrado(){
+        long id = 3;
+        Cuidado refugio  = this.servicioCuidado.ObtenerDetalleRefugio(id);
+        assertThat(refugio).isNull();
+    }
 
 
 }
