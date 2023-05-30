@@ -1,3 +1,9 @@
+var submenuSeleccionadoGlobal = 0;
+
+function actualizarSubmenuSeleccionado(opcion) {
+    submenuSeleccionadoGlobal = opcion;
+}
+
 async function obtenerTiposMascotas() {
     try {
         const response = await fetch('/tipoMascota');
@@ -43,12 +49,42 @@ async function mostrarTiposMascotas() {
         tiposMascotasContainer.innerHTML = 'Error al cargar los tipos de mascotas.';
     }
 }
+/*
 $(document).on('change', '#tipoMascotaSelector', function() {
     const tipoMascotaSeleccionada = $(this).val();
-    const idEstado = 0; // Por ahora toma solo para todos los estados
-    cargarHomeConFiltros(tipoMascotaSeleccionada, idEstado);
+    // Por ahora toma solo para todos los estados
+
+
+
+    alert(submenuSeleccionadoGlobal)
+
+    console.log("Id del estado:", 3);
+    cargarHomeConFiltros(tipoMascotaSeleccionada, submenuSeleccionadoGlobal);
 });
 
+$(document).on('click', '.dropdown-item', function() {
+    const submenuSeleccionado = parseInt($(this).attr('onclick').match(/\d+/)[0]);
+    submenuSeleccionado(submenuSeleccionado);
+
+    // Verificar si se activa el evento click del submenu
+    console.log("Clic en submenu. Submenu seleccionado:", submenuSeleccionado);
+
+    // Ejecutar los filtros al hacer clic en el submenu
+    const tipoMascotaSeleccionada = $('#tipoMascotaSelector').val();
+    console.log("Id del estado:", submenuSeleccionadoGlobal);
+    cargarHomeConFiltros(tipoMascotaSeleccionada, submenuSeleccionadoGlobal);
+});
+*/
+
+$(document).on('click', '.dropdown-item', function() {
+    const submenuSeleccionado = parseInt($(this).attr('onclick').match(/\d+/)[0]);
+    actualizarSubmenuSeleccionado(submenuSeleccionado);
+
+    // Ejecutar los filtros al hacer clic en el submenu
+    const tipoMascotaSeleccionada = $('#tipoMascotaSelector').val();
+
+    cargarHomeConFiltros(tipoMascotaSeleccionada, submenuSeleccionadoGlobal);
+});
 function cargarHomeConFiltros(idTipoMascota, idEstado) {
     var parametros = {
         idTipoMascota: idTipoMascota,
