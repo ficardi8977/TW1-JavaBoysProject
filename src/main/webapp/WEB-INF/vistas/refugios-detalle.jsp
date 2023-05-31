@@ -18,10 +18,9 @@
 </div>
 
 <c:if test="${not empty refugio}">
-<div class="container-fluid d-flex">
+  <div class = "container">
   <div class="row">
-    <div class="col-4">
-      <div class="card d-inline-block m-3"  style="width: 400px">
+    <div class="card" style="width: 80%;">
         <img src="../img/${refugio.imagen}" class="card-img-top" alt="Refugio....">
         <div class="card-body">
           <h5 class="card-title">${refugio.nombre}</h5>
@@ -30,6 +29,7 @@
           <p class="card-text">Telefono: ${refugio.telefono}</p>
             <p class="card-text">Latitud: ${refugio.latitud}</p>
             <p class="card-text">Longitud: ${refugio.longitud}</p>
+          <p class="card-text">CBU: ${refugio.cbu}</p>
         </div>
       </div>
       </div>

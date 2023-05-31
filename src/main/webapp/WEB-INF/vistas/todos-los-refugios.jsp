@@ -17,27 +17,24 @@
   <h1>Bienvenidos a  todos los Refugios</h1>
 </div>
 
-
+<div id="contenido-home">
 <c:if test="${not empty cuidados}">
-<div class="container-fluid d-flex">
+<div class="cards-container">
   <c:forEach  var="cuidado" items="${cuidados}">
-  <div class="row">
-    <div class="col-4">
-      <div class="card d-inline-block m-3"  style="width: 400px">
+      <div class="card">
         <img src="../img/${cuidado.imagen}" class="card-img-top" alt="Refugio....">
         <div class="card-body">
           <h5 class="card-title">${cuidado.nombre}</h5>
           <p class="card-text">Email: ${cuidado.email}</p>
           <p class="card-text">Direccion: ${cuidado.direccion}</p>
           <p class="card-text">Telefono: ${cuidado.telefono}</p>
-          <a href="refugio/${cuidado.id}" class="btn btn-primary">detalles</a>
+          <a href="refugio/${cuidado.id}" class="dog-paw-button">detalles</a>
         </div>
-      </div>
-      </div>
     </div>
   </c:forEach>
 </div>
 </c:if>
+</div>
 
 <c:if test="${empty cuidados}">
   <h3><span>No hay Refugios</span></h3>
@@ -47,6 +44,6 @@
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />
 </jsp:include>
-
+<link href="../css/mascotas.css" rel="stylesheet" >
 </body>
 </html>
