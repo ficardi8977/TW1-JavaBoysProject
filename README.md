@@ -4,4 +4,4 @@ https://trello.com/b/wrR3PQqo/app-mascotas
 
 
 TRAVIS STATUS DEVELOP
-https://app.travis-ci.com/ficardi8977/TW1-JavaBoysProject.svg?branch=develop
+![BuildStatus]{https://app.travis-ci.com/ficardi8977/TW1-JavaBoysProject.svg?branch=develop}
