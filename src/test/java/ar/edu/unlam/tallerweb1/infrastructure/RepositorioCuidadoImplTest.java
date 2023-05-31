@@ -49,4 +49,5 @@ public class RepositorioCuidadoImplTest  extends SpringTest {
         Cuidado refugio = this.repositorioCuidado.BuscarDetalleRefugio(idRefugio);
         assertThat(refugio).isNull();
     }
+
 }
