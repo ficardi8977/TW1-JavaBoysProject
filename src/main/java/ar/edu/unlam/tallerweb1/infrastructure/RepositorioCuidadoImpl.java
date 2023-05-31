@@ -1,0 +1,39 @@
+package ar.edu.unlam.tallerweb1.infrastructure;
+
+import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
+import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import javax.transaction.Transactional;
+import java.util.List;
+@Repository
+@Transactional
+public class RepositorioCuidadoImpl implements  RepositorioCuidado{
+
+
+    private SessionFactory sessionFactory;
+    @Autowired
+    public RepositorioCuidadoImpl(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public List<Cuidado> TodosLosRefugios() {
+        return (List<Cuidado>)this.sessionFactory.getCurrentSession()
+                .createCriteria(Cuidado.class)
+                .createAlias("tipocuidado","tipoCuidado")
+                .add(Restrictions.eq("tipoCuidado.nombre","Refugio")).list();
+    }
+
+    @Override
+    public Cuidado BuscarDetalleRefugio(long id) {
+        return (Cuidado)this.sessionFactory.getCurrentSession()
+                .createCriteria(Cuidado.class)
+                .createAlias("tipocuidado","tipoCuidado")
+                .add(Restrictions.eq("tipoCuidado.nombre","Refugio"))
+                .add(Restrictions.eq("id",id)).uniqueResult();
+    }
+}

@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.mascotas;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+
 import java.util.List;
 
 public interface ServicioMascota {
@@ -8,4 +10,6 @@ public interface ServicioMascota {
     List<Mascota> ObtenerTodasLasMascotas();
     Mascota ObtenerDetalle(long id);
     List<Mascota> obtenerMascotaPorIdUsuario(Long idUsuario);
+
+    List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 }

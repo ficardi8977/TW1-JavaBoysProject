@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.mascotas;
 
+import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
@@ -12,15 +13,26 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer idEstado;
-    private String nombre, latitud, longitud, imagen;
+    private String nombre, latitud, longitud, imagen, descripcion;
     private Date fechaAdopcion;
 
 
     // Propiedad de la FK
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdTipoRaza")
     private TipoRaza tipoRaza;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idEstado")
+    private Estado estado;
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
 
     public TipoRaza getTipoRaza() {
         return tipoRaza;
@@ -58,14 +70,6 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-    }
-
     public String getLatitud() {
         return latitud;
     }
@@ -96,5 +100,13 @@ public class Mascota {
 
     public void setFechaAdopcion(Date fechaAdopcion) {
         this.fechaAdopcion = fechaAdopcion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion( String descripcion) {
+        this.descripcion = descripcion;
     }
 }

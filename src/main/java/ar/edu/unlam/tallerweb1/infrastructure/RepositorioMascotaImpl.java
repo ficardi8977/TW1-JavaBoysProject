@@ -1,6 +1,6 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
-import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import org.hibernate.SessionFactory;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.hibernate.criterion.Restrictions;
@@ -54,5 +54,23 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     public List buscarMascotasPorIdUsuario(Long idUsuario) {
         return this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .add(Restrictions.eq("idUsuario", idUsuario)).list();
+    }
+    @Override
+    public List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request)
+    {
+        var session =  this.sessionFactory.getCurrentSession().createCriteria(Mascota.class);
+        if(request.getIdEstado() != 0)
+        {
+            session.add(Restrictions.eq("estado.id", request.getIdEstado()));
+        }
+        if(request.getIdTipoMascota() != 0)
+        {
+            session.createAlias("tipoRaza", "tipoRaza")
+                .createAlias("tipoRaza.tipoMascota", "tipoMascota")
+                .add(Restrictions.eq("tipoMascota.id", request.getIdTipoMascota()));
+        }
+        var result =  session.list();
+
+        return result;
     }
 }
