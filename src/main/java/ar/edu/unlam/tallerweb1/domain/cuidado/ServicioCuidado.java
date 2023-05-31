@@ -9,4 +9,8 @@ public interface ServicioCuidado {
     List<Cuidado> ObtenerTodosLosRefugios();
 
     Cuidado ObtenerDetalleRefugio(long id);
+
+    List<Cuidado> ObtenerTodosLosCuidadores();
+
+    Cuidado ObtenerDetalle(long id);
 }

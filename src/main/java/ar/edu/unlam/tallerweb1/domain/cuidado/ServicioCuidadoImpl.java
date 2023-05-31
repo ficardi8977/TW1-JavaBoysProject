@@ -22,4 +22,14 @@ public class ServicioCuidadoImpl implements ServicioCuidado {
     public Cuidado ObtenerDetalleRefugio(long id) {
         return repositorioCuidado.BuscarDetalleRefugio(id);
     }
+
+    @Override
+    public List<Cuidado> ObtenerTodosLosCuidadores() {
+        return repositorioCuidado.obtenerTodosLosCuidadores();
+    }
+
+    @Override
+    public Cuidado ObtenerDetalle(long id) {
+        return repositorioCuidado.getDetalle(id);
+    }
 }

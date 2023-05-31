@@ -1,14 +1,11 @@
 package ar.edu.unlam.tallerweb1.domain;
 
-import ar.edu.unlam.tallerweb1.domain.cuidadores.Cuidado;
-import ar.edu.unlam.tallerweb1.domain.cuidadores.ServicioCuidador;
-import ar.edu.unlam.tallerweb1.domain.cuidadores.ServicioCuidadorImpl;
-import ar.edu.unlam.tallerweb1.infrastructure.RepositorioCuidador;
-import ar.edu.unlam.tallerweb1.infrastructure.RepositorioCuidadorImpl;
+import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
+import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
+import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidadoImpl;
+import ar.edu.unlam.tallerweb1.infrastructure.RepositorioCuidadoImpl;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +15,19 @@ import static org.assertj.core.api.Assertions.*;
 
 public class ServicioCuidadorTest {
 
-    private RepositorioCuidadorImpl repositorioCuidador;
-    private ServicioCuidador servicioCuidador;
+    private RepositorioCuidadoImpl repositorioCuidador;
+    private ServicioCuidado servicioCuidador;
     private List<Cuidado> cuidadores;
 
     @Before
     public void init(){
-        this.repositorioCuidador = mock(RepositorioCuidadorImpl.class);
-        this.servicioCuidador = new ServicioCuidadorImpl(repositorioCuidador);
+        this.repositorioCuidador = mock(RepositorioCuidadoImpl.class);
+        this.servicioCuidador = new ServicioCuidadoImpl(repositorioCuidador);
         this.cuidadores = new ArrayList<>();
         cuidadores.add(new Cuidado());
         cuidadores.add(new Cuidado());
-        when(this.repositorioCuidador.TodosLosCuidadores()).thenReturn(cuidadores);
+        when(this.repositorioCuidador.obtenerTodosLosCuidadores()).thenReturn(cuidadores);
+        when(this.repositorioCuidador.getDetalle(2)).thenReturn(cuidadores.get(1));
     }
 
     @Test
@@ -39,6 +37,34 @@ public class ServicioCuidadorTest {
 
         obtieneLosCuidadores(lista);
     }
+
+    @Test
+    public void queTraigaLosDetalles(){
+
+        Cuidado detalle = servicioCuidador.ObtenerDetalle(2);
+
+        meTraeElDetalle(detalle);
+
+    }
+
+    @Test
+    public void queNoTraigaLosDetalles(){
+
+        Cuidado detalle = servicioCuidador.ObtenerDetalle(3);
+
+        noMeTraeElDetalle(detalle);
+
+    }
+
+    private void noMeTraeElDetalle(Cuidado detalle) {
+        assertThat(detalle).isNull();
+    }
+
+
+    private void meTraeElDetalle(Cuidado detalle) {
+        assertThat(detalle).isNotNull();
+    }
+
 
     private void obtieneLosCuidadores(List<Cuidado> lista) {
         assertThat(lista.size()).isEqualTo(2);

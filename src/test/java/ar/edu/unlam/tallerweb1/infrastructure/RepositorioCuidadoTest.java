@@ -1,8 +1,8 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
-import ar.edu.unlam.tallerweb1.domain.cuidadores.Cuidado;
-import ar.edu.unlam.tallerweb1.domain.cuidadores.TipoCuidado;
+import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
+import ar.edu.unlam.tallerweb1.domain.cuidado.Tipocuidado;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +15,26 @@ import java.util.List;
 public class RepositorioCuidadoTest extends SpringTest {
 
     @Autowired
-    private RepositorioCuidador repositorioCuidador;
+    private RepositorioCuidado repositorioCuidador;
     private Cuidado cuidado;
     private Cuidado cuidado2;
+    private Cuidado cuidado3;
 
     @Before
     public void init(){
         this.cuidado = dadoQueExisteUnCuidador();
         this.cuidado2 = dadoQueExisteUnCuidador();
+        this.cuidado3 = dadoQueExisteUnCuidador();
     }
 
     private Cuidado dadoQueExisteUnCuidador() {
-        TipoCuidado tc = new TipoCuidado();
+        Tipocuidado tc = new Tipocuidado();
         tc.setNombre("Cuidador");
         this.repositorioCuidador.GuardarTipoCuidado(tc);
-        Cuidado c = new Cuidado("Tomas", "tomas@gmail.com", "UNLaM", "12345", "0", "0", tc);
+        Cuidado c = new Cuidado();
+        c.setNombre("Tomas");
+        c.setEmail("tomas@gmail.com");
+        c.setTipocuidado(tc);
         this.repositorioCuidador.Guardar(c);
         return c;
     }
@@ -40,14 +45,40 @@ public class RepositorioCuidadoTest extends SpringTest {
     @Rollback
     public void meTraeTodosLosCuidadores(){
 
-        List<Cuidado> cuidadores = this.repositorioCuidador.TodosLosCuidadores();
+        List<Cuidado> cuidadores = this.repositorioCuidador.obtenerTodosLosCuidadores();
 
         entoncesMeTraeLosCuidadores(cuidadores);
     }
 
+    @Test
+    @Transactional
+    @Rollback
+    public void meMuestraLosDetalles(){
+        Cuidado detalles = this.repositorioCuidador.getDetalle(cuidado.getId());
+
+        meTraeElDetalle(detalles);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void noMeMuestraLosDetalles(){
+        Cuidado detalles = this.repositorioCuidador.getDetalle(7);
+
+        noMeTraeElDetalle(detalles);
+    }
+
+    private void noMeTraeElDetalle(Cuidado detalles) {
+        assertThat(detalles).isNull();
+    }
+
+    private void meTraeElDetalle(Cuidado detalles) {
+        assertThat(detalles).isNotNull();
+    }
+
 
     private void entoncesMeTraeLosCuidadores(List<Cuidado> cuidadores) {
-        assertThat(cuidadores.size()).isEqualTo(2);
+        assertThat(cuidadores.size()).isEqualTo(3);
     }
 
 

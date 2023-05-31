@@ -27,6 +27,22 @@ public class Cuidado {
     @JoinColumn(name = "IdTipoCuidado")
     private Tipocuidado tipocuidado;
 
+    public Cuidado (String nombre, String email, String direccion, String telefono, String latitud, String longitud, Tipocuidado tc){
+        this.nombre = nombre;
+        this.email = email;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.tipocuidado = tc;
+    }
+    public Cuidado (String nombre, String email){
+        this.nombre = nombre;
+        this.email = email;
+    }
+
+    public Cuidado(){}
+
 
     public Long getId() {
         return id;
