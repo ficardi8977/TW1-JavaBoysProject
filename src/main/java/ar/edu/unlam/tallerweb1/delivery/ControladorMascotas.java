@@ -73,7 +73,7 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/filtradas", method = RequestMethod.GET)
-    public ResponseEntity getMascotaPorTipo(@ModelAttribute DatosMascotasFiltradas request) {
+    public ResponseEntity<List<Mascota>> getMascotasFiltradas(@ModelAttribute DatosMascotasFiltradas request) {
         List<Mascota> result = this.servicioMascota.ObtenerMascotasFiltradas(request);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

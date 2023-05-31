@@ -1,8 +1,11 @@
 package ar.edu.unlam.tallerweb1.delivery;
+import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
+import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +69,33 @@ public class ControladorMascotaTest {
         ModelAndView mav = this.controladorMascotas.getMascotaPorIdUsuario(idUsuarioIncorrecto);
         assertThat(mav.getModel().get("mascotas").toString()).isEqualTo("[]");
     }
+    @Test
+    public void getMascotasFiltradas_Ok()
+    {
+        var request = new DatosMascotasFiltradas();
+        request.setIdTipoMascota(1);
+        request.setIdEstado(1);
+        this.dadoQueExisteMascotasFiltradas(request);
+
+        var result = this.controladorMascotas.getMascotasFiltradas(request);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getBody().size()).isEqualTo(1);
+    }
+
+    @Test
+    public void getMascotasFiltradas_NoEncontradas()
+    {
+        var request = new DatosMascotasFiltradas();
+        request.setIdTipoMascota(1);
+        request.setIdEstado(1);
+        this.dadoQueNoExisteMascotasFiltradas(request);
+
+        var result = this.controladorMascotas.getMascotasFiltradas(request);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(result.getBody()).isNull();
+    }
 
     private void dadoQueExisteMascota(Long idUsuario) {
         List<Mascota> mascotas = new ArrayList<>();
@@ -73,6 +103,16 @@ public class ControladorMascotaTest {
         mascota.setIdUsuario(idUsuario);
         mascotas.add(mascota);
         when(this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario)).thenReturn(mascotas);
+    }
+
+    private void dadoQueExisteMascotasFiltradas(DatosMascotasFiltradas request) {
+        List<Mascota> mascotas = new ArrayList<>();
+        Mascota mascota = new Mascota();
+        mascotas.add(mascota);
+        when(this.servicioMascota.ObtenerMascotasFiltradas(request)).thenReturn(mascotas);
+    }
+    private void dadoQueNoExisteMascotasFiltradas(DatosMascotasFiltradas request) {
+        when(this.servicioMascota.ObtenerMascotasFiltradas(request)).thenReturn(null);
     }
 
     private void dadoQueExisteMascotasDeTipo(Integer tipo) {
