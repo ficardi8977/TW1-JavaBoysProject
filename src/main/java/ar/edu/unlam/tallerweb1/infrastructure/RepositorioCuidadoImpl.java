@@ -13,12 +13,15 @@ import java.util.List;
 @Repository
 @Transactional
 public class RepositorioCuidadoImpl implements  RepositorioCuidado{
-
-
     private SessionFactory sessionFactory;
     @Autowired
     public RepositorioCuidadoImpl(SessionFactory sessionFactory){
+
         this.sessionFactory = sessionFactory;
+    }
+    @Override
+    public void Guardar(Cuidado cuidado) {
+        this.sessionFactory.getCurrentSession().save(cuidado);
     }
 
     @Override
