@@ -17,7 +17,5 @@ public interface RepositorioCuidado {
 
     void GuardarTipoCuidado(Tipocuidado tc);
 
-    void Guardar(Cuidado c);
-
     Cuidado getDetalle(long id);
 }

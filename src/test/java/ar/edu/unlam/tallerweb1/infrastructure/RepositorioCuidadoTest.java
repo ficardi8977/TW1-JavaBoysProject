@@ -63,7 +63,7 @@ public class RepositorioCuidadoTest extends SpringTest {
     @Transactional
     @Rollback
     public void noMeMuestraLosDetalles(){
-        Cuidado detalles = this.repositorioCuidador.getDetalle(7);
+        Cuidado detalles = this.repositorioCuidador.getDetalle(22);
 
         noMeTraeElDetalle(detalles);
     }

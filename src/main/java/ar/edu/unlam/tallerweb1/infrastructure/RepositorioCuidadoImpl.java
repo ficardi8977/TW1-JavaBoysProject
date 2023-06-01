@@ -19,6 +19,7 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
 
         this.sessionFactory = sessionFactory;
     }
+
     @Override
     public void Guardar(Cuidado cuidado) {
         this.sessionFactory.getCurrentSession().save(cuidado);
@@ -51,11 +52,6 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
     @Override
     public void GuardarTipoCuidado(Tipocuidado tc) {
         this.sessionFactory.getCurrentSession().save(tc);
-    }
-
-    @Override
-    public void Guardar(Cuidado c) {
-        this.sessionFactory.getCurrentSession().save(c);
     }
 
     @Override
