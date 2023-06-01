@@ -45,5 +45,6 @@
 <jsp:include page="foot.jsp">
     <jsp:param name="foot" value="foot" />
 </jsp:include>
+<link href="../css/mascotas.css" rel="stylesheet" >
 </body>
 </html>

@@ -28,9 +28,6 @@
     <img src="img/${mascota.imagen}" class="card-img-top" alt="Mascota....">
     <div class="card-body">
       <h5 class="card-title">${mascota.nombre}</h5>
-      <p class="card-text">Latitud: ${mascota.latitud}</p>
-      <p class="card-text">Longitud: ${mascota.longitud}</p>
-      <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
       <form:form action="mascota/detalle" method="GET">
         <input name="id" value=${mascota.id} id=${mascota.id} type="hidden" class="form-control"/>
         <button class="dog-paw-button">Detalle</button>
