@@ -1,8 +1,11 @@
 package ar.edu.unlam.tallerweb1.domain;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascotaImpl;
+import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
+import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracionImpl;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioTipoMascota;
@@ -68,6 +71,53 @@ public class ServicioMascotaImplTests {
         long id = 2;
         Mascota result = this.servicioMascota.ObtenerDetalle(id);
         assertThat(result).isNull();
+    }
+
+    @Test
+    public void ListarMascotasFiltradas(){
+        //preparacion
+        var request = new DatosMascotasFiltradas();
+        this.dadoQueExistemascotasFiltradas(request);
+        // ejecucion
+        var result = this.servicioMascota.ObtenerMascotasFiltradas(request);
+        // verificacion
+        assertThat(result).isNotNull();
+        assertThat(result.size()).isEqualTo(1);
+
+    }
+    @Test
+    public void NoExisteMascotaFiltrada(){
+        //preparacion
+        var request = new DatosMascotasFiltradas();
+        this.dadoQueNoExistemascotasFiltradas(request);
+        // ejecucion
+        var result = this.servicioMascota.ObtenerMascotasFiltradas(request);
+        // verificacion
+        assertThat(result).isNotNull();
+        assertThat(result.size()).isEqualTo(0);
+    }
+
+    private void dadoQueExistemascotasFiltradas(DatosMascotasFiltradas request)
+    {
+        var lista = new ArrayList<Mascota>();
+        var mascota = new Mascota();
+
+        /*long idTipo = 1;
+        var tipoMascota = new TipoMascota();
+        tipoMascota.setId(idTipo);
+
+        tipoMascota.setId(idTipo);
+        var tipoRaza = new TipoRaza();
+        tipoRaza.setTipoMascota(tipoMascota);
+
+        mascota.setTipoRaza(tipoRaza);*/
+
+        lista.add(mascota);
+        when(this.repositorio.ObtenerMascotasFiltradas(request)).thenReturn(lista);
+    }
+    private void dadoQueNoExistemascotasFiltradas(DatosMascotasFiltradas request)
+    {
+        when(this.repositorio.ObtenerMascotasFiltradas(request)).thenReturn(new ArrayList<Mascota>());
     }
 
 }

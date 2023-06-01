@@ -17,3 +17,16 @@ button{
     cursor: pointer;
     overflow: hidden;
 }
+.dog-paw-button{
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #e6b9a0;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+}

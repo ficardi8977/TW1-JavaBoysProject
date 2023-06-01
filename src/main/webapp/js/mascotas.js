@@ -25,7 +25,11 @@ async function mostrarTiposMascotas() {
     try {
         const tiposMascotas = await obtenerTiposMascotas();
         tiposMascotasContainer.innerHTML = '';
-
+        // creando label
+        const label = document.createElement('label');
+        label.textContent = "Tipo de Mascota";
+        tiposMascotasContainer.appendChild(label);
+        // creando select
         const selectElement = document.createElement('select');
         selectElement.id = "tipoMascotaSelector"
         selectElement.value = "tipoMascotaSelector"
@@ -96,7 +100,7 @@ function cargarHomeConFiltros(idTipoMascota, idEstado) {
         data: parametros,
         success: function (mascotas) {
             $("#contenido-home").empty(); // borramos contenido de cards
-            var contenidoHtml ='<div className="cards-container">'
+            var contenidoHtml ='<div class="cards-container">'
             $.each(mascotas, function(index, mascota) {
                 var cardHtml = `<div class="card">
                     <img src="img/${mascota.imagen}" class="card-img-top" alt="Mascota...">
