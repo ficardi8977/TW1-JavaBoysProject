@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
+import ar.edu.unlam.tallerweb1.domain.cuidado.Tipocuidado;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +18,34 @@ public class RepositorioCuidadoImplTest  extends SpringTest {
     @Autowired
     private RepositorioCuidado repositorioCuidado;
 
+    @Autowired
+    private RepositorioTipoCuidado repositorioTipoCuidado;
+
+    private Tipocuidado tipocuidadoResult;
+    private Cuidado cuidadoResult;
     @Before
-    public void Init(){}
+    public void Init(){
+        this.tipocuidadoResult = existeUnTipoRefugio();
+        this.cuidadoResult = existeUnCuidadoDelTipoRefugio(tipocuidadoResult);
+
+    }
+
+    private Cuidado existeUnCuidadoDelTipoRefugio(Tipocuidado tipocuidadoResult) {
+        Cuidado cuidado= new Cuidado();
+        cuidado.setNombre("Refugio-1");
+        cuidado.setEmail("refu1@refu1.com");
+        cuidado.setTipocuidado(tipocuidadoResult);
+        this.repositorioCuidado.Guardar(cuidado);
+        return cuidado;
+    }
+
+    private Tipocuidado existeUnTipoRefugio() {
+        Tipocuidado tipocuidado = new Tipocuidado();
+        tipocuidado.setNombre("Refugio");
+        this.repositorioTipoCuidado.Guardar(tipocuidado);
+        return tipocuidado;
+    }
+
 
     @Test
     @Transactional
@@ -29,7 +56,7 @@ public class RepositorioCuidadoImplTest  extends SpringTest {
     }
 
     private void verificoQueLaListaNoEsteVacia(List<Cuidado> cuidadoList) {
-        assertThat(cuidadoList.size()).isGreaterThanOrEqualTo(2);
+        assertThat(cuidadoList.size()).isGreaterThanOrEqualTo(1);
     }
 
     @Test
