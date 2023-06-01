@@ -22,7 +22,7 @@
                         <a class="nav-link" href="/refugios">Refugios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="cuidadores">Cuidadores</a>
+                        <a class="nav-link" href="/cuidadores">Cuidadores</a>
                     </li>
                 </ul>
             </div>
