@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
@@ -19,4 +20,6 @@ public interface RepositorioMascota {
     void guardar(Mascota mascota);
 
     List<Mascota> buscarMascotasPorIdUsuario(Long idUsuario);
+
+    List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 }

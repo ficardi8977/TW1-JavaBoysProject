@@ -1,11 +1,8 @@
 <div class="foot">
     <footer class="d-grid py-2 bg-light text-center mt-auto">
         <span class="text-muted justify-content-center">Desarrolladores:</span>
-        <span class="text-muted justify-content-center">Emanuel Ibarrola</span>
-        <span class="text-muted justify-content-center">Fernando Icardi</span>
-        <span class="text-muted justify-content-center">Tomas Magliano</span>
-        <span class="text-muted justify-content-center">Willam Meneses</span>
-
+        <span class="text-muted justify-content-center">Emanuel Ibarrola | Fernando Icardi </span>
+        <span class="text-muted justify-content-center">Tomas Magliano | Willam Meneses</span>
     </footer>
 
     <!-- Bootstrap core JS -->

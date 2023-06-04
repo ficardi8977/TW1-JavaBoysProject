@@ -1,0 +1,25 @@
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 0 0 18rem;
+    margin: 10px;
+}
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+#tipoMascotaSelector {
+    width: 100%; /* Ancho al 100% por defecto */
+}
+
+/* Media query para dispositivos de escritorio */
+@media screen and (min-width: 768px) {
+    #tipoMascotaSelector {
+        width: 30%; /* Ancho al 50% en dispositivos de escritorio */
+    }
+}
