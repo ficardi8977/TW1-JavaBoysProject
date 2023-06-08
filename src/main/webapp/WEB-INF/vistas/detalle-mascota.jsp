@@ -31,6 +31,7 @@
         <p class="card-text">${mascota.descripcion}</p>
         <input type="hidden" value="${mascota.latitud}" id="mascotaLatitud">
         <input type="hidden" value="${mascota.longitud}" id="mascotaLongitud">
+        <input type="hidden" value="${mascota.nombre}" id="mascotaNombrePin">
       </div>
     </div>
     </c:if>
