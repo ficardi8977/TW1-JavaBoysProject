@@ -9,7 +9,7 @@
 
 <body>
 
-<div class="container">
+<div class="container-fluid">
   <!-- NAV -->
   <jsp:include page="nav.jsp">
     <jsp:param name="nav" value="nav" />
@@ -20,8 +20,14 @@
   <div class="content">
     <c:if test="${not empty mascota}">
     <h1 style="text-align: center;">${mascota.nombre}</h1>
-    <div class="card" style="width: 95%;">
-      <img src="../img/${mascota.imagen}" class="card-img-top" alt="Mascota....">
+      <div class="card" style="width: 100%;">
+        <div class="h-100 d-flex">
+          <img src="../img/${mascota.imagen}" class="card-img-top col-lg-6 p-0" alt="Mascota....">
+
+          <!-- Mostrar el mapa con la ubicación de la mascota -->
+          <div id="map" class="col-lg-6"></div>
+        </div>
+
       <div class="card-body">
         <p class="card-text" id="mascotaNombre">Raza: ${mascota.tipoRaza.nombre}</p>
         <p class="card-text">Estado: ${mascota.estado.nombre}</p>
@@ -40,8 +46,6 @@
       <br>
     </c:if>
 
-    <!-- Mostrar el mapa con la ubicación de la mascota -->
-    <div id="map" style="height: 400px;"></div>
   <!-- CONTENT -->
 
   <!-- FOOTER -->
