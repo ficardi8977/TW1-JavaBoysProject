@@ -2,11 +2,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Obtener los datos de latitud y longitud de la mascota
   var latitud;
   var longitud;
-  const mascotaLatitud = document.getElementById("mascotaLatitud");
-  const mascotaLongitud = document.getElementById("mascotaLongitud");
+  var nombre;
+  const mascotaLatitudElement = document.getElementById("mascotaLatitud");
+  const mascotaLongitudElement = document.getElementById("mascotaLongitud");
+  const mascotaNombreElement = document.getElementById("mascotaNombrePin");
 
-    latitud = mascotaLatitud.value;
-    longitud = mascotaLongitud.value;
+    latitud = mascotaLatitudElement.value;
+    longitud = mascotaLongitudElement.value;
+    nombre = mascotaNombreElement.value;
 
     // Crear una instancia de LatLng para la ubicación de la mascota
     var mascotaLatLng = new google.maps.LatLng(latitud, longitud);
@@ -24,6 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var marker = new google.maps.Marker({
         position: mascotaLatLng,
         map: map,
-        title: '${mascota.nombre}' // Título del marcador
+        title: nombre  // Título del marcador
     });
 });
