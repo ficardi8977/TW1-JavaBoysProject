@@ -3,48 +3,64 @@
 <html lang="es">
 
 <head>
-  <jsp:include page="head.jsp">
-    <jsp:param name="head" value="head" />
-  </jsp:include>
+    <jsp:include page="head.jsp">
+        <jsp:param name="head" value="head"/>
+    </jsp:include>
 </head>
 <body>
+<div class="container">
+    <!-- NAV -->
+    <jsp:include page="nav.jsp">
+        <jsp:param name="nav" value="nav"/>
+    </jsp:include>
+    <!-- NAV -->
 
-<jsp:include page="nav.jsp">
-  <jsp:param name="nav" value="nav" />
-</jsp:include>
+    <!-- CONTENT -->
+    <div class="Content" style="width: 100%">
+        <c:if test="${not empty cuidado}">
+        <h1>Detalles del Cuidador</h1>
 
-<div class = "container">
-  <h1>Detalles del Cuidador</h1>
-</div>
+            <div class="card" style="width: 100%;">
+                <div class="h-100 d-flex">
+                    <img src="../img/${cuidado.imagen}" class="card-img-top col-lg-6 p-0" alt="Cuidador...">
 
-<c:if test="${not empty cuidado}">
-  <div class = "container">
-    <div class="row">
-      <div class="card" style="width: 80%;">
-        <img src="../img/${cuidado.imagen}" class="card-img-top" alt="Cuidador....">
-        <div class="card-body">
-          <h5 class="card-title">${cuidado.nombre}</h5>
-          <p class="card-text">Email: ${cuidado.email}</p>
-          <p class="card-text">Direccion: ${cuidado.direccion}</p>
-          <p class="card-text">Telefono: ${cuidado.telefono}</p>
-          <p class="card-text">Latitud: ${cuidado.latitud}</p>
-          <p class="card-text">Longitud: ${cuidado.longitud}</p>
-          <p class="card-text">CBU: ${cuidado.cbu}</p>
-        </div>
-      </div>
+                    <!-- Mostrar el mapa con la ubicación de la mascota -->
+                    <div id="map" class="col-lg-6"></div>
+                </div>
+            </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${cuidado.nombre}</h5>
+                        <p class="card-text">Email: ${cuidado.email}</p>
+                        <p class="card-text">Direccion: ${cuidado.direccion}</p>
+                        <p class="card-text">Telefono: ${cuidado.telefono}</p>
+                        <p class="card-text">Latitud: ${cuidado.latitud}</p>
+                        <p class="card-text">Longitud: ${cuidado.longitud}</p>
+                        <p class="card-text">CBU: ${cuidado.cbu}</p>
+
+                        <!-- valores para dibujar el mapa -->
+                        <input type="hidden" value="${cuidado.nombre}" id="nombrePin">
+                        <input type="hidden" value="${cuidado.latitud}" id="latitud">
+                        <input type="hidden" value="${cuidado.longitud}" id="longitud">
+                    </div>
+                </div>
+        </c:if>
+
+        <c:if test="${empty cuidado}">
+            <h3><span>No hay cuidador</span></h3>
+            <br>
+        </c:if>
     </div>
-  </div>
-  </div>
-</c:if>
+    <!-- CONTENT -->
 
-<c:if test="${empty cuidado}">
-  <h3><span>No hay cuidador</span></h3>
-  <br>
-</c:if>
-
-<jsp:include page="foot.jsp">
-  <jsp:param name="foot" value="foot" />
-</jsp:include>
+    <!-- FOOTER -->
+    <jsp:include page="foot.jsp">
+        <jsp:param name="foot" value="foot"/>
+    </jsp:include>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
+    <script src="../js/detalle-mapa.js"></script>
+    <!-- FOOTER -->
+</div>
 
 </body>
 </html>
