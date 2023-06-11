@@ -9,7 +9,7 @@
 
 <body>
 
-<div class="container-fluid">
+<div class="container">
   <!-- NAV -->
   <jsp:include page="nav.jsp">
     <jsp:param name="nav" value="nav" />
@@ -17,7 +17,7 @@
   <!-- NAV -->
 
   <!-- CONTENT -->
-  <div class="content">
+  <div class="content" style="width: 100%">
     <c:if test="${not empty mascota}">
     <h1 style="text-align: center;">${mascota.nombre}</h1>
       <div class="card" style="width: 100%;">
@@ -35,9 +35,11 @@
           <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
         </c:if>
         <p class="card-text">${mascota.descripcion}</p>
-        <input type="hidden" value="${mascota.latitud}" id="mascotaLatitud">
-        <input type="hidden" value="${mascota.longitud}" id="mascotaLongitud">
-        <input type="hidden" value="${mascota.nombre}" id="mascotaNombrePin">
+
+        <!--Valores para dibujar el mapa -->
+        <input type="hidden" value="${mascota.latitud}" id="latitud">
+        <input type="hidden" value="${mascota.longitud}" id="longitud">
+        <input type="hidden" value="${mascota.nombre}" id="nombrePin">
       </div>
     </div>
     </c:if>
@@ -53,7 +55,7 @@
     <jsp:param name="foot" value="foot" />
   </jsp:include>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
-  <script src="../js/detalle-mascota.js"></script>
+  <script src="../js/detalle-mapa.js"></script>
   <!-- FOOTER -->
 </div>
 
