@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.mascotas;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascotaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,5 +42,10 @@ public class ServicioMascotaImpl implements ServicioMascota {
     @Override
     public List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request) {
         return this.repositorioMascota.ObtenerMascotasFiltradas(request);
+    }
+
+    @Override
+    public List<Vacunacion> obtenerVacunas(Long idMascota) {
+        return this.repositorioMascota.obtenerVacunasMascota(idMascota);
     }
 }
