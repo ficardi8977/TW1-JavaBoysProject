@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.hibernate.SessionFactory;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.hibernate.criterion.Restrictions;
@@ -72,5 +73,11 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
         var result =  session.list();
 
         return result;
+    }
+
+    @Override
+    public List<Vacunacion> obtenerVacunasMascota(Long idMascota) {
+        return this.sessionFactory.getCurrentSession().createCriteria(Vacunacion.class)
+                .add(Restrictions.eq("idMascota", idMascota)).list();
     }
 }

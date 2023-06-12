@@ -25,6 +25,46 @@
                         <a class="nav-link" href="/cuidadores">Cuidadores</a>
                     </li>
                 </ul>
+                <div class="dropleft">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="mascotas/mis-mascotas?idUsuario=1">Mis Mascotas</a>
+                    </div>
+                </div>
             </div>
         </div>
 </nav>
+<style>
+    .btn, .btn:hover, .btn:active, .show>.btn-secondary.dropdown-toggle{
+        color: black;
+        background-color: white;
+        border: none;
+    }
+    .dropleft .dropdown-toggle::before {
+        display: none;
+    }
+    .btn-secondary:focus, .show>.btn-secondary.dropdown-toggle:focus {
+        box-shadow: none;
+    }
+    .show>.btn-secondary.dropdown-toggle {
+        color: black;
+        background-color: white;
+        border: none;
+    }
+    .btn:focus {
+        outline: none;
+    }
+    .btn-secondary{
+        --bs-btn-active-bg: none;
+    }
+    .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle{
+        color: black;
+        background-color: white;
+        border: none;
+    }
+    .btn-secondary:not(:disabled):not(.disabled).active:focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .show>.btn-secondary.dropdown-toggle:focus {
+        box-shadow: none;
+    }
+</style>
