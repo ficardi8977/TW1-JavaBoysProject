@@ -1,9 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain.vacunas;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
+
+import javax.persistence.*;
 
 import java.util.Date;
 

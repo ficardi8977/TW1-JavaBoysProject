@@ -34,10 +34,7 @@
           </div>
           <div class="card-body">
             <h2 style="text-align: center">Vacunacion</h2>
-            <form:form action="mis-mascotas/vacunas" method="GET">
-              <input name="id" value=${mascota.id} id=${mascota.id} type="hidden" class="form-control"/>
-              <button class="dog-paw-button">Ver Vacunas</button>
-            </form:form>
+            <p class="card-text">${mascota.vacunas}</p>
           </div>
         </div>
       </c:forEach>

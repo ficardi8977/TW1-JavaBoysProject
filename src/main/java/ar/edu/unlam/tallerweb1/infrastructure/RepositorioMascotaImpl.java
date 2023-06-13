@@ -80,4 +80,9 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
         return this.sessionFactory.getCurrentSession().createCriteria(Vacunacion.class)
                 .add(Restrictions.eq("idMascota", idMascota)).list();
     }
+
+    @Override
+    public void guardarVacuna(Vacunacion vacuna) {
+        this.sessionFactory.getCurrentSession().save(vacuna);
+    }
 }
