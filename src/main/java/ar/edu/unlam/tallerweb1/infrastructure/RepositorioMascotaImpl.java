@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.hibernate.criterion.Restrictions;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -52,9 +54,11 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
-    public List buscarMascotasPorIdUsuario(Long idUsuario) {
+    public List<Mascota> buscarMascotasPorIdUsuario(Long idUsuario) {
         return this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
-                .add(Restrictions.eq("idUsuario", idUsuario)).list();
+                .add(Restrictions.eq("idUsuario", idUsuario)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+
+
     }
     @Override
     public List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request)

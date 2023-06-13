@@ -37,7 +37,6 @@ public class RepositorioMascotaTest extends SpringTest {
 
     private Vacunacion dadoQueExisteVacuna(Mascota mascota) {
         Vacunacion vacuna = new Vacunacion();
-        vacuna.setIdMascota(mascota.getId());
         vacuna.setNombre("Primera vacuna");
         this.repositorioM.guardarVacuna(vacuna);
         return vacuna;

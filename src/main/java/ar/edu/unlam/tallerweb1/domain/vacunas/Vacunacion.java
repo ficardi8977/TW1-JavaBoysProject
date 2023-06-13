@@ -13,13 +13,9 @@ public class Vacunacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private Long idMascota;
-    private Date fecha;
 
-    public Vacunacion(String nombre, Long idMascota, Date fecha) {
+    public Vacunacion(String nombre) {
         this.nombre = nombre;
-        this.idMascota = idMascota;
-        this.fecha = fecha;
     }
 
     public Vacunacion(){}
@@ -40,20 +36,5 @@ public class Vacunacion {
         this.nombre = nombre;
     }
 
-    public Long getIdMascota() {
-        return idMascota;
-    }
-
-    public void setIdMascota(Long idMascota) {
-        this.idMascota = idMascota;
-    }
-
-    public Date getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
 
 }
