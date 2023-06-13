@@ -8,7 +8,6 @@
   </jsp:include>
 </head>
 <body>
-
 <jsp:include page="nav.jsp">
   <jsp:param name="nav" value="nav" />
 </jsp:include>

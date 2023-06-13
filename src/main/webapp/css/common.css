@@ -30,3 +30,10 @@ button{
     overflow: hidden;
     text-decoration: none;
 }
+.text-error
+{
+    color: red;
+}
+.small-logo{
+    width: 30%;
+}

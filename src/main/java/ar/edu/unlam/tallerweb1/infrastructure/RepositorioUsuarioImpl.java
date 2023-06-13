@@ -27,9 +27,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	@Override
 	public Usuario buscarUsuario(String email, String password) {
 
-		// Se obtiene la sesion asociada a la transaccion iniciada en el servicio que invoca a este metodo y se crea un criterio
-		// de busqueda de Usuario donde el email y password sean iguales a los del objeto recibido como parametro
-		// uniqueResult da error si se encuentran mas de un resultado en la busqueda.
 		final Session session = sessionFactory.getCurrentSession();
 		return (Usuario) session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("email", email))
