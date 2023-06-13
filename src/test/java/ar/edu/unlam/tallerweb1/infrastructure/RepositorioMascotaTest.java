@@ -4,6 +4,7 @@ import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,23 @@ public class RepositorioMascotaTest extends SpringTest {
 
     private Long idUsuario;
     private Mascota mascota;
+    private Vacunacion vacuna;
 
 
     @Before
     public void init(){
         this.idUsuario = dadoQueExisteUsuario();
         this.mascota = dadoQueExisteMascota(idUsuario);
+        this.vacuna = dadoQueExisteVacuna(mascota);
+        this.mascota.setVacunas(vacuna);
+    }
+
+    private Vacunacion dadoQueExisteVacuna(Mascota mascota) {
+        Vacunacion vacuna = new Vacunacion();
+        vacuna.setIdMascota(mascota.getId());
+        vacuna.setNombre("Primera vacuna");
+        this.repositorioM.guardarVacuna(vacuna);
+        return vacuna;
     }
 
 
@@ -67,6 +79,30 @@ public class RepositorioMascotaTest extends SpringTest {
         entoncesNoEncuentroNinguna(mascotasEncontradas);
 
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void meTraeLasVacunas(){
+
+        Long idMascota = this.mascota.getId();
+
+        // ejecucion
+        List<Vacunacion> vacunasMascota = buscoLasVacunas(idMascota);
+
+        // verificacion
+        entoncesLasTrae(vacunasMascota);
+    }
+
+    private void entoncesLasTrae(List<Vacunacion> vacunasMascota) {
+        assertThat(vacunasMascota).isNotNull();
+        assertThat(vacunasMascota.size()).isEqualTo(1);
+    }
+
+    private List<Vacunacion> buscoLasVacunas(Long idMascota) {
+        return this.mascota.getVacunas();
+    }
+
 
     private void entoncesNoEncuentroNinguna(List<Mascota> mascotasEncontradas) {
         assertThat(mascotasEncontradas).isNotNull();

@@ -3,9 +3,12 @@ package ar.edu.unlam.tallerweb1.domain.mascotas;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Mascota {
@@ -16,6 +19,19 @@ public class Mascota {
     private String nombre, latitud, longitud, imagen, descripcion;
     private Date fechaAdopcion;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="vacunas_mascota",
+            joinColumns = {@JoinColumn(name = "idMascota")},
+            inverseJoinColumns = {@JoinColumn(name = "idVacuna")} )
+    private List<Vacunacion> vacunas;
+
+    public List<Vacunacion> getVacunas() {
+        return vacunas;
+    }
+
+    public void setVacunas(Vacunacion vacunas) {
+        this.vacunas.add(vacunas);
+    }
 
     // Propiedad de la FK
     @ManyToOne(fetch = FetchType.EAGER)
