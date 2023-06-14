@@ -20,6 +20,16 @@ public class Usuario {
 	// el atributo, la misma admite nulos, y el tipo de dato se deduce del tipo de dato de java.
 	private String email;
 	private String password;
+
+	private String nombre;
+
+	private String apellido;
+
+	private String telefono;
+
+	private String latitud;
+
+	private String longitud;
 	private String rol;
 	private Boolean activo = false;
 
@@ -74,6 +84,45 @@ public class Usuario {
 		activo = true;
 	}
 
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+
+	public String getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
 }
 
 
