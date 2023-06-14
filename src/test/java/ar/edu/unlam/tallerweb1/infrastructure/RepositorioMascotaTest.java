@@ -26,7 +26,6 @@ public class RepositorioMascotaTest extends SpringTest {
     private Mascota mascota;
     private Vacunacion vacuna;
 
-
     @Before
     public void init(){
         this.idUsuario = dadoQueExisteUsuario();
@@ -41,7 +40,6 @@ public class RepositorioMascotaTest extends SpringTest {
         this.repositorioM.guardarVacuna(vacuna);
         return vacuna;
     }
-
 
     @Test
     @Transactional
@@ -76,32 +74,24 @@ public class RepositorioMascotaTest extends SpringTest {
         List<Mascota> mascotasEncontradas = buscoLasMascotasPorIdUsuario(usuarioSinMascotas);
 
         entoncesNoEncuentroNinguna(mascotasEncontradas);
-
     }
 
     @Test
     @Transactional
     @Rollback
-    public void meTraeLasVacunas(){
+    public void meTraeVacunas(){
 
-        Long idMascota = this.mascota.getId();
+        Mascota mascota = this.repositorioM.buscarMascotasPorIdUsuario(idUsuario).get(0);
+        List<Vacunacion> vacunasEncontradas = mascota.getVacunas();
 
-        // ejecucion
-        List<Vacunacion> vacunasMascota = buscoLasVacunas(idMascota);
+        entoncesLasTrae(vacunasEncontradas);
 
-        // verificacion
-        entoncesLasTrae(vacunasMascota);
     }
 
     private void entoncesLasTrae(List<Vacunacion> vacunasMascota) {
         assertThat(vacunasMascota).isNotNull();
         assertThat(vacunasMascota.size()).isEqualTo(1);
     }
-
-    private List<Vacunacion> buscoLasVacunas(Long idMascota) {
-        return this.mascota.getVacunas();
-    }
-
 
     private void entoncesNoEncuentroNinguna(List<Mascota> mascotasEncontradas) {
         assertThat(mascotasEncontradas).isNotNull();

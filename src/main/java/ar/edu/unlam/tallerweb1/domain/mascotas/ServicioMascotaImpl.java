@@ -44,8 +44,4 @@ public class ServicioMascotaImpl implements ServicioMascota {
         return this.repositorioMascota.ObtenerMascotasFiltradas(request);
     }
 
-    @Override
-    public List<Vacunacion> obtenerVacunas(Long idMascota) {
-        return this.repositorioMascota.obtenerVacunasMascota(idMascota);
-    }
 }

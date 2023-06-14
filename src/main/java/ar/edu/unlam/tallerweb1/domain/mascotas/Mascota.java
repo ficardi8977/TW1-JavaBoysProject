@@ -23,7 +23,7 @@ public class Mascota {
     @JoinTable(name="vacunas_mascota",
             joinColumns = {@JoinColumn(name = "idMascota")},
             inverseJoinColumns = {@JoinColumn(name = "idVacuna")} )
-    private List<Vacunacion> vacunas;
+    private List<Vacunacion> vacunas = new ArrayList<Vacunacion>();
 
     public List<Vacunacion> getVacunas() {
         return vacunas;

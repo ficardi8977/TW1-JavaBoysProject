@@ -24,7 +24,5 @@ public interface RepositorioMascota {
 
     List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 
-    List<Vacunacion> obtenerVacunasMascota(Long idMascota);
-
-    void guardarVacuna(Vacunacion vacuna);
+    public void guardarVacuna(Vacunacion vacuna);
 }

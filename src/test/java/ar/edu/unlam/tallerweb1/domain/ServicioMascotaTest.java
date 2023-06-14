@@ -4,6 +4,7 @@ import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascotaImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascotaImpl;
 import org.junit.Before;
@@ -29,16 +30,21 @@ public class ServicioMascotaTest {
         this.servicioMascota = new ServicioMascotaImpl(this.repositorioMascota);
         this.mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
+        Mascota mascota2 = new Mascota();
+        Vacunacion vacuna = new Vacunacion();
+        mascota.setVacunas(vacuna);
         mascotas.add(mascota);
+        mascotas.add(mascota2);
         Long idUsuario = 1l;
         when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuario)).thenReturn(mascotas);
+
     }
 
     @Test
     public void buscarMascotasPorIdUsuario(){
         Long idUsuario = 1l;
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
-        assertThat(mascotas.size()).isEqualTo(1);
+        assertThat(mascotas.size()).isEqualTo(2);
     }
 
     @Test
@@ -47,6 +53,27 @@ public class ServicioMascotaTest {
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         assertThat(mascotas.size()).isEqualTo(0);
     }
+
+    @Test
+    public void queMeTraigaLasVacunas(){
+        Long idUsuario = 1l;
+        List <Vacunacion> vacunas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario).get(0).getVacunas();
+        assertThat(vacunas).isNotNull();
+        assertThat(vacunas.size()).isEqualTo(1);
+    }
+
+    @Test
+    public void queNoMeTraigaLasVacunas(){
+        Long idUsuario = 1l;
+        List <Vacunacion> vacunas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario).get(1).getVacunas();
+        assertThat(vacunas.size()).isEqualTo(0);
+    }
+
+
+
+
+
+
 
 
 

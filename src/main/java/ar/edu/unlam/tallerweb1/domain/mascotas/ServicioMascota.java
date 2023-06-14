@@ -14,7 +14,4 @@ public interface ServicioMascota {
 
     List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 
-    List<Vacunacion> obtenerVacunas(Long idMascota);
-
-
 }

@@ -33,12 +33,10 @@
             <p class="card-text">${mascota.descripcion}</p>
           </div>
           <div class="card-body">
-
             <h2 style="text-align: center">Vacunacion</h2>
               <c:forEach  var="vacuna" items="${mascota.vacunas}">
             <p class="card-text">${vacuna.nombre}</p>
               </c:forEach>
-
           </div>
         </div>
       </c:forEach>

@@ -79,13 +79,6 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
         return result;
     }
 
-    @Override
-    public List<Vacunacion> obtenerVacunasMascota(Long idMascota) {
-        return this.sessionFactory.getCurrentSession().createCriteria(Vacunacion.class)
-                .add(Restrictions.eq("idMascota", idMascota)).list();
-    }
-
-    @Override
     public void guardarVacuna(Vacunacion vacuna) {
         this.sessionFactory.getCurrentSession().save(vacuna);
     }
