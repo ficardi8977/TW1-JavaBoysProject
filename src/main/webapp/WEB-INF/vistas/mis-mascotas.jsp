@@ -34,9 +34,15 @@
           </div>
           <div class="card-body">
             <h2 style="text-align: center">Vacunacion</h2>
+            <c:if test="${not empty mascota.vacunas}">
               <c:forEach  var="vacuna" items="${mascota.vacunas}">
-            <p class="card-text">${vacuna.nombre}</p>
+                <p class="card-text">${vacuna.nombre}</p>
               </c:forEach>
+            </c:if>
+            <c:if test="${empty mascota.vacunas}">
+              <p><span>No se encontraron vacunas</span></p>
+              <br>
+            </c:if>
           </div>
         </div>
       </c:forEach>
