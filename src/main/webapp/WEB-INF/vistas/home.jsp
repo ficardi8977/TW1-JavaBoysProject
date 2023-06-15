@@ -49,7 +49,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-<h1> Mascotas perdidas </h1>
+<h1 style="text-align: center;"> Mascotas perdidas </h1>
 <div class="items m-0">
 	<c:forEach  var="mascotaPerdida" items="${carruseles.perdidos}">
 	<div class="card">
@@ -65,7 +65,7 @@
 </c:forEach>
 </div>
 
-<h1 style="text-align: center; color: white"> Cuidadadores </h1>
+<h1 style="text-align: center;"> Cuidadadores </h1>
 <div class="items m-2">
 	<c:forEach  var="cuidador" items="${carruseles.cuidadores}">
 		<div class="card">
@@ -80,7 +80,7 @@
 		</div>
 	</c:forEach>
 </div>
-<h1> Refugios </h1>
+<h1 style="text-align: center;"> Refugios </h1>
 <div class="items m-0">
 	<c:forEach  var="refugio" items="${carruseles.refugios}">
 		<div class="card">

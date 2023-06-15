@@ -8,13 +8,12 @@
     </jsp:include>
 </head>
 <body>
-<div class="container">
     <!-- NAV -->
     <jsp:include page="nav.jsp">
         <jsp:param name="nav" value="nav"/>
     </jsp:include>
     <!-- NAV -->
-
+    <div class="container">
     <!-- CONTENT -->
     <div class="Content" style="width: 100%">
         <c:if test="${not empty cuidado}">

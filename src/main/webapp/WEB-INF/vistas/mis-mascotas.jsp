@@ -30,13 +30,12 @@
             <c:if test="${not empty mascota.fechaAdopcion}">
               <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
             </c:if>
-            <p class="card-text">${mascota.descripcion}</p>
           </div>
           <div class="card-body">
             <h2 style="text-align: center">Vacunacion</h2>
             <c:if test="${not empty mascota.vacunas}">
               <c:forEach  var="vacuna" items="${mascota.vacunas}">
-                <p class="card-text">${vacuna.nombre}</p>
+                <p class="card-text"> - ${vacuna.nombre}</p>
               </c:forEach>
             </c:if>
             <c:if test="${empty mascota.vacunas}">

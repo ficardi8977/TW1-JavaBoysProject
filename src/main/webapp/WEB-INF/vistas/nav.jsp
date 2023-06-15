@@ -17,10 +17,10 @@
                             Mascotas
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/mascotas">Todos</a>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" onclick="submenuSeleccionado(5)">Perdidos</a>
                             <a class="dropdown-item" onclick="submenuSeleccionado(2)">Adopción</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/mascotas">Todos</a>
                         </div>
                     </li>
                     <li class="nav-item">
