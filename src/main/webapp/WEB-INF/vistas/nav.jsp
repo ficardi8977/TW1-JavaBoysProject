@@ -39,7 +39,6 @@
                                     Hola ${sessionScope.NOMBRE}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" >Mi perfil</a>
                                     <a class="dropdown-item" href="/mascotas/mis-mascotas?idUsuario=${sessionScope.IDUSUARIO}" >Mis Mascotas</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="/logout">Cerrar sesión</a>
@@ -51,7 +50,3 @@
             </div>
         </div>
 </nav>
-<<<<<<< HEAD
-
-=======
->>>>>>> 1c3ebe061e70466c9854c64af30e1718ef533938
