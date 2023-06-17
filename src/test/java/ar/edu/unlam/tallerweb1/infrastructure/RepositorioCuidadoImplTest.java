@@ -63,8 +63,7 @@ public class RepositorioCuidadoImplTest  extends SpringTest {
     @Transactional
     @Rollback
     public void ObtenerRefugioDetalle_Encontrado() {
-        long idRefugio = 1;
-        Cuidado refugio = this.repositorioCuidado.BuscarDetalleRefugio(idRefugio);
+        Cuidado refugio = this.repositorioCuidado.BuscarDetalleRefugio(cuidadoResult.getId());
         assertThat(refugio).isNotNull();
     }
 

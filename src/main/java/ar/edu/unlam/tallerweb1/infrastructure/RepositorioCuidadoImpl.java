@@ -37,8 +37,6 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
     public Cuidado BuscarDetalleRefugio(long id) {
         return (Cuidado)this.sessionFactory.getCurrentSession()
                 .createCriteria(Cuidado.class)
-                .createAlias("tipocuidado","tipoCuidado")
-                .add(Restrictions.eq("tipoCuidado.nombre","Refugio"))
                 .add(Restrictions.eq("id",id)).uniqueResult();
     }
 
