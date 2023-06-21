@@ -57,7 +57,7 @@ public class Mascota {
     public void setTipoRaza(TipoRaza tipoRaza) {
         this.tipoRaza = tipoRaza;
     }
-    private Long idUsuario;
+    private int idUsuario;
 
 
     public Mascota() {
@@ -67,11 +67,11 @@ public class Mascota {
         return id;
     }
 
-    public Long getIdUsuario() {
+    public int getIdUsuario() {
         return this.idUsuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
+    public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 

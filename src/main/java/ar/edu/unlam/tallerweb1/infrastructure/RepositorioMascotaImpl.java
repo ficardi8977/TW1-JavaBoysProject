@@ -54,7 +54,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
-    public List<Mascota> buscarMascotasPorIdUsuario(Long idUsuario) {
+    public List<Mascota> buscarMascotasPorIdUsuario(int idUsuario) {
         return this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .add(Restrictions.eq("idUsuario", idUsuario)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 

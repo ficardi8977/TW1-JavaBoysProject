@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Tipocuidado;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
+import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +56,14 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
 
     @Override
     public Cuidado getDetalle(long id) {
-        return (Cuidado) this.sessionFactory.getCurrentSession().createCriteria(Cuidado.class)
+        var cuidado =  (Cuidado) this.sessionFactory.getCurrentSession().createCriteria(Cuidado.class)
                 .add(Restrictions.eq("id", id)).uniqueResult();
+
+        if(cuidado != null) {
+            var comentarios = cuidado.getComentarios();
+            Hibernate.initialize(comentarios); // sin esta linea se cierra la sesion antes de levantar los comentarios
+            cuidado.setComentarios(comentarios);
+        }
+        return cuidado;
     }
 }

@@ -35,28 +35,28 @@ public class ServicioMascotaTest {
         mascota.setVacunas(vacuna);
         mascotas.add(mascota);
         mascotas.add(mascota2);
-        Long idUsuario = 1l;
+        int idUsuario = 1;
         when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuario)).thenReturn(mascotas);
 
     }
 
     @Test
     public void buscarMascotasPorIdUsuario(){
-        Long idUsuario = 1l;
+        int idUsuario = 1;
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         assertThat(mascotas.size()).isEqualTo(2);
     }
 
     @Test
     public void NoBuscarMascotasPorIdUsuario(){
-        Long idUsuario = 2l;
+        int idUsuario = 2;
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         assertThat(mascotas.size()).isEqualTo(0);
     }
 
     @Test
     public void queMeTraigaLasVacunas(){
-        Long idUsuario = 1l;
+        int idUsuario = 1;
         List <Vacunacion> vacunas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario).get(0).getVacunas();
         assertThat(vacunas).isNotNull();
         assertThat(vacunas.size()).isEqualTo(1);
@@ -64,7 +64,7 @@ public class ServicioMascotaTest {
 
     @Test
     public void queNoMeTraigaLasVacunas(){
-        Long idUsuario = 1l;
+        int idUsuario = 1;
         List <Vacunacion> vacunas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario).get(1).getVacunas();
         assertThat(vacunas.size()).isEqualTo(0);
     }

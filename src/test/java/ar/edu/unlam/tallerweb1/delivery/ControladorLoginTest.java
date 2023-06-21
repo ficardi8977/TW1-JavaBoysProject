@@ -1,20 +1,15 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLogin;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLoginImpl;
+import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuarioImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
-
-import java.util.Enumeration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -24,12 +19,12 @@ import static org.mockito.Mockito.*;
 public class ControladorLoginTest {
 
     private ControladorLogin controladorLogin;
-    private ServicioLogin servicioLogin;
+    private ServicioUsuario servicioLogin;
 
     @Before
     public void Init()
     {
-        this.servicioLogin = mock(ServicioLoginImpl.class);
+        this.servicioLogin = mock(ServicioUsuarioImpl.class);
         this.controladorLogin = new ControladorLogin(this.servicioLogin);
     }
 

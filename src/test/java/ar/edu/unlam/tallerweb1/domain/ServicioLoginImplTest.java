@@ -1,8 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain;
 
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLogin;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioLoginImpl;
+import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuarioImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +13,13 @@ import static org.mockito.Mockito.when;
 
 public class ServicioLoginImplTest {
 
-    private ServicioLogin servicioLogin;
+    private ServicioUsuario servicioLogin;
 
     private RepositorioUsuario repositorioUsuario;
     @Before
     public void init(){
         this.repositorioUsuario = mock(RepositorioUsuario.class);
-        this.servicioLogin = new ServicioLoginImpl(this.repositorioUsuario);
+        this.servicioLogin = new ServicioUsuarioImpl(this.repositorioUsuario);
     }
     @Test
     public void obtenerUsuarioLogin(){

@@ -35,7 +35,7 @@ public class ServicioMascotaImpl implements ServicioMascota {
     public Mascota ObtenerDetalle(long id) {
         return repositorioMascota.BuscarDetalle(id);
     }
-    public List<Mascota> obtenerMascotaPorIdUsuario(Long idUsuario) {
+    public List<Mascota> obtenerMascotaPorIdUsuario(int idUsuario) {
         return this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuario);
     }
 

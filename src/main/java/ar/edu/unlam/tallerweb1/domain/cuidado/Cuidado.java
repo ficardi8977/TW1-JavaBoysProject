@@ -1,6 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.cuidado;
 
+import ar.edu.unlam.tallerweb1.domain.comentarios.Comentario;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Cuidado {
@@ -26,6 +29,9 @@ public class Cuidado {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdTipoCuidado")
     private Tipocuidado tipocuidado;
+
+    @OneToMany(mappedBy = "cuidado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comentario> comentarios;
 
     public Cuidado (String nombre, String email, String direccion, String telefono, String latitud, String longitud, Tipocuidado tc){
         this.nombre = nombre;
@@ -122,5 +128,13 @@ public class Cuidado {
 
     public void setTipocuidado(Tipocuidado tipocuidado) {
         this.tipocuidado = tipocuidado;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
     }
 }
