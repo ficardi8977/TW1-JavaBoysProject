@@ -8,6 +8,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class ControladorRegistracion {
     private ServicioRegistracion servicioRegistracion;
@@ -21,21 +23,21 @@ public class ControladorRegistracion {
     public ModelAndView registrarme() {
         ModelMap model = new ModelMap();
         model.put("datosRegistracion", new DatosRegistracion());
-        return new ModelAndView("registro-usuario",model);
+        return new ModelAndView("registrar-usuario",model);
     }
 
     @RequestMapping(path = "/registrar-usuario", method = RequestMethod.POST)
-    public ModelAndView registrarUsuario(@ModelAttribute DatosRegistracion datosRegistracion) {
+    public ModelAndView registrarUsuario(@ModelAttribute("datosRegistracion") DatosRegistracion datosRegistracion) {
         ModelMap model = new ModelMap();
         String viewName = "";
 
-        if(this.servicioRegistracion.esValido(datosRegistracion.getCorreo()) && this.servicioRegistracion.registrarUsuario(datosRegistracion.getCorreo(), datosRegistracion.getClave())){
-            model.put("msg", "Registro exitoso");
-            model.put("datosLogin", new DatosLogin(datosRegistracion.getCorreo()));
+        if(this.servicioRegistracion.datosValidos(datosRegistracion.getEmail(), datosRegistracion.getPassword()) && this.servicioRegistracion.registroUsuario(datosRegistracion.getNombre(), datosRegistracion.getApellido(), datosRegistracion.getEmail(), datosRegistracion.getPassword(), datosRegistracion.getTelefono())){
+            model.put("error", "Registro exitoso");
+            model.put("datosLogin", new DatosLogin(datosRegistracion.getEmail()));
             viewName = "login";
         }else{
-            model.put("msg", "Registro fallido");
-            viewName = "registro-usuario";
+            model.put("error", "Registro fallido");
+            viewName = "registrar-usuario";
         }
 
         return new ModelAndView(viewName, model);

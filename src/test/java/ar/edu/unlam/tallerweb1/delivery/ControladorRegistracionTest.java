@@ -77,8 +77,8 @@ ControladorRegistracionTest {
     }*/
 
     private void dadoQueNoExisteElUsuario(DatosRegistracion datosRegistracion, Boolean retorno) {
-        when(this.servicioRegistracion.esValido(datosRegistracion.getCorreo())).thenReturn(retorno);
-        when(this.servicioRegistracion.registrarUsuario(datosRegistracion.getCorreo(), datosRegistracion.getClave())).thenReturn(retorno);
+        when(this.servicioRegistracion.esValido(datosRegistracion.getEmail())).thenReturn(retorno);
+        when(this.servicioRegistracion.registrarUsuario(datosRegistracion.getEmail(), datosRegistracion.getPassword())).thenReturn(retorno);
     }
 
     private ModelAndView cuandoMeRegistro(DatosRegistracion datosRegistracion) {

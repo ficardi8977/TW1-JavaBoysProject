@@ -10,5 +10,6 @@ public interface RepositorioUsuario {
 	void guardar(Usuario usuario);
     Usuario buscar(String email);
 	void modificar(Usuario usuario);
-
+    Boolean validarDatos(String email, String password);
+    Boolean registroUsuario(String nombre, String apellido, String email, String password, String telefono);
 }

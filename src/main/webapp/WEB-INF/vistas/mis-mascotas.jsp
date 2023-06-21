@@ -49,6 +49,11 @@
   </c:if>
 </div>
 
+<c:if test="${empty mascotas}">
+  <h3><span>No hay Mascotas</span></h3>
+  <br>
+</c:if>
+
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />
 </jsp:include>
