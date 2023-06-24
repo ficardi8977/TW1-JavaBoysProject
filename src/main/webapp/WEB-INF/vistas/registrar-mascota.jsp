@@ -23,7 +23,7 @@
                             <div class="row g-0">
                                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                     <div class="card-body p-4 p-lg-5 text-black">
-                                        <form action="alta-mascota" method="post" >
+                                        <form action="/alta-mascota" method="post" >
 
 
                                             <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Agregar nueva mascota</h5>
@@ -39,17 +39,12 @@
                                             </div>
 
                                             <div class="form-outline mb-4">
-                                                <label>Ubicacion</label>
+                                                <label>Ingrese su ubicacion</label>
                                                 <input type="hidden" id="latitud" name="latitud">
                                                 <input type="hidden" id="longitud" name="longitud">
                                             </div>
 
                                             <div id="map" style="width: 100%; height: 400px;"></div>
-
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label" for="imagen" style="display:block">Imagen</label>
-                                                <input type="file" name="imagen" id="imagen" >
-                                            </div>
 
                                             <div class="form-outline mb-4">
                                                 <label class="form-label" for="estado" style="display:block">Estado</label>
@@ -105,7 +100,7 @@
 
 <script src="../js/mapa-registro.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
+
 
 
 

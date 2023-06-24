@@ -22,7 +22,7 @@
             <div class="col-md-6 col-lg-7 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
 
-                <form action="/registrar-usuario" method="post" enctype="application/x-www-form-urlencoded">
+                <form action="/registrar-usuario" method="post">
 
                   <div class="d-flex align-items-center mb-3 pb-1">
                     <img class="img-fluid img-thumbnail border-0 rounded mx-auto d-block" style="width: 50%; height: auto;" src="img/AMIPETS2.PNG" alt="AmiPets">
@@ -95,4 +95,4 @@
 
 <script src="../js/mapa-registro.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
+
