@@ -17,7 +17,7 @@
 <div id="contenido-home">
   <div style="display:flex; justify-content: space-between">
     <h1 style="text-align: center">Mis Mascotas</h1>
-    <a href="registrar-mascota">Agregar mascota</a>
+    <a href="/registrar-mascota">Agregar mascota</a>
   </div>
   
   <c:if test="${not empty mascotas}">

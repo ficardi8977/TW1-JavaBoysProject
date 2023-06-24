@@ -1,6 +1,6 @@
 function initMap() {
-    var latitudeInput = document.getElementById('latitud');
-    var longitudeInput = document.getElementById('longitud');
+    var latitudInput = document.getElementById('latitud');
+    var longitudInput = document.getElementById('longitud');
     var latitud;
     var longitud;
     var marker;
@@ -27,8 +27,8 @@ function initMap() {
         });
 
         // Actualiza los valores de latitud y longitud en los campos del formulario
-        latitudeInput.value = latitud;
-        longitudeInput.value = longitud;
+        latitudInput.value = latitud;
+        longitudInput.value = longitud;
     });
 
 }
