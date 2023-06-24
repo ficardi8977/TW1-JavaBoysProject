@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
+import com.sun.istack.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +11,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -85,5 +92,28 @@ public class ControladorMascotas {
         model.put("mascotas", mascotas);
         return new ModelAndView("mis-mascotas", model);
     }
+
+    @RequestMapping(path = "/mascotas/registrar-mascota")
+    public ModelAndView irALogin() {
+        return new ModelAndView("registrar-mascota");
+    }
+
+    @RequestMapping(path = "/mascotas/alta-mascota", method = RequestMethod.POST)
+    public ModelAndView registrarMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas) {
+        ModelMap model = new ModelMap();
+
+        Boolean registrada = this.servicioMascota.registrarMascota(datosMascotas);
+
+        if(registrada){
+            List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(datosMascotas.getIdUsuario());
+            model.put("mascotas", mascotas);
+            return new ModelAndView("mis-mascotas", model);
+        } else {
+            model.put("error", "Registro fallido");
+        }
+
+        return new ModelAndView("registrar-mascota", model);
+    }
+
 
 }

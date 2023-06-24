@@ -1,6 +1,10 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.domain.estado.Estado;
+import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
+import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -81,5 +85,47 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
     public void guardarVacuna(Vacunacion vacuna) {
         this.sessionFactory.getCurrentSession().save(vacuna);
+    }
+
+    @Override
+    public Boolean registrarMascota(DatosMascotas datosMascotas) {
+
+        Boolean registrado = false;
+
+        TipoMascota tm = (TipoMascota) this.sessionFactory.getCurrentSession().createCriteria(TipoMascota.class)
+                .add(Restrictions.eq("id", datosMascotas.getTipo())).uniqueResult();
+        Estado e = (Estado) this.sessionFactory.getCurrentSession().createCriteria(Estado.class)
+                .add(Restrictions.eq("id", datosMascotas.getEstado())).uniqueResult();
+        TipoRaza razaExistente = (TipoRaza) this.sessionFactory.getCurrentSession().createCriteria(TipoRaza.class)
+                .add(Restrictions.eq("nombre", datosMascotas.getRaza())).uniqueResult();
+
+        Mascota mascota = new Mascota();
+        mascota.setNombre(datosMascotas.getNombre());
+        mascota.setDescripcion(datosMascotas.getDescripcion());
+        mascota.setImagen(datosMascotas.getImagen());
+        mascota.setEstado(e);
+        mascota.setIdUsuario(datosMascotas.getIdUsuario());
+        mascota.setLatitud(datosMascotas.getLatitud());
+        mascota.setLongitud(datosMascotas.getLongitud());
+
+        if (razaExistente!=null){
+            mascota.setTipoRaza(razaExistente);
+        } else {
+            TipoRaza tr = new TipoRaza(datosMascotas.getRaza(), tm);
+            this.sessionFactory.getCurrentSession().save(tr);
+            mascota.setTipoRaza(tr);
+        }
+
+        this.sessionFactory.getCurrentSession().save(mascota);
+
+        Mascota buscarMascota = (Mascota) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", mascota.getId())).uniqueResult();
+
+        if(buscarMascota!=null){
+            registrado = true;
+        }
+
+        return registrado;
+
     }
 }

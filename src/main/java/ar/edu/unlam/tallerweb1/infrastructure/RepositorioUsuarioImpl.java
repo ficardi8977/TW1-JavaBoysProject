@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import antlr.JavaCodeGenerator;
+import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.security.KeyStore;
 
 // implelemtacion del repositorio de usuarios, la anotacion @Repository indica a Spring que esta clase es un componente que debe
 // ser manejado por el framework, debe indicarse en applicationContext que busque en el paquete ar.edu.unlam.tallerweb1.dao
@@ -69,17 +72,24 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		return esValido;
 	}
 	@Override
-	public Boolean registroUsuario(String nombre, String apellido, String email, String password, String telefono) {
+	public Boolean registroUsuario(DatosRegistracion datosRegistracion) {
 		Boolean registrado = false;
-		Usuario user = new Usuario(nombre, apellido, email, password, telefono);
-		user.setLatitud("0"); // falta mapa
-		user.setLongitud("0");
+		Usuario user = new Usuario(
+				datosRegistracion.getNombre(),
+				datosRegistracion.getApellido(),
+				datosRegistracion.getEmail(),
+				datosRegistracion.getPassword(),
+				datosRegistracion.getTelefono(),
+				datosRegistracion.getLatitud(),
+				datosRegistracion.getLongitud()
+		);
+
 		TipoUsuario tu = new TipoUsuario(1l, "Masivo"); // mejorar
 		user.setTipoUsuario(tu);
 
 		this.sessionFactory.getCurrentSession().save(user);
 
-		if(buscar(email)!=null)
+		if(buscar(datosRegistracion.getEmail())!=null)
 			registrado = true;
 
 		return registrado;

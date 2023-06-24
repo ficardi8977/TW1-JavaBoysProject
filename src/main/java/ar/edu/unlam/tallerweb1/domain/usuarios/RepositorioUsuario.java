@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
@@ -11,5 +12,5 @@ public interface RepositorioUsuario {
     Usuario buscar(String email);
 	void modificar(Usuario usuario);
     Boolean validarDatos(String email, String password);
-    Boolean registroUsuario(String nombre, String apellido, String email, String password, String telefono);
+    Boolean registroUsuario(DatosRegistracion datosRegistracion);
 }

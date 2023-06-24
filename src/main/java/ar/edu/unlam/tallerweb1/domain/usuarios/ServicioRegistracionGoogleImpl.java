@@ -1,5 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
+
 public class ServicioRegistracionGoogleImpl implements  ServicioRegistracion{
     @Override
     public Boolean esValido(String correo) {
@@ -11,7 +13,7 @@ public class ServicioRegistracionGoogleImpl implements  ServicioRegistracion{
         return null;
     }
 
-    public Boolean registroUsuario(String nombre, String apellido, String email, String password, String telefono){
+    public Boolean registroUsuario(DatosRegistracion datosRegistracion){
         return true;
     }
 

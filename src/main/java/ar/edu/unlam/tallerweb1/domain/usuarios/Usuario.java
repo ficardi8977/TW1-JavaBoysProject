@@ -51,12 +51,14 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	public Usuario(String nombre, String apellido, String email, String password, String telefono){
+	public Usuario(String nombre, String apellido, String email, String password, String telefono, String latitud, String longitud){
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.password = password;
 		this.telefono = telefono;
+		this.latitud = latitud;
+		this.longitud = longitud;
 	}
 
 	public Long getId() {

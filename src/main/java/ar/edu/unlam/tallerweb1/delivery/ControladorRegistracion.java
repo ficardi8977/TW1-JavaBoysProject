@@ -31,7 +31,7 @@ public class ControladorRegistracion {
         ModelMap model = new ModelMap();
         String viewName = "";
 
-        if(this.servicioRegistracion.datosValidos(datosRegistracion.getEmail(), datosRegistracion.getPassword()) && this.servicioRegistracion.registroUsuario(datosRegistracion.getNombre(), datosRegistracion.getApellido(), datosRegistracion.getEmail(), datosRegistracion.getPassword(), datosRegistracion.getTelefono())){
+        if(this.servicioRegistracion.datosValidos(datosRegistracion.getEmail(), datosRegistracion.getPassword()) && this.servicioRegistracion.registroUsuario(datosRegistracion)){
             model.put("error", "Registro exitoso");
             model.put("datosLogin", new DatosLogin(datosRegistracion.getEmail()));
             viewName = "login";

@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class ServicioRegistracionImpl implements ServicioRegistracion {
     public Boolean registrarUsuario(String email, String password) {
         return true;
     }
-    public Boolean registroUsuario(String nombre, String apellido, String email, String password, String telefono){
-        return this.repositorioUsuario.registroUsuario(nombre, apellido, email, password, telefono);
+    public Boolean registroUsuario(DatosRegistracion datosRegistracion){
+        return this.repositorioUsuario.registroUsuario(datosRegistracion);
     }
 }

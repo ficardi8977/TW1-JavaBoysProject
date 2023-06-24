@@ -51,6 +51,14 @@
                   </div>
 
                   <div class="form-outline mb-4">
+                    <label>Ubicacion</label>
+                    <input type="hidden" id="latitud" name="latitud">
+                    <input type="hidden" id="longitud" name="longitud">
+                  </div>
+
+                  <div id="map" style="width: 100%; height: 400px;"></div>
+
+                  <div class="form-outline mb-4">
                     <input type="number" name="telefono" id="telefono" class="form-control form-control-lg" />
                     <label class="form-label" for="telefono">Telefono</label>
                   </div>
@@ -84,3 +92,7 @@
 
 </body>
 </html>
+
+<script src="../js/mapa-registro.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>

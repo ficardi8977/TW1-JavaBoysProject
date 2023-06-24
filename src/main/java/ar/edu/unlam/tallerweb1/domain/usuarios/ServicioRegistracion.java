@@ -1,8 +1,10 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
+
 public interface ServicioRegistracion {
     Boolean esValido(String correo);
-    Boolean registroUsuario(String nombre, String apellido, String email, String password, String telefono);
+    Boolean registroUsuario(DatosRegistracion datosRegistracion);
 
     Boolean registrarUsuario(String email, String password);
 

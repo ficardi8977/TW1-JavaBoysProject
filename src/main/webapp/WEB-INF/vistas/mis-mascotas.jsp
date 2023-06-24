@@ -15,7 +15,11 @@
 </jsp:include>
 
 <div id="contenido-home">
-  <h1 style="text-align: center">Mis Mascotas</h1>
+  <div style="display:flex; justify-content: space-between">
+    <h1 style="text-align: center">Mis Mascotas</h1>
+    <a href="registrar-mascota">Agregar mascota</a>
+  </div>
+  
   <c:if test="${not empty mascotas}">
     <div class="cards-container" style="display:block">
       <c:forEach  var="mascota" items="${mascotas}">
