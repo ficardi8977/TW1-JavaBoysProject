@@ -24,6 +24,7 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
 
     @Override
     public void Guardar(Cuidado cuidado) {
+
         this.sessionFactory.getCurrentSession().save(cuidado);
     }
 
