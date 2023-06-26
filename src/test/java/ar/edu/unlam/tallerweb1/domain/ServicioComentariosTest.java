@@ -57,7 +57,7 @@ public class ServicioComentariosTest {
 
     private void dadoQueExisteCuidadoyUsuario() {
         when(this.servicioCuidado.ObtenerDetalle(any())).thenReturn(new Cuidado());
-        when(this.servicioUsuario.consultarUsuario(any())).thenReturn(new Cuidado());
+        //when(this.servicioUsuario.consultarUsuario(any())).thenReturn(new Cuidado());
     }
     private void dadoQueNoExisteCuidado() {
         when(this.servicioCuidado.ObtenerDetalle(any())).thenReturn(null);
