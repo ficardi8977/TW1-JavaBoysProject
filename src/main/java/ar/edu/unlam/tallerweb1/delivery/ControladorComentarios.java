@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.comentarios.ServicioComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.CuidadoNoExistenteExcepcion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoExistenteExcepcion;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +23,24 @@ public class ControladorComentarios {
     private ServicioComentario servicioComentarios;
 
     @Autowired
-    public ControladorComentarios(ServicioComentario servicioComentarios){
+    public ControladorComentarios(ServicioComentario servicioComentarios) {
         this.servicioComentarios = servicioComentarios;
     }
 
-    @RequestMapping(path = "/comentario/cuidador",method = RequestMethod.POST)
+    @RequestMapping(path = "/comentario/cuidador", method = RequestMethod.POST)
     public ModelAndView getComentariosDeCuidado(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
-        var idComentario  =  this.servicioComentarios.guardar(datosComentario);
-        return new ModelAndView("redirect:../cuidador/detalle?id="+ Integer.toString(datosComentario.getIdCuidado()));
+        try {
+            this.servicioComentarios.guardar(datosComentario);
+            return new ModelAndView("redirect:../cuidador/detalle?id=" + Integer.toString(datosComentario.getIdCuidado()));
+        } catch (UsuarioNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        } catch (CuidadoNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        }
     }
 }
+

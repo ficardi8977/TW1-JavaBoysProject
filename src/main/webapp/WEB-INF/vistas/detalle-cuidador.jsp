@@ -85,27 +85,34 @@
                                 <p class="mt-3 mb-4 pb-2">
                                     ${comentario.mensaje}
                                 </p>
-
-                                <div class="small d-flex justify-content-start">
-                                    <a href="#!" class="d-flex align-items-center me-3">
-                                        <i class="far fa-thumbs-up me-2"></i>
-                                        <p class="mb-0">Like</p>
-                                    </a>
-                                    <a href="#!" class="d-flex align-items-center me-3">
-                                        <i class="far fa-comment-dots me-2"></i>
-                                        <p class="mb-0">Comment</p>
-                                    </a>
-                                    <a href="#!" class="d-flex align-items-center me-3">
-                                        <i class="fas fa-share me-2"></i>
-                                        <p class="mb-0">Share</p>
-                                    </a>
-                                </div>
+                                                                <!--  <div class="small d-flex justify-content-start">
+                                                                    <a href="#!" class="d-flex align-items-center me-3">
+                                                                        <i class="far fa-thumbs-up me-2"></i>
+                                                                        <p class="mb-0">Like</p>
+                                                                    </a>
+                                                                    <a href="#!" class="d-flex align-items-center me-3">
+                                                                        <i class="far fa-comment-dots me-2"></i>
+                                                                        <p class="mb-0">Comment</p>
+                                                                    </a>
+                                                                    <a href="#!" class="d-flex align-items-center me-3">
+                                                                        <i class="fas fa-share me-2"></i>
+                                                                        <p class="mb-0">Share</p>
+                                                                    </a>
+                                                                </div>-->
                             </div>
                             </c:forEach>
-                            <c:if test="${empty sessionScope.IDUSUARIO}">
-                                <h3><span>No hay comentarios</span></h3>
-                                <br>
-                            </c:if>
+                            <c:choose>
+                            <c:when test="${empty sessionScope.IDUSUARIO}">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-auto">
+                                            <h5 class="d-inline mr-2">Para comentar debe tener una cuenta</h5>
+                                            <a class="btn btn-primary btn-sm d-inline" href="/login">Ingresar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
                             <form method="post" action="/comentario/cuidador">
                             <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                                 <div class="d-flex flex-start w-100">
@@ -144,6 +151,8 @@
                                 </div>
                             </div>
                             </form>
+                            </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
