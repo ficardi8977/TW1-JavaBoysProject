@@ -1,8 +1,6 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
-import antlr.JavaCodeGenerator;
 import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
-import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.security.KeyStore;
 
 // implelemtacion del repositorio de usuarios, la anotacion @Repository indica a Spring que esta clase es un componente que debe
 // ser manejado por el framework, debe indicarse en applicationContext que busque en el paquete ar.edu.unlam.tallerweb1.dao
@@ -59,14 +56,18 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	}
 
 	@Override
-	public Boolean validarDatos(String email, String password) {
+	public Boolean validarDatos(DatosRegistracion datosRegistracion) {
+		String email = datosRegistracion.getEmail();
+		String password = datosRegistracion.getPassword();
+		String telefono = datosRegistracion.getTelefono();
 		Boolean esValido = false;
 		Boolean emailValido = email.endsWith(".com") && email.contains("@");
+		Boolean telefonoValido = !telefono.equals("") && telefono!=null;
 		Boolean pwValida = password.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$");
 		// Que tenga al menos una mayúscula, al menos una minúscula, al menos un digito y
 		// que sea de entre 4 y 8 caracteres de largo
 
-		if(buscar(email)==null && emailValido && pwValida)
+		if(buscar(email)==null && emailValido && pwValida && telefonoValido)
 			esValido = true;
 
 		return esValido;
@@ -89,7 +90,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 		this.sessionFactory.getCurrentSession().save(user);
 
-		if(buscar(datosRegistracion.getEmail())!=null)
+		if(buscar(user.getEmail())!=null)
 			registrado = true;
 
 		return registrado;

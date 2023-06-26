@@ -102,4 +102,65 @@ function cargarHomeConFiltros(idTipoMascota, idEstado) {
     });
 }
 
+function actualizarRazas() {
+    var tipoMascota = document.getElementById("tipo").value;
+    var razasMascota = document.getElementById("raza");
+
+    // Eliminar las opciones de razas actuales
+    razasMascota.innerHTML = "";
+
+    // Agregar las nuevas opciones de razas según el tipo de mascota seleccionado
+    if (tipoMascota === "1") {
+        var razasPerro = [
+            { name: "Labrador", value: "Labrador" },
+            { name: "Chihuahua", value: "Chihuahua" },
+            { name: "Mestizo", value: "Mestizo" }
+        ]; // Ejemplo de razas de perro
+        for (var i = 0; i < razasPerro.length; i++) {
+            var option = document.createElement("option");
+            option.text = razasPerro[i].name;
+            option.value = razasPerro[i].value;
+            razasMascota.add(option);
+        }
+    } else if (tipoMascota === "2") {
+        var razasGato = [
+            { name: "Persa", value: "Persa" },
+            { name: "Siames", value: "Siames" },
+            { name: "Sphynx", value: "Sphynx" }
+        ]; // Ejemplo de razas de gato
+        for (var j = 0; j < razasGato.length; j++) {
+            var option = document.createElement("option");
+            option.text = razasGato[j].name;
+            option.value = razasGato[j].value;
+            razasMascota.add(option);
+        }
+    }
+    // Agrega más condiciones para otros tipos de mascotas si es necesario
+}
+
+function mostrarFormularioVacuna() {
+    var vacunasDiv = document.getElementById('vacunas');
+    if (vacunasDiv.style.display === 'block') {
+        vacunasDiv.style.display = 'none';
+    } else {
+        vacunasDiv.style.display = 'block';
+    }
+}
+
+function agregarVacuna() {
+    var nombreVacunaInput = document.getElementById('nombre-vacuna');
+    var nombreVacuna = nombreVacunaInput.value;
+
+    if (nombreVacuna !== '') {
+        var listaVacunas = document.getElementById('listaVacunas');
+        var nuevaVacuna = document.createElement('li');
+        nuevaVacuna.textContent = "- " + nombreVacuna;
+        nuevaVacuna.setAttribute("value", nombreVacuna);
+        nuevaVacuna.setAttribute("name", "vacuna");
+        listaVacunas.appendChild(nuevaVacuna);
+
+        nombreVacunaInput.value = '';
+    }
+}
+
 mostrarTiposMascotas();

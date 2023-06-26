@@ -95,9 +95,7 @@ public class ControladorMascotas {
     public ModelAndView registrarMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas) {
         ModelMap model = new ModelMap();
 
-        Boolean registrada = this.servicioMascota.registrarMascota(datosMascotas);
-
-        if(registrada){
+        if(this.servicioMascota.validarDatos(datosMascotas)&&this.servicioMascota.registrarMascota(datosMascotas)){
             List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(datosMascotas.getIdUsuario());
             model.put("mascotas", mascotas);
             return new ModelAndView("mis-mascotas", model);

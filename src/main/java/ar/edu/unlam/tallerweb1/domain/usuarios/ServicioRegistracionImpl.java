@@ -17,8 +17,8 @@ public class ServicioRegistracionImpl implements ServicioRegistracion {
     public ServicioRegistracionImpl(){}
 
     @Override
-    public Boolean datosValidos(String correo, String password) {
-        return this.repositorioUsuario.validarDatos(correo, password);
+    public Boolean datosValidos(DatosRegistracion datosRegistracion) {
+        return this.repositorioUsuario.validarDatos(datosRegistracion);
     }
 
     @Override

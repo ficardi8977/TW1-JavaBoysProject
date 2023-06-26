@@ -16,4 +16,6 @@ public interface ServicioMascota {
     List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 
     Boolean registrarMascota(DatosMascotas datosMascotas);
+
+    Boolean validarDatos(DatosMascotas datosMascotas);
 }

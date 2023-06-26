@@ -50,4 +50,10 @@ public class ServicioMascotaImpl implements ServicioMascota {
         return this.repositorioMascota.registrarMascota(datosMascotas);
     }
 
+    @Override
+    public Boolean validarDatos(DatosMascotas datosMascotas) {
+        return this.repositorioMascota.validarDatos(datosMascotas);
+    }
+
+
 }

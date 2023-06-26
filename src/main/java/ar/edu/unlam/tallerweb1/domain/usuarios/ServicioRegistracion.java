@@ -8,5 +8,5 @@ public interface ServicioRegistracion {
 
     Boolean registrarUsuario(String email, String password);
 
-    Boolean datosValidos(String correo, String password);
+    Boolean datosValidos(DatosRegistracion datosRegistracion);
 }

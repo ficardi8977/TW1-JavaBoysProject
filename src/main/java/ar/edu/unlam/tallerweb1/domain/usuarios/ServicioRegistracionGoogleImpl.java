@@ -18,7 +18,7 @@ public class ServicioRegistracionGoogleImpl implements  ServicioRegistracion{
     }
 
     @Override
-    public Boolean datosValidos(String correo, String password) {
+    public Boolean datosValidos(DatosRegistracion datosRegistracion) {
         return null;
     }
 }

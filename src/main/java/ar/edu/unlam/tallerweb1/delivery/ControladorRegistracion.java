@@ -1,7 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracion;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracionImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +30,7 @@ public class ControladorRegistracion {
         ModelMap model = new ModelMap();
         String viewName = "";
 
-        if(this.servicioRegistracion.datosValidos(datosRegistracion.getEmail(), datosRegistracion.getPassword()) && this.servicioRegistracion.registroUsuario(datosRegistracion)){
+        if(this.servicioRegistracion.datosValidos(datosRegistracion) && this.servicioRegistracion.registroUsuario(datosRegistracion)){
             model.put("error", "Registro exitoso");
             model.put("datosLogin", new DatosLogin(datosRegistracion.getEmail()));
             viewName = "login";

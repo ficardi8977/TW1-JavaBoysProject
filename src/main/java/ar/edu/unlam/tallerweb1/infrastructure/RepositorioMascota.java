@@ -28,4 +28,6 @@ public interface RepositorioMascota {
     public void guardarVacuna(Vacunacion vacuna);
 
     Boolean registrarMascota(DatosMascotas datosMascotas);
+
+    Boolean validarDatos(DatosMascotas datosMascotas);
 }

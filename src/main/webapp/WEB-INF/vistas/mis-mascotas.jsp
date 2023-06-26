@@ -15,15 +15,18 @@
 </jsp:include>
 
 <div id="contenido-home">
-  <div style="display:flex; justify-content: space-between">
-    <h1 style="text-align: center">Mis Mascotas</h1>
-    <a href="/registrar-mascota">Agregar mascota</a>
+  <div style="display:flex;justify-content: space-between;align-items: center;margin: 10px auto 10px auto;width: 90%;">
+        <h1 style="text-align: center; margin:0px;">Mis Mascotas</h1>
+
+        <h4 style="margin:0px;">
+          <a href="/registrar-mascota" class="btn btn-lg btn-success">Agregar Mascota</a>
+        </h4>
   </div>
   
   <c:if test="${not empty mascotas}">
     <div class="cards-container" style="display:block">
       <c:forEach  var="mascota" items="${mascotas}">
-        <div class="card mis-mascotas" style="width: 95%;">
+        <div class="card mis-mascotas" style="width: 95%; margin: 10px auto 10px auto;">
           <div class="card-body">
             <img src="../img/${mascota.imagen}" class="card-img-top" alt="Mascota....">
           </div>
