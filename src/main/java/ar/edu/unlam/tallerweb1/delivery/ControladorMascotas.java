@@ -88,7 +88,7 @@ public class ControladorMascotas {
 
     @RequestMapping(value = "/mascotas/cercanas", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<MascotasCercanasResponse> buscarMascotasCercanas(@RequestParam("latitud") String latitud,
+    public ResponseEntity<List<Mascota>> buscarMascotasCercanas(@RequestParam("latitud") String latitud,
                                                                            @RequestParam("longitud") String longitud,
                                                                            @RequestParam("radio") double radio,
                                                                            HttpSession session) {
@@ -104,7 +104,7 @@ public class ControladorMascotas {
         session.setAttribute("ubicacion", request.getUbicacion());
         session.setAttribute("radio", request.getUbicacion().getRadio());
 
-        MascotasCercanasResponse response = this.servicioMascota.obtenerMascotasCercanas(request);
+        List<Mascota> response = this.servicioMascota.obtenerMascotasCercanas(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
