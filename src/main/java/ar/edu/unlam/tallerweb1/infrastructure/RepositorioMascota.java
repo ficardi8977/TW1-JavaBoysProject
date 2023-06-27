@@ -25,4 +25,6 @@ public interface RepositorioMascota {
 
     public void guardarVacuna(Vacunacion vacuna);
 
+    List<Mascota> buscarMascotasPorEstados(String[] estados);
+
 }
