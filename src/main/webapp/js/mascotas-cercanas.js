@@ -1,10 +1,12 @@
-var ubicacionModal = document.getElementById("ubicacionModal");
 var mapa;
 var btnPermitirUbicacion = document.getElementById("btnPermitirUbicacion");
+const perdido = "Perdido";
+const enAdopcion = "EnAdopcion";
 
 function solicitarUbicacion() {
-    $(ubicacionModal).modal("dispose"); // Reinicializar el modal
-    $(ubicacionModal).modal("show");
+    if (confirm("Se solicitará tu ubicación. ¿Deseas continuar?")) {
+        obtenerUbicacion();
+    }
 }
 
 function obtenerUbicacion() {
@@ -30,10 +32,6 @@ function obtenerUbicacion() {
                 // Enviar la solicitud al controlador utilizando AJAX
                 enviarSolicitudAlControlador(url, latitude, longitude, radio);
 
-                $(ubicacionModal).modal("hide");
-                $("body").removeClass("modal-open");
-                $(".modal-backdrop").remove();
-                ubicacionModal.style.display = "none";
             },
             function (error) {
                 // Error al obtener la ubicación
@@ -49,22 +47,19 @@ function enviarSolicitudAlControlador(url, latitud, longitud, radio) {
         type: "GET",
         url: url,
         success: function(response) {
-            var mascotasPerdidas = response.mascotasPerdidas;
-            var mascotasAdopcion = response.mascotasAdopcion;
+            var mascotasCercanas = response;
 
             // Crear el mapa y mostrar la ubicación
             inicializarMapa(latitud, longitud, radio);
 
-            // Agregar los marcadores de mascotas perdidas en el mapa con un color de pin rojo
-            agregarMarcadoresMascotasPerdidas(mascotasAdopcion);
+            agregarMarcadoresSegunEstado(mascotasCercanas, perdido);
 
-            // Agregar los marcadores de mascotas en adopción en el mapa con un color de pin verde
-            agregarMarcadoresMascotasAdopcion(mascotasPerdidas);
+            agregarMarcadoresSegunEstado(mascotasCercanas, enAdopcion);
 
             // Resto del código...
 
             // Reactivar el botón de permitir ubicación
-            btnPermitirUbicacion.disabled = false;
+
         },
         error: function(xhr, status, error) {
             // Manejar el error de la solicitud AJAX
@@ -130,6 +125,21 @@ function agregarMarcadoresMascotasAdopcion(mascotasAdopcion) {
     });
 }
 
+function agregarMarcadoresSegunEstado(mascotas, estado) {
+    const mascotasFiltradas = mascotas.filter(mascota => mascota.estado.nombre === estado);
+
+    switch (estado) {
+        case perdido:
+            agregarMarcadoresMascotasPerdidas(mascotasFiltradas);
+            break;
+        case enAdopcion:
+            agregarMarcadoresMascotasAdopcion(mascotasFiltradas);
+            break;
+        default:
+            // Acción predeterminada si el estado no coincide con ningún caso
+            break;
+    }
+}
 
 function mostrarUbicacionEnMapa(latitud, longitud, radio) {
     // Agregar un marcador en la ubicación
@@ -149,9 +159,8 @@ function mostrarUbicacionEnMapa(latitud, longitud, radio) {
         fillOpacity: 0.2,
         map: mapa
     });
-
 }
 
-// Resto del código...
-
-
+$(document).ready(function() {
+    solicitarUbicacion();
+});
