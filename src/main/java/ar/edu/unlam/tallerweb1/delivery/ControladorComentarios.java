@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.comentarios.ServicioComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.mascotas.EncontrarMascotaExcepcion;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,5 +30,18 @@ public class ControladorComentarios {
     public ModelAndView getComentariosDeCuidado(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
         var idComentario  =  this.servicioComentarios.guardar(datosComentario);
         return new ModelAndView("redirect:../cuidador/detalle?id="+ Integer.toString(datosComentario.getIdCuidado()));
+    }
+
+    @RequestMapping(path = "/comentario/mascota",method = RequestMethod.POST)
+    public ModelAndView postComentariosMascotas(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
+        try {
+            this.servicioComentarios.guardarMascotas(datosComentario);
+            return new ModelAndView("redirect:../mascota/detalle?id=" + Integer.toString(datosComentario.getIdMascota()));
+        }
+        catch (EncontrarMascotaExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        }
     }
 }

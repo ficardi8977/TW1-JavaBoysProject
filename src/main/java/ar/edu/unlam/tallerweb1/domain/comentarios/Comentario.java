@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.comentarios;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
+import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(nullable = true)
     private int clasificacion;
     @Column(length = 255)
     private String mensaje;
@@ -17,12 +19,23 @@ public class Comentario {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdUsuario")
     private Usuario usuario;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdCuidado")
     private Cuidado cuidado;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdMascota")
+    private Mascota mascota;
     private Date fecha;
+
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
+    }
+
 
 
     public void setId(int id) {
