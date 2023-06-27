@@ -2,12 +2,12 @@ package ar.edu.unlam.tallerweb1.domain.mascotas;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
-import ar.edu.unlam.tallerweb1.delivery.MascotasCercanasResponse;
 import ar.edu.unlam.tallerweb1.domain.estado.ServicioEstado;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,12 +15,10 @@ import java.util.stream.Collectors;
 public class ServicioMascotaImpl implements ServicioMascota {
 
     private RepositorioMascota repositorioMascota;
-    private ServicioEstado servicioEstado;
 
     @Autowired
-    public ServicioMascotaImpl(RepositorioMascota repositorioMascota, ServicioEstado servicioEstado) {
+    public ServicioMascotaImpl(RepositorioMascota repositorioMascota) {
         this.repositorioMascota = repositorioMascota;
-        this.servicioEstado = servicioEstado;
     }
 
     @Override
@@ -49,40 +47,32 @@ public class ServicioMascotaImpl implements ServicioMascota {
     }
 
     @Override
-    public MascotasCercanasResponse obtenerMascotasCercanas(DatosMascotasFiltradas request) {
+    public List<Mascota> obtenerMascotasPorEstados(String[] estados){
+        return this.repositorioMascota.buscarMascotasPorEstados(estados);
+    }
+
+    @Override
+    public List<Mascota> obtenerMascotasCercanas(DatosMascotasFiltradas request) {
         EstadoMascotasEnum perdido = EstadoMascotasEnum.Perdido;
         EstadoMascotasEnum adopcion = EstadoMascotasEnum.EnAdopcion;
-        DatosMascotasFiltradas requestPerdidos = new DatosMascotasFiltradas();
-        DatosMascotasFiltradas requestAdopcion = new DatosMascotasFiltradas();
-        DatosUbicacion ubicacion = request.getUbicacion();
-        Long estadoIdPerdido = servicioEstado.getIdEstadoPorNombre(perdido);
-        Long estadoIdAdopcion = servicioEstado.getIdEstadoPorNombre(adopcion);
-        MascotasCercanasResponse mascotasCercanasResponse = new MascotasCercanasResponse();
+        DatosUbicacion ubicacion;
+        List<Mascota> mascotasCercanas = new ArrayList<>();
+        String[] estados = {perdido.name(), adopcion.name()};
 
-        requestPerdidos.setIdEstado(estadoIdPerdido);
-        requestAdopcion.setIdEstado(estadoIdAdopcion);
-        long idEstado1 = requestPerdidos.getIdEstado();
-        long idEstado2 = requestAdopcion.getIdEstado();
-
-        List<Mascota> mascotasPerdidas = ObtenerMascotasFiltradas(requestPerdidos);
-        List<Mascota> mascotasEnAdopcion = ObtenerMascotasFiltradas(requestAdopcion);
+        ubicacion = request.getUbicacion();
+        List<Mascota> mascotasFiltradas = obtenerMascotasPorEstados(estados);
 
         if (ubicacion != null) {
             double latitud = Double.parseDouble(ubicacion.getLatitud());
             double longitud = Double.parseDouble(ubicacion.getLongitud());
             double radio = ubicacion.getRadio();
 
-            List<Mascota> mascotasPerdidasCercanas = mascotasPerdidas.stream()
+            mascotasCercanas = mascotasFiltradas.stream()
                     .filter(mascota -> esCercana(mascota, latitud, longitud, radio))
                     .collect(Collectors.toList());
-            List<Mascota> mascotasEnAdopcionCercanas = mascotasEnAdopcion.stream()
-                    .filter(mascota -> esCercana(mascota, latitud, longitud, radio))
-                    .collect(Collectors.toList());
-            mascotasCercanasResponse.setMascotasAdopcion(mascotasEnAdopcionCercanas);
-            mascotasCercanasResponse.setMascotasPerdidas(mascotasPerdidasCercanas);
         }
 
-        return mascotasCercanasResponse;
+        return mascotasCercanas;
     }
 
     private boolean esCercana(Mascota mascota, double latitud, double longitud, double radio) {
