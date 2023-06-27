@@ -21,7 +21,6 @@ public class ServicioMascotaTest {
 
     private ServicioMascota servicioMascota;
     private RepositorioMascota repositorioMascota;
-    private ServicioEstado servicioEstado;
 
     private List<Mascota> mascotas;
 
@@ -29,8 +28,7 @@ public class ServicioMascotaTest {
     @Before
     public void init(){
         this.repositorioMascota = mock(RepositorioMascotaImpl.class);
-        this.servicioEstado = mock(ServicioEstado.class);
-        this.servicioMascota = new ServicioMascotaImpl(this.repositorioMascota, this.servicioEstado);
+        this.servicioMascota = new ServicioMascotaImpl(this.repositorioMascota);
         this.mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
         Mascota mascota2 = new Mascota();
