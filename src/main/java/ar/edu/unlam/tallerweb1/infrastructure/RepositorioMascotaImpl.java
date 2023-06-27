@@ -2,10 +2,13 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
+import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
+import org.hibernate.criterion.Disjunction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -83,6 +86,25 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
     public void guardarVacuna(Vacunacion vacuna) {
         this.sessionFactory.getCurrentSession().save(vacuna);
+    }
+
+    @Override
+    public List<Mascota> buscarMascotasPorEstados(String[] estados) {
+        Criteria criteria = this.sessionFactory.getCurrentSession()
+                .createCriteria(Mascota.class);
+
+        // Crear un alias para acceder al estado de la mascota
+        criteria.createAlias("estado", "e");
+
+        // Crear una lista de restricciones para los estados
+        Disjunction disjunction = Restrictions.disjunction();
+        for (String estado : estados) {
+            disjunction.add(Restrictions.eq("e.nombre", estado));
+        }
+        criteria.add(disjunction);
+
+        // Obtener el resultado de la búsqueda
+        return criteria.list();
     }
 
 }
