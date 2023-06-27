@@ -36,19 +36,43 @@
     </div>
   </div>
   </c:forEach>
-  </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ubicacionModal">Solicitar ubicación</button>
+
+    <div class="modal" tabindex="-1" role="dialog" id="ubicacionModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Solicitar ubicación</h5>
+          </div>
+          <div class="modal-body">
+            <p>Para ofrecerte una mejor experiencia, necesitamos tu ubicación actual. ¿Deseas permitir el acceso a tu ubicación?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="obtenerUbicacion()" id="btnPermitirUbicacion">Permitir</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="mapa">
+
+    </div>
 </c:if>
-</div>
 
 <c:if test="${empty mascotas}">
   <h3><span>No hay Mascotas</span></h3>
   <br>
 </c:if>
 
+
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />
 </jsp:include>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
+<script src="../js/mascotas-cercanas.js"></script>
 <script src="../js/mascotas.js"></script>
-<link href="../css/mascotas.css" rel="stylesheet" >
+
+<link href="../css/mascotas.css" rel="stylesheet">
+
 </body>
 </html>

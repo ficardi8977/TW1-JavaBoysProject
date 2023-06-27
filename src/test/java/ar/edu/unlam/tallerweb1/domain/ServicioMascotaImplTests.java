@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.domain.estado.ServicioEstado;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascotaImpl;
@@ -23,18 +24,20 @@ import static org.mockito.Mockito.when;
 public class ServicioMascotaImplTests {
     private RepositorioMascota repositorio;
     private ServicioMascota servicioMascota;
+    private ServicioEstado servicioEstado;
     private List<Mascota> mascotasList;
 
     @Before
     public void Init(){
         this.repositorio = mock(RepositorioMascota.class);
+        this.servicioEstado = mock(ServicioEstado.class);
         this.mascotasList = new ArrayList<Mascota>();
         this.mascotasList.add(new Mascota());
         long idTipoMascota = 1;
         when(this.repositorio.BuscarMascotasPorTipo(idTipoMascota)).thenReturn(mascotasList);
         when(this.repositorio.TodasLasMascotas()).thenReturn(mascotasList);
         when(this.repositorio.BuscarDetalle(1)).thenReturn(mascotasList.get(0));
-        this.servicioMascota = new ServicioMascotaImpl(this.repositorio);
+        this.servicioMascota = new ServicioMascotaImpl(this.repositorio, this.servicioEstado);
 
     }
     @Test

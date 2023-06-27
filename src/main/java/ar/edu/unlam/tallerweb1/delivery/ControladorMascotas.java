@@ -7,17 +7,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class ControladorMascotas {
 
     private ServicioMascota servicioMascota;
+
     @Autowired
     public ControladorMascotas(ServicioMascota servicioMascota) {
         this.servicioMascota = servicioMascota;
@@ -36,7 +36,7 @@ public class ControladorMascotas {
         ModelMap model = new ModelMap();
         List<Mascota> result = this.servicioMascota.ObtenerTodasLasMascotas();
         model.put("mascotas", result);
-        return new ModelAndView("todas-las-mascotas",model);
+        return new ModelAndView("todas-las-mascotas", model);
     }
 
     @RequestMapping(path = "/mascotas/tipoMascota", method = RequestMethod.GET)
@@ -85,5 +85,29 @@ public class ControladorMascotas {
         model.put("mascotas", mascotas);
         return new ModelAndView("mis-mascotas", model);
     }
+
+    @RequestMapping(value = "/mascotas/cercanas", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<MascotasCercanasResponse> buscarMascotasCercanas(@RequestParam("latitud") String latitud,
+                                                                           @RequestParam("longitud") String longitud,
+                                                                           @RequestParam("radio") double radio,
+                                                                           HttpSession session) {
+        DatosMascotasFiltradas request = new DatosMascotasFiltradas();
+        DatosUbicacion ubicacion = new DatosUbicacion();
+        ubicacion.setLatitud(latitud);
+        ubicacion.setLongitud(longitud);
+        ubicacion.setRadio(radio);
+
+        request.setUbicacion(ubicacion);
+
+        // Guardar los datos en la sesión
+        session.setAttribute("ubicacion", request.getUbicacion());
+        session.setAttribute("radio", request.getUbicacion().getRadio());
+
+        MascotasCercanasResponse response = this.servicioMascota.obtenerMascotasCercanas(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
 
 }

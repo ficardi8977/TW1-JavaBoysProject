@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain;
 
+import ar.edu.unlam.tallerweb1.domain.estado.ServicioEstado;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascotaImpl;
@@ -20,6 +21,7 @@ public class ServicioMascotaTest {
 
     private ServicioMascota servicioMascota;
     private RepositorioMascota repositorioMascota;
+    private ServicioEstado servicioEstado;
 
     private List<Mascota> mascotas;
 
@@ -27,7 +29,8 @@ public class ServicioMascotaTest {
     @Before
     public void init(){
         this.repositorioMascota = mock(RepositorioMascotaImpl.class);
-        this.servicioMascota = new ServicioMascotaImpl(this.repositorioMascota);
+        this.servicioEstado = mock(ServicioEstado.class);
+        this.servicioMascota = new ServicioMascotaImpl(this.repositorioMascota, this.servicioEstado);
         this.mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
         Mascota mascota2 = new Mascota();
