@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.*;
 import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -23,19 +24,25 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	// el mismo esta difinido en el archivo hibernateContext.xml
 	private SessionFactory sessionFactory;
 
-    @Autowired
-	public RepositorioUsuarioImpl(SessionFactory sessionFactory){
+	@Autowired
+	public RepositorioUsuarioImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 
 	@Override
 	public Usuario buscarUsuario(String email, String password) {
 
+		// Se busca al usuario por email y contraseña
 		final Session session = sessionFactory.getCurrentSession();
-		return (Usuario) session.createCriteria(Usuario.class)
+		Usuario user = (Usuario) session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("email", email))
 				.add(Restrictions.eq("password", password))
 				.uniqueResult();
+
+		if(user==null)
+			throw new UsuarioNoEncontrado();
+
+		return user;
 	}
 
 	@Override
@@ -45,9 +52,16 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 	@Override
 	public Usuario buscar(String email) {
-		return (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-				.add(Restrictions.eq("email", email))
-				.uniqueResult();
+		Usuario user = null;
+		try{
+			user = (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+					.add(Restrictions.eq("email", email))
+					.uniqueResult();
+		} catch (Exception e) {
+			throw new EmailYaRegistrado();
+		}
+
+		return user;
 	}
 
 	@Override
@@ -56,25 +70,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	}
 
 	@Override
-	public Boolean validarDatos(DatosRegistracion datosRegistracion) {
-		String email = datosRegistracion.getEmail();
-		String password = datosRegistracion.getPassword();
-		String telefono = datosRegistracion.getTelefono();
-		Boolean esValido = false;
-		Boolean emailValido = email.endsWith(".com") && email.contains("@");
-		Boolean telefonoValido = !telefono.equals("") && telefono!=null;
-		Boolean pwValida = password.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$");
-		// Que tenga al menos una mayúscula, al menos una minúscula, al menos un digito y
-		// que sea de entre 4 y 8 caracteres de largo
-
-		if(buscar(email)==null && emailValido && pwValida && telefonoValido)
-			esValido = true;
-
-		return esValido;
-	}
-	@Override
 	public Boolean registroUsuario(DatosRegistracion datosRegistracion) {
+
+		// Se registra el usuario con los datos ingresados
 		Boolean registrado = false;
+
 		Usuario user = new Usuario(
 				datosRegistracion.getNombre(),
 				datosRegistracion.getApellido(),
@@ -85,16 +85,24 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				datosRegistracion.getLongitud()
 		);
 
-		TipoUsuario tu = new TipoUsuario(1l, "Masivo"); // mejorar
+		// El tipo de usuario es de tipo masivo
+		TipoUsuario tu = new TipoUsuario(1l, "Masivo");
+		this.sessionFactory.getCurrentSession().save(tu);
 		user.setTipoUsuario(tu);
 
-		this.sessionFactory.getCurrentSession().save(user);
+		// Se guarda el objeto en la sesión
+		try {
+			guardar(user);
+		} catch (Exception e) {
+			throw new NoSeRegistroAlUsuario(e);
+		}
 
-		if(buscar(user.getEmail())!=null)
+		// Se busca si el usuario guardado ahora existe en la base de datos
+		if (buscar(user.getEmail()) != null)
 			registrado = true;
 
 		return registrado;
+
+
 	}
-
-
 }

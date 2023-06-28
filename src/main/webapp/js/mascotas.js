@@ -112,6 +112,7 @@ function actualizarRazas() {
     // Agregar las nuevas opciones de razas según el tipo de mascota seleccionado
     if (tipoMascota === "1") {
         var razasPerro = [
+            { name: "Selecciona la raza de tu perro", value: "0" },
             { name: "Labrador", value: "Labrador" },
             { name: "Chihuahua", value: "Chihuahua" },
             { name: "Mestizo", value: "Mestizo" }
@@ -124,6 +125,7 @@ function actualizarRazas() {
         }
     } else if (tipoMascota === "2") {
         var razasGato = [
+            { name: "Selecciona la raza de tu gato", value: "0" },
             { name: "Persa", value: "Persa" },
             { name: "Siames", value: "Siames" },
             { name: "Sphynx", value: "Sphynx" }

@@ -24,42 +24,47 @@
 
       <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Registrar Usuario</h5>
 
-      <div class="d-flex h6">
+      <div class="h6">
 
-        <div class="col">
-          <div class="form-outline mb-4">
+        <div class="row">
+          <div class="col form-outline mb-4">
             <label class="form-label" for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control form-control-lg" />
+            <input type="text" name="nombre" id="nombre" class="form-control form-control-lg" required/>
           </div>
-          <div class="form-outline mb-4">
-            <label class="form-label" for="email">Email</label>
-            <input type="email" name="email" id="email" class="form-control form-control-lg" />
+
+          <div class="col form-outline mb-4">
+            <label class="form-label" for="apellido">Apellido</label>
+            <input type="text" name="apellido" id="apellido" class="form-control form-control-lg" required/>
           </div>
         </div>
 
-        <div class="col">
-          <div class="form-outline mb-4">
-            <label class="form-label" for="apellido">Apellido</label>
-            <input type="text" name="apellido" id="apellido" class="form-control form-control-lg" />
+        <div class="row">
+          <div class="col form-outline mb-4">
+            <label class="form-label" for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control form-control-lg" required/>
           </div>
-          <div class="form-outline mb-4">
+
+          <div class="col form-outline mb-4">
             <label class="form-label" for="password">Contraseña</label>
-            <input type="password" name="password" id="password" class="form-control form-control-lg" />
+            <input type="password" name="password" id="password" class="form-control form-control-lg" required/>
           </div>
         </div>
 
       </div>
-      <div class="form-outline h6">
-        <label>Ubicacion</label>
-        <input type="hidden" id="latitud" name="latitud">
-        <input type="hidden" id="longitud" name="longitud">
+
+      <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">
+        <label for="address" class="m-0 mr-2">Ubicación</label>
+        <input type="text" class="form-control form-control-lg" id="address"><br>
+
+        <input type="hidden" id="latitud" name="latitud" value="-34.6157959">
+        <input type="hidden" id="longitud" name="longitud" value="-58.5158707">
       </div>
 
       <div id="map" style="width: 100%; height: 400px;"></div>
 
       <div class="form-outline my-3 h6">
         <label class="form-label" for="telefono">Telefono</label>
-        <input type="number" name="telefono" id="telefono" class="form-control form-control-lg" />
+        <input type="number" name="telefono" id="telefono" class="form-control form-control-lg" required/>
       </div>
 
       <div>
@@ -83,10 +88,14 @@
   <jsp:include page="foot.jsp">
     <jsp:param name="foot" value="foot" />
   </jsp:include>
+
+  <script src="../js/mapa-registro.js"></script>
 </body>
 </html>
 
-<script src="../js/mapa-registro.js"></script>
+<!-- <script src="../js/mapa-registro.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&libraries=places&callback=initAutocomplete"></script>
+-->
 
 

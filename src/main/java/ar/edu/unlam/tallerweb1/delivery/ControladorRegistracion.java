@@ -6,8 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ControladorRegistracion {
@@ -26,20 +27,18 @@ public class ControladorRegistracion {
     }
 
     @RequestMapping(path = "/registrar-usuario", method = RequestMethod.POST)
-    public ModelAndView registrarUsuario(@ModelAttribute("datosRegistracion") DatosRegistracion datosRegistracion) {
+    public ModelAndView registrarUsuario(@ModelAttribute("datosRegistracion") DatosRegistracion datosRegistracion, RedirectAttributes redirectAttributes) {
         ModelMap model = new ModelMap();
-        String viewName = "";
 
-        if(this.servicioRegistracion.datosValidos(datosRegistracion) && this.servicioRegistracion.registroUsuario(datosRegistracion)){
-            model.put("error", "Registro exitoso");
-            model.put("datosLogin", new DatosLogin(datosRegistracion.getEmail()));
-            viewName = "login";
-        }else{
-            model.put("error", "Registro fallido");
-            viewName = "registrar-usuario";
+        try {
+            this.servicioRegistracion.registroUsuario(datosRegistracion);
+            redirectAttributes.addFlashAttribute("error", "Usuario registrado");
+        } catch (Exception e){
+            model.put("error", e.getMessage());
+            return new ModelAndView("registrar-usuario", model);
         }
 
-        return new ModelAndView(viewName, model);
+        return new ModelAndView(new RedirectView("/login"));
     }
 
 }

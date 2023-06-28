@@ -13,6 +13,11 @@ public class ServicioRegistracionGoogleImpl implements  ServicioRegistracion{
         return null;
     }
 
+    @Override
+    public String encriptarClave(String clave) {
+        return null;
+    }
+
     public Boolean registroUsuario(DatosRegistracion datosRegistracion){
         return true;
     }

@@ -22,7 +22,14 @@
           <a href="/registrar-mascota" class="btn btn-lg btn-success">Agregar Mascota</a>
         </h4>
   </div>
-  
+
+  <div class="d-flex justify-content-center">
+    <c:if test="${not empty error}">
+      <h5 class="text-success m-0">${error}</h5>
+      <br>
+    </c:if>
+  </div>
+
   <c:if test="${not empty mascotas}">
     <div class="cards-container" style="display:block">
       <c:forEach  var="mascota" items="${mascotas}">
@@ -37,6 +44,7 @@
             <c:if test="${not empty mascota.fechaAdopcion}">
               <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
             </c:if>
+            <p class="card-text">${mascota.descripcion}</p>
           </div>
           <div class="card-body">
             <h2 style="text-align: center">Vacunacion</h2>

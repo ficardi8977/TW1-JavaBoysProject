@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -86,24 +88,24 @@ public class ControladorMascotas {
         return new ModelAndView("mis-mascotas", model);
     }
 
-    @RequestMapping(path = "/mascotas/registrar-mascota")
-    public ModelAndView irALogin() {
+    @RequestMapping(path = "/registrar-mascota")
+    public ModelAndView registrarMascota() {
         return new ModelAndView("registrar-mascota");
     }
 
-    @RequestMapping(path = "/mascotas/alta-mascota", method = RequestMethod.POST)
-    public ModelAndView registrarMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas) {
-        ModelMap model = new ModelMap();
+    @RequestMapping(path = "/alta-mascota", method = RequestMethod.POST)
+    public ModelAndView altaMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas, RedirectAttributes redirectAttributes) {
 
-        if(this.servicioMascota.validarDatos(datosMascotas)&&this.servicioMascota.registrarMascota(datosMascotas)){
-            List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(datosMascotas.getIdUsuario());
-            model.put("mascotas", mascotas);
-            return new ModelAndView("mis-mascotas", model);
-        } else {
-            model.put("error", "Registro fallido");
+        try{
+            this.servicioMascota.registrarMascota(datosMascotas);
+            redirectAttributes.addFlashAttribute("error", "Mascota registrada!");
+        } catch (Exception e){
+            ModelMap model = new ModelMap();
+            model.put("error", e.getMessage());
+            return new ModelAndView("registrar-mascota", model);
         }
 
-        return new ModelAndView("registrar-mascota", model);
+        return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + datosMascotas.getIdUsuario() + ""));
     }
 
 

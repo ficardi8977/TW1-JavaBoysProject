@@ -1,41 +1,97 @@
 package ar.edu.unlam.tallerweb1.domain;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.EmailInvalido;
+import ar.edu.unlam.tallerweb1.domain.excepciones.EmailYaRegistrado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.IngresarTelefono;
+import ar.edu.unlam.tallerweb1.domain.excepciones.PasswordInvalida;
+import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracionImpl;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 public class ServicioRegistracionImplTest {
-    private ServicioRegistracionImpl servicioRegistracion = new ServicioRegistracionImpl();
-    private String correo;
-    private String clave;
+    private ServicioRegistracionImpl servicioRegistracion;
+    private RepositorioUsuario repositorioUsuario;
+    private final String CORREO = "correo@gmail.com";
+    private final String CORREO_EXISTENTE = "amipets@gmail.com";
+    private final String CORREO_INVALIDO = "correo@gmail";
+    private final String CLAVE = "Admin1";
+    private final String CLAVE_INVALIDA = "admin1";
 
-    @Test
-    public void alIngresarUnCorreoValidoMeDevuelveVerdadero(){
-        Boolean esValido = servicioRegistracion.esValido("fittipaldi.h@gmail.com");
-        entoncesMiCorreo(esValido);
+
+    @Before
+    public void init() {
+        this.repositorioUsuario = mock(RepositorioUsuario.class);
+        this.servicioRegistracion = new ServicioRegistracionImpl(repositorioUsuario);
+        Usuario usuarioExistente = new Usuario();
+        usuarioExistente.setEmail(CORREO_EXISTENTE);
+        when(this.repositorioUsuario.buscar(CORREO_EXISTENTE)).thenReturn(usuarioExistente);
     }
 
     @Test
-    public void alIngresarCredencialesValidasMePuedoRegistrarExitosamente(){
-        dadoQueTengoCredencialesValidas();
-        Boolean registroExitoso = cuandoMeRegistro(this.correo, this.clave);
-        entoncesEs(registroExitoso);
+    public void queValideLosDatosDelForm(){
+        DatosRegistracion datos = dadoQueSeEnviaUnForm();
+
+        Boolean datosValidos = seValidanLosDatos(datos);
+
+        entoncesSonValidos(datosValidos);
     }
 
-    private void entoncesEs(Boolean registroExitoso) {
-        assertThat(registroExitoso).isTrue();
+    @Test (expected = EmailInvalido.class)
+    public void queNoPermitaDatosInvalidosExcepcionEmail(){
+        DatosRegistracion datos = dadoQueSeEnviaUnForm();
+        datos.setEmail(CORREO_INVALIDO);
+        seValidanLosDatos(datos);
     }
 
-    private Boolean cuandoMeRegistro(String correo, String clave) {
-        return this.servicioRegistracion.registrarUsuario(correo, clave);
+    @Test (expected = PasswordInvalida.class)
+    public void queNoPermitaDatosInvalidosExcepcionPassword(){
+        DatosRegistracion datos = dadoQueSeEnviaUnForm();
+        datos.setPassword(CLAVE_INVALIDA);
+        seValidanLosDatos(datos);
     }
 
-    private void dadoQueTengoCredencialesValidas() {
-        this.correo = "fittipaldi.h@gmail.com";
-        this.clave = "asdfg";
+    @Test (expected = IngresarTelefono.class)
+    public void queNoPermitaDatosInvalidosExcepcionTelefono(){
+        DatosRegistracion datos = dadoQueSeEnviaUnForm();
+        datos.setTelefono("");
+        seValidanLosDatos(datos);
     }
 
-    private void entoncesMiCorreo(Boolean esValido) {
-        assertThat(esValido).isTrue();
+    @Test (expected = EmailYaRegistrado.class)
+    public void queNoPermitaDatosInvalidosExcepcionEmailExistente() {
+        DatosRegistracion datos = dadoQueSeEnviaUnForm();
+        datos.setEmail(CORREO_EXISTENTE);
+        seValidanLosDatos(datos);
     }
+
+    private void entoncesSonValidos(Boolean datosValidos) {
+        assertThat(datosValidos).isTrue();
+    }
+
+    private Boolean seValidanLosDatos(DatosRegistracion datos) {
+        return this.servicioRegistracion.datosValidos(datos);
+    }
+
+    private DatosRegistracion dadoQueSeEnviaUnForm() {
+        DatosRegistracion datosForm = new DatosRegistracion();
+        datosForm.setNombre("Tomas");
+        datosForm.setApellido("Magliano");
+        datosForm.setEmail(CORREO);
+        datosForm.setPassword(CLAVE);
+        datosForm.setTelefono("1122334455");
+        datosForm.setLatitud("-34.6157959");
+        datosForm.setLongitud("-58.5158707");
+
+        return datosForm;
+    }
+
 }

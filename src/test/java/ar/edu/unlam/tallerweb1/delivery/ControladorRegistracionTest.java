@@ -1,93 +1,89 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.excepciones.EmailInvalido;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracion;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracionImpl;
 import org.springframework.web.servlet.ModelAndView;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class
 ControladorRegistracionTest {
-    public static final String CORREO = "fittipaldi.h@gmail.com";
-    public static final String CORREO_INVALIDO = "Fitti";
-    public static final String CLAVE = "asdfg";
+    public static final String CORREO = "magliano@gmail.com";
+    public static final String CORREO_INVALIDO = "magliano@gmail";
+    public static final String CLAVE = "Admin1";
     private ServicioRegistracion servicioRegistracion;
     private ControladorRegistracion controladorRegistracion;
-    private DatosRegistracion datosRegistracion;
-    private DatosRegistracion datosRegistracionInvalido;
+    private DatosRegistracion formulario;
+    private DatosRegistracion formularioInvalido;
+
+    private RedirectAttributes redirectAttributes;
 
     @Before
-    public void init(){
-        this.datosRegistracion = new DatosRegistracion(CORREO, CLAVE);
-        this.datosRegistracionInvalido = new DatosRegistracion(CORREO_INVALIDO, CLAVE);
+    public void init() {
         this.servicioRegistracion = mock(ServicioRegistracionImpl.class);
-        this.controladorRegistracion = new ControladorRegistracion(this.servicioRegistracion);
+        this.controladorRegistracion = new ControladorRegistracion(servicioRegistracion);
+        this.redirectAttributes = new RedirectAttributesModelMap();
+        formulario = new DatosRegistracion();
+        formulario.setEmail(CORREO);
+        formulario.setPassword(CLAVE);
+        formularioInvalido = new DatosRegistracion();
+        formularioInvalido.setEmail(CORREO_INVALIDO);
+        formularioInvalido.setPassword(CLAVE);
+        when(this.servicioRegistracion.registroUsuario(formulario)).thenReturn(true);
+        when(this.servicioRegistracion.registroUsuario(formularioInvalido)).thenThrow(EmailInvalido.class);
     }
 
     @Test
-    public void alIngresarARegistrarmeMeMuestraLaPantallaDeRegistro(){
-        dadoQueNoExisteElUsuario(this.datosRegistracion, null);
+    public void alIngresarARegistrarmeMeMuestraLaPantallaDeRegistro() {
         ModelAndView mav = cuandoMeQuieroRegistrar();
-        entoncesMeLlevaALaPantallaDeRegistracion(mav);
+        assertThat(mav.getViewName()).isEqualTo("registrar-usuario");
+
     }
 
     @Test
-    public void alIngresarCredencialesCorrectasDeUnUsuarioQueNoExisteMeRegistraYLlevaAlLogin(){
-        // Correo y una contraseña valida
+    public void alIngresarCredencialesCorrectasMeRegistroYMeDevuelveAlLogin() {
+        ModelAndView mav = meRegistro(formulario, redirectAttributes);
+        Object view = mav.getView();
+        String url = ((RedirectView) view).getUrl();
 
-        // Preparacion
-        dadoQueNoExisteElUsuario(this.datosRegistracion, true);
-
-        // Ejecucion
-        ModelAndView mav = cuandoMeRegistro(this.datosRegistracion);
-
-        // Verificacion
-        entoncesElRegistroEsExitoso(mav);
+        assertThat(view.getClass()).isEqualTo(RedirectView.class);
+        assertThat(url).isEqualTo("/login");
     }
 
     @Test
-    public void alIngresarCredencialesInvalidasNoMePermiteRegistrarme(){
-        dadoQueNoExisteElUsuario(this.datosRegistracionInvalido, false);
-        ModelAndView mav = cuandoMeRegistro(this.datosRegistracionInvalido);
-        entoncesElRegistroFalla(mav);
+    public void alIngresarCredencialesIncorrectasNoMeRegistro() {
+        ModelAndView mav = meRegistro(formularioInvalido, redirectAttributes);
+        assertThat(mav.getViewName()).isEqualTo("registrar-usuario");
+    }
+
+    @Test
+    public void alRegistrarmeMeDevuelveUnMensajeDeExito(){
+        ModelAndView mav = meRegistro(formulario, redirectAttributes);
+        Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
+        String mensaje = (String) flashAttributes.get("error");
+
+        assertThat(mensaje).isEqualTo("Usuario registrado");
+    }
+
+    private ModelAndView meRegistro(DatosRegistracion datos, RedirectAttributes redirectAttributes) {
+        return controladorRegistracion.registrarUsuario(datos, redirectAttributes);
     }
 
     private ModelAndView cuandoMeQuieroRegistrar() {
         return controladorRegistracion.registrarme();
-    }
-
-    private void entoncesMeLlevaALaPantallaDeRegistracion(ModelAndView mav) {
-        assertThat(mav.getViewName()).isEqualTo("registro-usuario");
-    }
-
-    private void entoncesElRegistroFalla(ModelAndView mav) {
-        assertThat(mav.getViewName()).isEqualTo("registro-usuario");
-        assertThat(mav.getModel().get("msg")).isEqualTo("Registro fallido");
-    }
-
-    /*private void dadoQueLasCredencialesSonInvalidas(){
-        when(this.servicioRegistracion.esValido(datosRegistracion.getCorreo())).thenReturn(false);
-        when(this.servicioRegistracion.registrarUsuario(datosRegistracion.getCorreo(), datosRegistracion.getClave())).thenReturn(false);
-    }*/
-
-    private void dadoQueNoExisteElUsuario(DatosRegistracion datosRegistracion, Boolean retorno) {
-        when(this.servicioRegistracion.esValido(datosRegistracion.getEmail())).thenReturn(retorno);
-        when(this.servicioRegistracion.registrarUsuario(datosRegistracion.getEmail(), datosRegistracion.getPassword())).thenReturn(retorno);
-    }
-
-    private ModelAndView cuandoMeRegistro(DatosRegistracion datosRegistracion) {
-        return controladorRegistracion.registrarUsuario(datosRegistracion);
-    }
-
-    private void entoncesElRegistroEsExitoso(ModelAndView mav) {
-        assertThat(mav.getViewName()).isEqualTo("login");
-        assertThat(mav.getModel().get("msg")).isEqualTo("Registro exitoso");
     }
 
 }

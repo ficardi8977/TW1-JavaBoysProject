@@ -17,12 +17,16 @@
 
 <div class="container pt-4 pb-2 px-4 m-4 w-80 rounded-4 mx-auto" style="background-color: white">
     <form action="/alta-mascota" method="post" >
-        <h2 class="fw-normal mb-3 pb-3 text-center" style="letter-spacing: 1px;">Agregar Nueva Mascota</h2>
+        <div class="d-flex align-items-center mb-3 pb-1">
+            <img class="img-fluid img-thumbnail border-0 rounded mx-auto d-block" style="width: 20%; height: auto;" src="img/AMIPETS2.PNG" alt="AmiPets">
+        </div>
+
+        <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Agregar Nueva Mascota</h5>
         <div class="d-flex h6">
             <div class="col">
                 <div class="form-outline mb-4">
                     <label class="form-label" for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control form-control-lg" placeholder="Agregar nombre..." />
+                    <input type="text" name="nombre" id="nombre" class="form-control form-control-lg" placeholder="Agregar nombre..." required/>
                 </div>
 
                 <div class="form-outline mb-4">
@@ -57,30 +61,16 @@
             </div>
         </div>
 
-        <div>
-            <button type="button" class="btn btn-success" onclick="mostrarFormularioVacuna()">Agregar Vacunas</button>
-        </div>
+        <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">
+            <label for="address" class="m-0 mr-2">Ubicación</label>
+            <input type="text" class="form-control form-control-lg" id="address" placeholder="Introduce una ubicación o haz clic en el mapa"><br>
 
-        <div id="vacunas" style="display: none;padding:10px">
-            <h2>Vacunas</h2>
-                <div class="d-flex">
-                    <input type="text" id="nombre-vacuna" placeholder="Nombre de la vacuna">
-                    <button type="button" onclick="agregarVacuna()" class="p-0 m-0 ml-1" style="font-size:0px; background-color:white">
-                    <span class="material-symbols-outlined bg-success">
-                        add
-                    </span>
-                    </button>
-                </div>
-            <ul id="listaVacunas" class="mt-2 list-unstyled"></ul>
-        </div>
-
-        <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;">
-            <label>Ingrese su ubicacion</label>
-            <input type="hidden" id="latitud" name="latitud">
-            <input type="hidden" id="longitud" name="longitud">
+            <input type="hidden" id="latitud" name="latitud" value="-34.6157959">
+            <input type="hidden" id="longitud" name="longitud" value="-58.5158707">
         </div>
 
         <div id="map" style="width: 100%; height: 400px;"></div>
+
         <input type="hidden" value="${sessionScope.IDUSUARIO}" id="idUsuario" name="idUsuario">
 
         <div>
@@ -94,6 +84,8 @@
             <button type="submit" class="btn btn-dark btn-lg btn-block">Agregar Mascota</button>
         </div>
     </form>
+
+
 </div>
 
 
@@ -101,9 +93,10 @@
 <jsp:include page="foot.jsp">
     <jsp:param name="foot" value="foot" />
 </jsp:include>
+
+<script src="../js/mapa-registro.js"></script>
+<script src="../js/mascotas.js"></script>
 </body>
 </html>
 
-<script src="../js/mapa-registro.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
-<script src="../js/mascotas.js"></script>
+

@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.NoSeRegistroLaMascota;
 import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
@@ -15,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -87,29 +87,11 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
         this.sessionFactory.getCurrentSession().save(vacuna);
     }
 
-    public Boolean validarDatos(DatosMascotas datosMascotas){
-        Boolean datosValidos = false;
-        String nombre = datosMascotas.getNombre();
-        Long tipo = datosMascotas.getTipo();
-        String raza = datosMascotas.getRaza();
-
-        Boolean nombreValido = !nombre.equals("");
-        Boolean tipoValido = tipo != 0 && tipo != null;
-        Boolean razaValida = raza != null;
-
-        if(nombreValido && tipoValido && razaValida)
-            datosValidos = true;
-
-        return datosValidos;
-    }
-
     @Override
     public Boolean registrarMascota(DatosMascotas datosMascotas) {
 
         Boolean registrado = false;
 
-        TipoMascota tm = (TipoMascota) this.sessionFactory.getCurrentSession().createCriteria(TipoMascota.class)
-                .add(Restrictions.eq("id", datosMascotas.getTipo())).uniqueResult();
         Estado e = (Estado) this.sessionFactory.getCurrentSession().createCriteria(Estado.class)
                 .add(Restrictions.eq("id", datosMascotas.getEstado())).uniqueResult();
         TipoRaza razaExistente = (TipoRaza) this.sessionFactory.getCurrentSession().createCriteria(TipoRaza.class)
@@ -117,24 +99,21 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
         Mascota mascota = new Mascota();
         mascota.setNombre(datosMascotas.getNombre());
-        mascota.setDescripcion(datosMascotas.getDescripcion());
+        if(datosMascotas.getDescripcion()==""){
+            mascota.setDescripcion("Sin descripción");
+        } else {
+            mascota.setDescripcion(datosMascotas.getDescripcion());
+        }
         mascota.setEstado(e);
         mascota.setIdUsuario(datosMascotas.getIdUsuario());
         mascota.setLatitud(datosMascotas.getLatitud());
         mascota.setLongitud(datosMascotas.getLongitud());
+        mascota.setTipoRaza(razaExistente);
 
         if(datosMascotas.getImagen()!=null){
             mascota.setImagen(datosMascotas.getImagen());
         } else {
             mascota.setImagen("huellita.jpg");
-        }
-
-        if (razaExistente!=null){
-            mascota.setTipoRaza(razaExistente);
-        } else {
-            TipoRaza tr = new TipoRaza(datosMascotas.getRaza(), tm);
-            this.sessionFactory.getCurrentSession().save(tr);
-            mascota.setTipoRaza(tr);
         }
 
         this.sessionFactory.getCurrentSession().save(mascota);
@@ -144,6 +123,8 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
         if(buscarMascota!=null){
             registrado = true;
+        } else {
+            throw new NoSeRegistroLaMascota();
         }
 
         return registrado;
