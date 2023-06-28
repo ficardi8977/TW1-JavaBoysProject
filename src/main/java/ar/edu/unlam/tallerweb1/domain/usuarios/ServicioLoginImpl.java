@@ -36,21 +36,21 @@ public class ServicioLoginImpl implements ServicioLogin {
 	@Override
 	public String encriptarClave(String clave) {
 		MessageDigest md;
-		byte[] digest;
+		byte[] bytesClave;
 		// Se encripta la contraseña ingresada con el algoritmo MD5
 		try{
 			md = MessageDigest.getInstance("MD5");
-			digest = clave.getBytes("UTF-8");
+			bytesClave = clave.getBytes("UTF-8");
 		} catch (NoSuchAlgorithmException e) {
 			throw new AlgoritmoNoDisponible();
 		} catch (UnsupportedEncodingException e){
 			throw new CodificacionNoDisponible();
 		}
 
-		byte[] convertPass = md.digest(digest);
+		byte[] hashClave = md.digest(bytesClave);
 
 		StringBuffer sb = new StringBuffer();
-		for (final byte b : convertPass) {
+		for (final byte b : hashClave) {
 			sb.append(String.format("%02x", b));
 		}
 		String passwordCifrada = sb.toString().toUpperCase();
