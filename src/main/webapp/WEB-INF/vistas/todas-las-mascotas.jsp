@@ -14,7 +14,6 @@
 <jsp:include page="nav.jsp">
     <jsp:param name="nav" value="nav"/>
 </jsp:include>
-
 <div class="container">
     <h1>Bienvenidos a todas las mascotas</h1>
 </div>
@@ -36,22 +35,22 @@
             </div>
         </div>
         </c:forEach>
+    </div>
         <div id="mapa"></div>
         </c:if>
 
         <c:if test="${empty mascotas}">
         <h3><span>No hay Mascotas</span></h3>
         <br>
-        </c:if>
-
-
-        <jsp:include page="foot.jsp">
+        </c:if>                                             
+                                                            
+</div>                                                      
+        <jsp:include page="foot.jsp">                       
             <jsp:param name="foot" value="foot"/>
         </jsp:include>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
-        <script src="../js/mascotas-cercanas.js"></script>
         <script src="../js/mascotas.js"></script>
-
+        <script src="../js/mascotas-cercanas.js"></script>
         <link href="../css/mascotas.css" rel="stylesheet">
 
 </body>
