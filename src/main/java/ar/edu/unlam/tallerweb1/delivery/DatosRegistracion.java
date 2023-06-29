@@ -6,14 +6,23 @@ public class DatosRegistracion {
     private String nombre;
     private String apellido;
     private String telefono;
-
     private String latitud;
-
     private String longitud;
+    private String base64Image;
+
+    public String getBase64Image() {
+        return base64Image;
+    }
+
+    public void setImagenBase64(String base64Image) {
+        this.base64Image = base64Image;
+    }
 
     public String getLatitud() {
         return latitud;
     }
+
+
 
     public void setLatitud(String latitud) {
         this.latitud = latitud;

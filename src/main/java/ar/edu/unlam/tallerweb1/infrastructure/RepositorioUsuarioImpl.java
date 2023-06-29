@@ -9,8 +9,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 
 // implelemtacion del repositorio de usuarios, la anotacion @Repository indica a Spring que esta clase es un componente que debe
 // ser manejado por el framework, debe indicarse en applicationContext que busque en el paquete ar.edu.unlam.tallerweb1.dao
@@ -82,7 +83,8 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				datosRegistracion.getPassword(),
 				datosRegistracion.getTelefono(),
 				datosRegistracion.getLatitud(),
-				datosRegistracion.getLongitud()
+				datosRegistracion.getLongitud(),
+				datosRegistracion.getBase64Image()
 		);
 
 		TipoUsuario tu = new TipoUsuario(1l, "Masivo"); // mejorar

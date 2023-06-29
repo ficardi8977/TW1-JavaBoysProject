@@ -39,9 +39,17 @@ public class Usuario {
 	@JoinColumn(name = "IdTipoUsuario")
 	private TipoUsuario tipoUsuario;
 	private Boolean activo = false;
-
+	private String base64Image;
 	public TipoUsuario getTipoUsuario() {
 		return tipoUsuario;
+	}
+
+	public String getBase64Image() {
+		return base64Image;
+	}
+
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
 	}
 
 	public void setTipoUsuario(TipoUsuario tipoUsuario) {
@@ -51,7 +59,8 @@ public class Usuario {
 	public Usuario() {
 	}
 
-	public Usuario(String nombre, String apellido, String email, String password, String telefono, String latitud, String longitud){
+	public Usuario(String nombre, String apellido, String email, String password,
+				   String telefono, String latitud, String longitud, String base64Image){
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
@@ -59,6 +68,7 @@ public class Usuario {
 		this.telefono = telefono;
 		this.latitud = latitud;
 		this.longitud = longitud;
+		this.base64Image = base64Image;
 	}
 
 	public Long getId() {
