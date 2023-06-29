@@ -39,7 +39,7 @@
         </c:forEach>
            
     </div>
-        <div id="mapa"></div>
+
         </c:if>
 
         <c:if test="${empty mascotas}">
@@ -48,6 +48,7 @@
         </c:if>                                             
 
 </div>
+    <div id="mapa"></div>
         <jsp:include page="foot.jsp">                       
             <jsp:param name="foot" value="foot"/>
         </jsp:include>
