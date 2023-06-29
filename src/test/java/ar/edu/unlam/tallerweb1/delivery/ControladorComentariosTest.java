@@ -26,7 +26,7 @@ public class ControladorComentariosTest{
         DatosComentario request = new DatosComentario();
         request.setIdCuidado(1);
         this.dadoQueExisteCuidadoyUsuario();
-        var result = controladorComentarios.getComentariosDeCuidado(request);
+        var result = controladorComentarios.getComentariosDeCuidador(request);
         assertThat(result.getViewName()).isEqualTo("redirect:../cuidador/detalle?id=" + Integer.toString(request.getIdCuidado()));
         verify(servicioComentario, atLeastOnce()).guardar(request);
 
@@ -36,7 +36,7 @@ public class ControladorComentariosTest{
         DatosComentario request = new DatosComentario();
         this.dadoQueNoExisteUsuario();
         request.setIdCuidado(1);
-        var result = controladorComentarios.getComentariosDeCuidado(request);
+        var result = controladorComentarios.getComentariosDeCuidador(request);
         assertThat(result.getViewName()).isEqualTo("error");
         verify(servicioComentario, atLeastOnce()).guardar(request);
     }
@@ -45,7 +45,7 @@ public class ControladorComentariosTest{
         DatosComentario request = new DatosComentario();
         this.dadoQueNoExisteCuidado();
         request.setIdCuidado(1);
-        var result = controladorComentarios.getComentariosDeCuidado(request);
+        var result = controladorComentarios.getComentariosDeCuidador(request);
         assertThat(result.getViewName()).isEqualTo("error");
         verify(servicioComentario, atLeastOnce()).guardar(request);
     }

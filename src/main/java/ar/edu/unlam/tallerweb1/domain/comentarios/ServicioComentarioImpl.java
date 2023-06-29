@@ -36,6 +36,11 @@ public class ServicioComentarioImpl implements ServicioComentario
         comentario.setMensaje(request.getMensaje());
         comentario.setFecha(Date.from(Instant.now()));
 
+        if(request.getIdComentarioPadre() != null)
+        {
+            comentario.setComentarioPadre(this.repositorioComentario.obtener(request.getIdComentarioPadre()));
+        }
+
         var cuidado = this.servicioCuidado.ObtenerDetalle(request.getIdCuidado());
         if(cuidado == null)
         {

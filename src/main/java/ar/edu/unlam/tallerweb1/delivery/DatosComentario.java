@@ -9,6 +9,8 @@ public class DatosComentario {
 
     private Integer idMascota;
 
+    private Integer idComentarioPadre;
+
     public void setClasificacion(int clasificacion) {
         this.clasificacion = clasificacion;
     }
@@ -47,5 +49,13 @@ public class DatosComentario {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public Integer getIdComentarioPadre() {
+        return idComentarioPadre;
+    }
+
+    public void setIdComentarioPadre(Integer idComentarioPadre) {
+        this.idComentarioPadre = idComentarioPadre;
     }
 }

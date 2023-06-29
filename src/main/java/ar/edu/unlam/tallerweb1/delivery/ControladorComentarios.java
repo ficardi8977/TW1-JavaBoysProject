@@ -28,10 +28,26 @@ public class ControladorComentarios {
     }
 
     @RequestMapping(path = "/comentario/cuidador", method = RequestMethod.POST)
-    public ModelAndView getComentariosDeCuidado(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
+    public ModelAndView getComentariosDeCuidador(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
         try {
             this.servicioComentarios.guardar(datosComentario);
             return new ModelAndView("redirect:../cuidador/detalle?id=" + Integer.toString(datosComentario.getIdCuidado()));
+        } catch (UsuarioNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        } catch (CuidadoNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        }
+    }
+
+    @RequestMapping(path = "/comentario/refugio", method = RequestMethod.POST)
+    public ModelAndView getComentariosDeRefugio(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
+        try {
+            this.servicioComentarios.guardar(datosComentario);
+            return new ModelAndView("redirect:../refugio/detalle?id=" + Integer.toString(datosComentario.getIdCuidado()));
         } catch (UsuarioNoExistenteExcepcion e) {
             ModelMap model = new ModelMap();
             model.put("msg", e.getMessage());

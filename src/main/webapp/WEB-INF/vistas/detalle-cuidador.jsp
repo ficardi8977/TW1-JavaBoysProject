@@ -85,20 +85,12 @@
                                 <p class="mt-3 mb-4 pb-2">
                                     ${comentario.mensaje}
                                 </p>
-                                                                <!--  <div class="small d-flex justify-content-start">
-                                                                    <a href="#!" class="d-flex align-items-center me-3">
-                                                                        <i class="far fa-thumbs-up me-2"></i>
-                                                                        <p class="mb-0">Like</p>
-                                                                    </a>
-                                                                    <a href="#!" class="d-flex align-items-center me-3">
-                                                                        <i class="far fa-comment-dots me-2"></i>
-                                                                        <p class="mb-0">Comment</p>
-                                                                    </a>
-                                                                    <a href="#!" class="d-flex align-items-center me-3">
-                                                                        <i class="fas fa-share me-2"></i>
-                                                                        <p class="mb-0">Share</p>
-                                                                    </a>
-                                                                </div>-->
+
+                                <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${cuidado.id})" class="d-flex align-items-center me-3">
+                                    <i class="far fa-comment-dots me-2"></i>
+                                    <p class="mb-0">comentar</p>
+                                </a>
+                                <div id="contenedorSubcomentarios${comentario.id}"></div>
                             </div>
                             </c:forEach>
                             <c:choose>
@@ -167,6 +159,7 @@
         <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>-->
          <script src="../js/detalle-mapa.js"></script>
         <link href="../css/comentarios.css" rel="stylesheet" >
+        <script src="../js/comentarios.js"></script>
          <!-- FOOTER -->
 </div>
 
