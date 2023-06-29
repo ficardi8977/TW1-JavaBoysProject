@@ -38,9 +38,15 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
 
     @Override
     public Cuidado BuscarDetalleRefugio(long id) {
-        return (Cuidado)this.sessionFactory.getCurrentSession()
-                .createCriteria(Cuidado.class)
-                .add(Restrictions.eq("id",id)).uniqueResult();
+        var cuidado =  (Cuidado) this.sessionFactory.getCurrentSession().createCriteria(Cuidado.class)
+                .add(Restrictions.eq("id", id)).uniqueResult();
+
+        if(cuidado != null) {
+            var comentarios = cuidado.getComentarios();
+            Hibernate.initialize(comentarios); // sin esta linea se cierra la sesion antes de levantar los comentarios
+            cuidado.setComentarios(comentarios);
+        }
+        return cuidado;
     }
 
     @Override

@@ -47,7 +47,7 @@ public class ControladorComentarios {
     public ModelAndView getComentariosDeRefugio(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
         try {
             this.servicioComentarios.guardar(datosComentario);
-            return new ModelAndView("redirect:../refugio/detalle?id=" + Integer.toString(datosComentario.getIdCuidado()));
+            return new ModelAndView("redirect:../refugio/" + Integer.toString(datosComentario.getIdCuidado()));
         } catch (UsuarioNoExistenteExcepcion e) {
             ModelMap model = new ModelMap();
             model.put("msg", e.getMessage());

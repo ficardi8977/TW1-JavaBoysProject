@@ -56,11 +56,11 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-12 col-lg-10 col-xl-8">
                 <div class="card">
-                    <c:if test="${empty cuidado.comentarios}">
+                    <c:if test="${empty refugio.comentarios}">
                         <h3><span>No hay comentarios</span></h3>
                         <br>
                     </c:if>
-                    <c:forEach  var="comentario" items="${cuidado.comentarios}">
+                    <c:forEach  var="comentario" items="${refugio.comentarios}">
                         <div class="card-body">
                             <div class="d-flex flex-start align-items-center">
                                 <c:choose>
@@ -142,7 +142,7 @@
                                             </div>
                                             <textarea class="form-control" id="mensaje" name="mensaje" value = "mensaje" rows="4" style="background: #fff;"></textarea>
                                             <input type="hidden" name="idUsuario" value="${sessionScope.IDUSUARIO}">
-                                            <input type="hidden" name="idCuidado" value="${cuidado.id}">
+                                            <input type="hidden" name="idCuidado" value="${refugio.id}">
                                             <label class="form-label" for="mensaje">Mensaje</label>
                                             <div class="float-end mt-2 pt-1">
                                                 <input type=submit class="btn btn-primary btn-sm">
@@ -162,7 +162,7 @@
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />
 </jsp:include>
-<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
 <script src="../js/detalle-refugio.js"></script>
 <link href="../css/comentarios.css" rel="stylesheet" >
 </body>

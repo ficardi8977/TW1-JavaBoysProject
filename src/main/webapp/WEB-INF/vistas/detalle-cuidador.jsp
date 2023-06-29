@@ -156,7 +156,7 @@
     <jsp:include page="foot.jsp">
         <jsp:param name="foot" value="foot"/>
     </jsp:include>
-        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
          <script src="../js/detalle-mapa.js"></script>
         <link href="../css/comentarios.css" rel="stylesheet" >
         <script src="../js/comentarios.js"></script>
