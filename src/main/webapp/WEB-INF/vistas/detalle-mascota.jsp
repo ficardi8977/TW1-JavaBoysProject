@@ -58,7 +58,7 @@
   <script src="../js/detalle-mapa.js"></script>
   <!-- FOOTER -->
 </div>
+  </div>
 
 </body>
-
 </html>

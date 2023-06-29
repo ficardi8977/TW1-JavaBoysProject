@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -20,6 +18,7 @@ import java.util.List;
 public class ControladorMascotas {
 
     private ServicioMascota servicioMascota;
+
     @Autowired
     public ControladorMascotas(ServicioMascota servicioMascota) {
         this.servicioMascota = servicioMascota;
@@ -87,6 +86,30 @@ public class ControladorMascotas {
         model.put("mascotas", mascotas);
         return new ModelAndView("mis-mascotas", model);
     }
+
+    @RequestMapping(value = "/mascotas/cercanas", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Mascota>> buscarMascotasCercanas(@RequestParam("latitud") String latitud,
+                                                                           @RequestParam("longitud") String longitud,
+                                                                           @RequestParam("radio") double radio,
+                                                                           HttpSession session) {
+        DatosMascotasFiltradas request = new DatosMascotasFiltradas();
+        DatosUbicacion ubicacion = new DatosUbicacion();
+        ubicacion.setLatitud(latitud);
+        ubicacion.setLongitud(longitud);
+        ubicacion.setRadio(radio);
+
+        request.setUbicacion(ubicacion);
+
+        // Guardar los datos en la sesión
+        session.setAttribute("ubicacion", request.getUbicacion());
+        session.setAttribute("radio", request.getUbicacion().getRadio());
+
+        List<Mascota> response = this.servicioMascota.obtenerMascotasCercanas(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
 
     @RequestMapping(path = "/registrar-mascota")
     public ModelAndView registrarMascota() {

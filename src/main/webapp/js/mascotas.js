@@ -1,5 +1,11 @@
 var submenuSeleccionadoGlobal = 0;
-
+var url =
+    "/mascotas/cercanas?latitud=" +
+    -34.73449912021523 +
+    "&longitud=" +
+    -58.71841233313527+
+    "&radio=" +
+    4.5;
 function actualizarSubmenuSeleccionado(opcion) {
     submenuSeleccionadoGlobal = opcion;
 }
@@ -95,7 +101,10 @@ function cargarHomeConFiltros(idTipoMascota, idEstado) {
                 contenidoHtml += cardHtml;
             });
             $("#contenido-home").html(contenidoHtml + ' </div>');
+            enviarSolicitudAlControlador(url, -34.73449912021523, -58.71841233313527, 4.5);
+
         },
+
         error: function (error) {
             console.log(error);
         }

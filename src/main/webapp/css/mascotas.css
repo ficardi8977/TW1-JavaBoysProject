@@ -33,3 +33,8 @@
         width: 30%; /* Ancho al 50% en dispositivos de escritorio */
     }
 }
+
+#mapa {
+    width: 100%;
+    height: 600px; /* Puedes ajustar la altura según tus necesidades */
+}
