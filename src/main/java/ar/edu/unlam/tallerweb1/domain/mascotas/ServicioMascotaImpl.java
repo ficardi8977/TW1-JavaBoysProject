@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.domain.mascotas;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirRaza;
 import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirTipo;
 import ar.edu.unlam.tallerweb1.domain.excepciones.NombreInvalido;
