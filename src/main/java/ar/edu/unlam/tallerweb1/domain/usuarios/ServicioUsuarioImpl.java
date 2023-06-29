@@ -18,12 +18,12 @@ import java.security.NoSuchAlgorithmException;
 // en hibernateCOntext.xml. De esta manera todos los metodos de cualquier dao invocados dentro de un servicio se ejecutan en la misma transaccion
 @Service("servicioLogin")
 @Transactional
-public class ServicioLoginImpl implements ServicioLogin {
+public class ServicioUsuarioImpl implements ServicioUsuario {
 
 	private RepositorioUsuario servicioLoginDao;
 
 	@Autowired
-	public ServicioLoginImpl(RepositorioUsuario servicioLoginDao){
+	public ServicioUsuarioImpl(RepositorioUsuario servicioLoginDao){
 		this.servicioLoginDao = servicioLoginDao;
 	}
 
@@ -55,6 +55,9 @@ public class ServicioLoginImpl implements ServicioLogin {
 		}
 		String passwordCifrada = sb.toString().toUpperCase();
 		return passwordCifrada;
+	}
+	public Usuario consultarUsuario (int id) {
+		return servicioLoginDao.buscarUsuario(id);
 	}
 
 }

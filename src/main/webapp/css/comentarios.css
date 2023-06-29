@@ -1,0 +1,24 @@
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    color: grey;
+}
+.puntaje{
+    color: orange;
+}
+
+.clasificacion {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+    color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+    color: orange;
+}
