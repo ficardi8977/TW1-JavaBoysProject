@@ -2,6 +2,15 @@ package ar.edu.unlam.tallerweb1.delivery;
 
 public class DatosMascotasFiltradas {
     private long idTipoMascota, idEstado;
+    private DatosUbicacion ubicacion;
+
+    public DatosUbicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(DatosUbicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
 
     public DatosMascotasFiltradas(){}
     public DatosMascotasFiltradas(long idTipoMascota, long idEstado){
@@ -9,6 +18,7 @@ public class DatosMascotasFiltradas {
         this.idTipoMascota = idTipoMascota;
         this.idEstado = idEstado;
     }
+
 
     public void setIdEstado(long idEstado) {
         this.idEstado = idEstado;
@@ -25,4 +35,6 @@ public class DatosMascotasFiltradas {
     public long getIdTipoMascota() {
         return idTipoMascota;
     }
+
+
 }

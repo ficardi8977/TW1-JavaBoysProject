@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.domain;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.domain.estado.ServicioEstado;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascotaImpl;
