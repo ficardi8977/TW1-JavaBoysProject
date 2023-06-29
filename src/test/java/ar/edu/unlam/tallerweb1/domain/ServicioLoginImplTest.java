@@ -7,6 +7,8 @@ import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 
+import static ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuarioImplTest.CLAVE;
+import static ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuarioImplTest.CORREO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -16,11 +18,15 @@ public class ServicioLoginImplTest {
     private ServicioUsuario servicioLogin;
 
     private RepositorioUsuario repositorioUsuario;
+
+    private final String CORREO_INEXISTENTE = "miMail2@gmail.com";
+    private final String CLAVE = "1234";
+
     @Before
     public void init(){
         this.repositorioUsuario = mock(RepositorioUsuario.class);
         this.servicioLogin = new ServicioUsuarioImpl(this.repositorioUsuario);
-        this.servicioLogin = new ServicioLoginImpl(this.repositorioUsuario);
+        this.servicioLogin = new ServicioUsuarioImpl(this.repositorioUsuario);
         String claveNueva = servicioLogin.encriptarClave(CLAVE);
         Usuario usuarioClave = new Usuario();
         usuarioClave.setPassword(claveNueva);

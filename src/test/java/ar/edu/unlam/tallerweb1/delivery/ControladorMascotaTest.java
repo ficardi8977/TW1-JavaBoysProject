@@ -33,7 +33,7 @@ public class ControladorMascotaTest {
         controladorMascotas = new ControladorMascotas(this.servicioMascota);
         this.datosInvalidos = new DatosMascotas();
         this.datos = new DatosMascotas();
-        datos.setIdUsuario(1l);
+        datos.setIdUsuario(1);
         when(this.servicioMascota.validarDatos(datos)).thenReturn(true);
         when(this.servicioMascota.registrarMascota(datos)).thenReturn(true);
         when(this.servicioMascota.validarDatos(datosInvalidos)).thenReturn(false);
@@ -161,7 +161,7 @@ public class ControladorMascotaTest {
     }
 
 
-    private void dadoQueExisteMascota(Long idUsuario) {
+    private void dadoQueExisteMascota(int idUsuario) {
         List<Mascota> mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
         mascota.setIdUsuario(idUsuario);

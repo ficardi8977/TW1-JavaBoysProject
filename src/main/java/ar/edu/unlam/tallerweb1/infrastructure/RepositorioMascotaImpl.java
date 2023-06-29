@@ -129,7 +129,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
             mascota.setDescripcion(datosMascotas.getDescripcion());
         }
         mascota.setEstado(e);
-        mascota.setIdUsuario(datosMascotas.getIdUsuario());
+        mascota.setIdUsuario((int)datosMascotas.getIdUsuario());
         mascota.setLatitud(datosMascotas.getLatitud());
         mascota.setLongitud(datosMascotas.getLongitud());
         mascota.setTipoRaza(razaExistente);

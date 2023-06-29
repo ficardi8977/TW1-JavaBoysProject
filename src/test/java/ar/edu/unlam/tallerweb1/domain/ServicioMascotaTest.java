@@ -29,8 +29,8 @@ public class ServicioMascotaTest {
     private List<Mascota> mascotas;
     private DatosMascotas formulario;
 
-    private Long idUsuarioExiste = 1l;
-    private Long idUsuarioNoExiste = 2l;
+    private int idUsuarioExiste = 1;
+    private int idUsuarioNoExiste = 2;
 
 
     @Before
@@ -39,6 +39,7 @@ public class ServicioMascotaTest {
         this.servicioMascota = new ServicioMascotaImpl(this.repositorioMascota);
         this.mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
+        mascota.setVacunas(new Vacunacion());
         Mascota mascota2 = new Mascota();
         mascotas.add(mascota);
         mascotas.add(mascota2);
@@ -66,7 +67,7 @@ public class ServicioMascotaTest {
 
     @Test
     public void NoBuscarMascotasPorIdUsuario(){
-        int idUsuario = 2;
+        int idUsuario = 5;
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         assertThat(mascotas.size()).isEqualTo(0);
     }
@@ -96,6 +97,9 @@ public class ServicioMascotaTest {
         Boolean registroLaMascota = this.servicioMascota.registrarMascota(formulario);
         entoncesSeRegistra(registroLaMascota);
     }
+    private void entoncesSeRegistra(Boolean registroLaMascota) {
+        assertThat(registroLaMascota).isTrue();
+    }
 
     @Test (expected = ElegirTipo.class)
     public void queNoMeRegistreUnaMascotaTipoInvalido(){
@@ -109,5 +113,19 @@ public class ServicioMascotaTest {
         formulario.setRaza(null);
         Boolean registroLaMascota = this.servicioMascota.registrarMascota(formulario);
         entoncesSeRegistra(registroLaMascota);
+    }
+
+    private DatosMascotas seLlenaUnForm() {
+        DatosMascotas datos = new DatosMascotas();
+        datos.setNombre("Pancho");
+        datos.setRaza("Labrador");
+        datos.setDescripcion("");
+        datos.setTipo(1l);
+        datos.setEstado(1l);
+        datos.setIdUsuario(1);
+        datos.setLatitud("0");
+        datos.setLongitud("0");
+
+        return datos;
     }
 }
