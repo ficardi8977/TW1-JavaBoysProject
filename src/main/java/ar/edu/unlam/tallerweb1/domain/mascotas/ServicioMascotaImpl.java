@@ -89,6 +89,12 @@ public class ServicioMascotaImpl implements ServicioMascota {
         ubicacion = request.getUbicacion();
         List<Mascota> mascotasFiltradas = obtenerMascotasPorEstados(estados);
 
+        for (Mascota mascota : mascotasFiltradas) {
+            mascota.setComentarios(null);
+        }
+
+
+
         if (ubicacion != null) {
             double latitud = Double.parseDouble(ubicacion.getLatitud());
             double longitud = Double.parseDouble(ubicacion.getLongitud());
