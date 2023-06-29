@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
+import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
+import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -30,10 +32,33 @@ public class Usuario {
 	private String latitud;
 
 	private String longitud;
+
 	private String rol;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "IdTipoUsuario")
+	private TipoUsuario tipoUsuario;
 	private Boolean activo = false;
 
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
 	public Usuario() {
+	}
+
+	public Usuario(String nombre, String apellido, String email, String password, String telefono, String latitud, String longitud){
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.password = password;
+		this.telefono = telefono;
+		this.latitud = latitud;
+		this.longitud = longitud;
 	}
 
 	public Long getId() {
@@ -60,13 +85,7 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public String getRol() {
-		return rol;
-	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
-	}
 
 	public Boolean getActivo() {
 		return activo;
@@ -122,6 +141,14 @@ public class Usuario {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
 	}
 }
 

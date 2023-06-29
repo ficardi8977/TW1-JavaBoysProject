@@ -1,6 +1,11 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.domain.estado.Estado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.NoSeRegistroLaMascota;
+import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
+import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -11,7 +16,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -81,5 +85,49 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
     public void guardarVacuna(Vacunacion vacuna) {
         this.sessionFactory.getCurrentSession().save(vacuna);
+    }
+
+    @Override
+    public Boolean registrarMascota(DatosMascotas datosMascotas) {
+
+        Boolean registrado = false;
+
+        Estado e = (Estado) this.sessionFactory.getCurrentSession().createCriteria(Estado.class)
+                .add(Restrictions.eq("id", datosMascotas.getEstado())).uniqueResult();
+        TipoRaza razaExistente = (TipoRaza) this.sessionFactory.getCurrentSession().createCriteria(TipoRaza.class)
+                .add(Restrictions.eq("nombre", datosMascotas.getRaza())).uniqueResult();
+
+        Mascota mascota = new Mascota();
+        mascota.setNombre(datosMascotas.getNombre());
+        if(datosMascotas.getDescripcion()==""){
+            mascota.setDescripcion("Sin descripción");
+        } else {
+            mascota.setDescripcion(datosMascotas.getDescripcion());
+        }
+        mascota.setEstado(e);
+        mascota.setIdUsuario(datosMascotas.getIdUsuario());
+        mascota.setLatitud(datosMascotas.getLatitud());
+        mascota.setLongitud(datosMascotas.getLongitud());
+        mascota.setTipoRaza(razaExistente);
+
+        if(datosMascotas.getImagen()!=null){
+            mascota.setImagen(datosMascotas.getImagen());
+        } else {
+            mascota.setImagen("huellita.jpg");
+        }
+
+        this.sessionFactory.getCurrentSession().save(mascota);
+
+        Mascota buscarMascota = (Mascota) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", mascota.getId())).uniqueResult();
+
+        if(buscarMascota!=null){
+            registrado = true;
+        } else {
+            throw new NoSeRegistroLaMascota();
+        }
+
+        return registrado;
+
     }
 }

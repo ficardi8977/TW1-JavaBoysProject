@@ -15,11 +15,25 @@
 </jsp:include>
 
 <div id="contenido-home">
-  <h1 style="text-align: center">Mis Mascotas</h1>
+  <div style="display:flex;justify-content: space-between;align-items: center;margin: 10px auto 10px auto;width: 90%;">
+        <h1 style="text-align: center; margin:0px;">Mis Mascotas</h1>
+
+        <h4 style="margin:0px;">
+          <a href="/registrar-mascota" class="btn btn-lg btn-success">Agregar Mascota</a>
+        </h4>
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <c:if test="${not empty error}">
+      <h5 class="text-success m-0">${error}</h5>
+      <br>
+    </c:if>
+  </div>
+
   <c:if test="${not empty mascotas}">
     <div class="cards-container" style="display:block">
       <c:forEach  var="mascota" items="${mascotas}">
-        <div class="card mis-mascotas" style="width: 95%;">
+        <div class="card mis-mascotas" style="width: 95%; margin: 10px auto 10px auto;">
           <div class="card-body">
             <img src="../img/${mascota.imagen}" class="card-img-top" alt="Mascota....">
           </div>
@@ -30,6 +44,7 @@
             <c:if test="${not empty mascota.fechaAdopcion}">
               <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
             </c:if>
+            <p class="card-text">${mascota.descripcion}</p>
           </div>
           <div class="card-body">
             <h2 style="text-align: center">Vacunacion</h2>
@@ -48,6 +63,11 @@
     </div>
   </c:if>
 </div>
+
+<c:if test="${empty mascotas}">
+  <h3><span>No hay Mascotas</span></h3>
+  <br>
+</c:if>
 
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />
