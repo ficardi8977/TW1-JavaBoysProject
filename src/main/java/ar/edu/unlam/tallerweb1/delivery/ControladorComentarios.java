@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.comentarios.ServicioComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.mascotas.EncontrarMascotaExcepcion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.CuidadoNoExistenteExcepcion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoExistenteExcepcion;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
@@ -23,7 +24,7 @@ public class ControladorComentarios {
     private ServicioComentario servicioComentarios;
 
     @Autowired
-    public ControladorComentarios(ServicioComentario servicioComentarios) {
+    public ControladorComentarios(ServicioComentario servicioComentarios){
         this.servicioComentarios = servicioComentarios;
     }
 
@@ -37,6 +38,19 @@ public class ControladorComentarios {
             model.put("msg", e.getMessage());
             return new ModelAndView("error",model);
         } catch (CuidadoNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        }
+    }
+
+    @RequestMapping(path = "/comentario/mascota",method = RequestMethod.POST)
+    public ModelAndView postComentariosMascotas(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
+        try {
+            this.servicioComentarios.guardarMascotas(datosComentario);
+            return new ModelAndView("redirect:../mascota/detalle?id=" + Integer.toString(datosComentario.getIdMascota()));
+        }
+        catch (EncontrarMascotaExcepcion e) {
             ModelMap model = new ModelMap();
             model.put("msg", e.getMessage());
             return new ModelAndView("error",model);

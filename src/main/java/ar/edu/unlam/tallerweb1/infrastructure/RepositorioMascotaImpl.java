@@ -10,6 +10,7 @@ import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.hibernate.criterion.Disjunction;
@@ -41,9 +42,15 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
     @Override
     public Mascota BuscarDetalle(long id) {
-        return (Mascota)this.sessionFactory.getCurrentSession()
-                .createCriteria(Mascota.class)
+        var  mascota=  (Mascota)this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .add(Restrictions.eq("id", id)).uniqueResult();
+
+        if(mascota != null) {
+            var comentarios = mascota.getComentarios();
+            Hibernate.initialize(comentarios); // inicializa los comentarios , al mantener la seccion
+            mascota.setComentarios(comentarios);
+        }
+        return mascota;
     }
 
     @Override
