@@ -29,8 +29,8 @@ public class ServicioMascotaTest {
     private List<Mascota> mascotas;
     private DatosMascotas formulario;
 
-    private Long idUsuarioExiste = 1l;
-    private Long idUsuarioNoExiste = 2l;
+    private Long idUsuarioConMascotas = 1l;
+    private Long idUsuarioSinMascotas = 2l;
 
 
     @Before
@@ -43,20 +43,20 @@ public class ServicioMascotaTest {
         mascotas.add(mascota);
         mascotas.add(mascota2);
         formulario = seLlenaUnForm();
-        when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuarioExiste)).thenReturn(mascotas);
-        when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuarioNoExiste)).thenReturn(null);
+        when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuarioConMascotas)).thenReturn(mascotas);
+        when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuarioSinMascotas)).thenReturn(null);
         when(this.repositorioMascota.registrarMascota(formulario)).thenReturn(true);
     }
 
     @Test
     public void buscarMascotasPorIdUsuario(){
-        List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuarioExiste);
+        List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuarioConMascotas);
         assertThat(mascotas.size()).isEqualTo(2);
     }
 
     @Test
     public void noMeTraeMascotasSiElUsuarioNoTieneMascotas(){
-        List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuarioNoExiste);
+        List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuarioSinMascotas);
         assertThat(mascotas).isNull();
     }
 

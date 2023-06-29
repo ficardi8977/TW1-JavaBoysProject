@@ -24,7 +24,6 @@ public class RepositorioUsuarioImplTest extends SpringTest {
     @Transactional
     @Rollback
     public void queSePuedaRegistrarUnUsuario() {
-
         DatosRegistracion datos = seLlenaUnFormulario();
 
         registroAlUsuario(datos);
@@ -33,29 +32,43 @@ public class RepositorioUsuarioImplTest extends SpringTest {
         entoncesSeRegistro(nuevoUsuario);
     }
 
-    @Test (expected = EmailYaRegistrado.class)
+    @Test
     @Transactional
     @Rollback
-    public void queNoPuedaRegistrarUnCorreoYaExistenteExcepcion() {
+    public void seBuscaUnUsuarioNoRegistrado() {
+        Usuario noRegistrado = new Usuario();
 
-        dadoQueYaExisteUnEmail();
-        DatosRegistracion datos = seLlenaUnFormularioRepetido();
+        Usuario encontrado = loBusco(noRegistrado);
+
+        entoncesNoLoEncuentro(encontrado);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void seBuscaUnUsuarioRegistrado() {
+        DatosRegistracion datos = seLlenaUnFormulario();
+        Usuario usuarioRegistrado = new Usuario();
+        usuarioRegistrado.setEmail(datos.getEmail());
 
         registroAlUsuario(datos);
+        Usuario encontrado = loBusco(usuarioRegistrado);
+
+        entoncesLoEncuentro(encontrado);
     }
 
-    private DatosRegistracion seLlenaUnFormularioRepetido() {
-        DatosRegistracion datosForm = new DatosRegistracion();
-        datosForm.setNombre("Tomas");
-        datosForm.setApellido("Magliano");
-        datosForm.setEmail("tomas@gmail.com");
-        datosForm.setPassword(CLAVE);
-        datosForm.setTelefono("112");
-        datosForm.setLatitud("-34.6157959");
-        datosForm.setLongitud("-58.5158707");
-
-        return datosForm;
+    private void entoncesLoEncuentro(Usuario encontrado) {
+        assertThat(encontrado).isNotNull();
     }
+
+    private void entoncesNoLoEncuentro(Usuario encontrado) {
+        assertThat(encontrado).isNull();
+    }
+
+    private Usuario loBusco(Usuario noRegistrado) {
+        return this.repositorioUsuario.buscar(noRegistrado.getEmail());
+    }
+
 
     private void registroAlUsuario(DatosRegistracion datos) {
         this.repositorioUsuario.registroUsuario(datos);
@@ -82,11 +95,6 @@ public class RepositorioUsuarioImplTest extends SpringTest {
         datosForm.setLongitud("-58.5158707");
 
         return datosForm;
-    }
-
-    private void dadoQueYaExisteUnEmail() {
-        DatosRegistracion datos = seLlenaUnFormularioRepetido();
-        registroAlUsuario(datos);
     }
 
 }

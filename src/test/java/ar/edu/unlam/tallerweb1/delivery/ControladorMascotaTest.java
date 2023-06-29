@@ -26,12 +26,14 @@ public class ControladorMascotaTest {
     private ServicioMascota servicioMascota;
     private DatosMascotas datos;
     private DatosMascotas datosInvalidos;
+    private RedirectAttributes redirectAttributes;
 
     @Before
     public void init(){
         this.servicioMascota = mock(ServicioMascota.class);
         controladorMascotas = new ControladorMascotas(this.servicioMascota);
         this.datosInvalidos = new DatosMascotas();
+        this.redirectAttributes = new RedirectAttributesModelMap();
         this.datos = new DatosMascotas();
         datos.setIdUsuario(1l);
         when(this.servicioMascota.validarDatos(datos)).thenReturn(true);
@@ -120,8 +122,6 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoRegistroMiMascotaMeDevuelveALaVistaMisMascotas() {
-        RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
-
         ModelAndView mav = registroMiMascota(datos, redirectAttributes);
         Object view = mav.getView();
         String url = ((RedirectView) view).getUrl();
@@ -132,8 +132,6 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoRegistroMiMascotaMeDevuelveUnMensajeExitoso() {
-        RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
-
         ModelAndView mav = registroMiMascota(datos, redirectAttributes);
         Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
         String mensaje = (String) flashAttributes.get("error");
@@ -143,8 +141,6 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoNoLogroRegistrarMiMascotaMeDevuelveAlFormConMensaje() {
-        RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
-
         ModelAndView mav = registroMiMascota(datosInvalidos, redirectAttributes);
 
         assertThat(mav.getViewName()).isEqualTo("registrar-mascota");

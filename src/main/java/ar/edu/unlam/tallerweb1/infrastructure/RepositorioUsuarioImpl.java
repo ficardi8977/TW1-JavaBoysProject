@@ -53,12 +53,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	@Override
 	public Usuario buscar(String email) {
 		Usuario user = null;
+
 		try{
-			user = (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-					.add(Restrictions.eq("email", email))
-					.uniqueResult();
+		user = (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", email))
+				.uniqueResult();
 		} catch (Exception e) {
-			throw new EmailYaRegistrado();
+			throw new UsuarioNoEncontrado();
 		}
 
 		return user;

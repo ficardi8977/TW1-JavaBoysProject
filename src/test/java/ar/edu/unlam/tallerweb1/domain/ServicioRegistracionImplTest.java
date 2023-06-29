@@ -56,6 +56,20 @@ public class ServicioRegistracionImplTest {
         entoncesSeRegistro(registrado);
     }
 
+    @Test (expected = PasswordInvalida.class)
+    public void queNoSePuedaRegistrarUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        seValidanLosDatos(datos);
+        datos.setPassword(CLAVE_INVALIDA);
+        loRegistro(datos);
+    }
+
+    @Test
+    public void queSeEncripteLaClave() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        seValidanLosDatos(datos);
+        String nuevaClave = encriptoLaClave(datos.getPassword());
+        entoncesSeEncripto(datos.getPassword(),  nuevaClave);
+    }
+
     @Test (expected = EmailInvalido.class)
     public void queNoPermitaDatosInvalidosExcepcionEmail(){
         datos.setEmail(CORREO_INVALIDO);
@@ -86,6 +100,14 @@ public class ServicioRegistracionImplTest {
 
     private Boolean loRegistro(DatosRegistracion datos) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         return this.servicioRegistracion.registroUsuario(datos);
+    }
+
+    private void entoncesSeEncripto(String password, String nuevaClave) {
+        assertThat(password).isNotEqualTo(nuevaClave);
+    }
+
+    private String encriptoLaClave(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        return this.servicioRegistracion.encriptarClave(password);
     }
 
     private void entoncesSonValidos(Boolean datosValidos) {
