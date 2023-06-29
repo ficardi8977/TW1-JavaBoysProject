@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.EmailYaRegistrado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoEncontrado;
 import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Test;
@@ -18,6 +19,8 @@ public class RepositorioUsuarioImplTest extends SpringTest {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     public static final String CORREO = "magliano@gmail.com";
+
+    public static final String CORREO_NO_REGISTRADO = "magliano2@gmail.com";
     public static final String CLAVE = "Admin123";
 
     @Test
@@ -32,11 +35,12 @@ public class RepositorioUsuarioImplTest extends SpringTest {
         entoncesSeRegistro(nuevoUsuario);
     }
 
-    @Test
+    @Test (expected = UsuarioNoEncontrado.class)
     @Transactional
     @Rollback
     public void seBuscaUnUsuarioNoRegistrado() {
         Usuario noRegistrado = new Usuario();
+        noRegistrado.setEmail(CORREO_NO_REGISTRADO);
 
         Usuario encontrado = loBusco(noRegistrado);
 

@@ -54,13 +54,12 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	public Usuario buscar(String email) {
 		Usuario user = null;
 
-		try{
 		user = (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
 				.add(Restrictions.eq("email", email))
 				.uniqueResult();
-		} catch (Exception e) {
+
+		if(user==null)
 			throw new UsuarioNoEncontrado();
-		}
 
 		return user;
 	}

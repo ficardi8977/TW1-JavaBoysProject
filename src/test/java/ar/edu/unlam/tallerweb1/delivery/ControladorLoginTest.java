@@ -78,7 +78,7 @@ public class ControladorLoginTest {
 
     private void ValidoLoginNoExitoso(ModelAndView modelAndView) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         assertThat(modelAndView.getViewName()).isEqualTo("login");
-        assertThat(modelAndView.getModel().values().stream().findFirst().get()).isEqualTo("Correo o clave incorrectos");
+        assertThat(modelAndView.getModel().values().stream().findFirst().get()).isEqualTo("No se encontró al usuario");
         verify(servicioLogin, atLeastOnce()).consultarUsuario("miMail@gmail.com","1234");
     }
 
