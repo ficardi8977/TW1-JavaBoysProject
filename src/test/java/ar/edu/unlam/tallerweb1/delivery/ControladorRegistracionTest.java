@@ -32,7 +32,7 @@ ControladorRegistracionTest {
     private RedirectAttributes redirectAttributes;
 
     @Before
-    public void init() {
+    public void init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.servicioRegistracion = mock(ServicioRegistracionImpl.class);
         this.controladorRegistracion = new ControladorRegistracion(servicioRegistracion);
         this.redirectAttributes = new RedirectAttributesModelMap();

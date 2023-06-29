@@ -72,6 +72,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	@Override
 	public Boolean registroUsuario(DatosRegistracion datosRegistracion) {
 
+		TipoUsuario tu = (TipoUsuario) this.sessionFactory.getCurrentSession().createCriteria(TipoUsuario.class)
+				.add(Restrictions.eq("id", 1l)).uniqueResult();
+
 		// Se registra el usuario con los datos ingresados
 		Boolean registrado = false;
 
@@ -85,9 +88,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				datosRegistracion.getLongitud()
 		);
 
-		// El tipo de usuario es de tipo masivo
-		TipoUsuario tu = new TipoUsuario(1l, "Masivo");
-		this.sessionFactory.getCurrentSession().save(tu);
 		user.setTipoUsuario(tu);
 
 		// Se guarda el objeto en la sesión

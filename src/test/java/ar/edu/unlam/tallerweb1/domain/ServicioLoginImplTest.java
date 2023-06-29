@@ -23,7 +23,7 @@ public class ServicioLoginImplTest {
     private final String CORREO_INEXISTENTE = "miMail2@gmail.com";
     private final String CLAVE = "1234";
     @Before
-    public void init(){
+    public void init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.repositorioUsuario = mock(RepositorioUsuario.class);
         this.servicioLogin = new ServicioLoginImpl(this.repositorioUsuario);
         String claveNueva = servicioLogin.encriptarClave(CLAVE);
@@ -33,19 +33,19 @@ public class ServicioLoginImplTest {
         when(this.repositorioUsuario.buscarUsuario(CORREO_INEXISTENTE,claveNueva)).thenReturn(null);
     }
     @Test
-    public void obtenerUsuarioLogin() {
+    public void obtenerUsuarioLogin() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Usuario user = consultoElUsuario(CORREO, CLAVE);
         this.validarUsuarioExiste(user);
     }
 
     @Test
-    public void noObtenerUsuarioLogin(){
+    public void noObtenerUsuarioLogin() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Usuario user = consultoElUsuario(CORREO_INEXISTENTE, CLAVE);
         this.validarUsuarioNoExiste(user);
     }
 
     @Test
-    public void seEncriptaLaClave(){
+    public void seEncriptaLaClave() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Usuario user = consultoElUsuario(CORREO, CLAVE);
         validoQueLaClaveHayaCambiado(user.getPassword());
     }
@@ -54,7 +54,7 @@ public class ServicioLoginImplTest {
         assertThat(password).isNotEqualTo(CLAVE);
     }
 
-    private Usuario consultoElUsuario(String correo, String clave) {
+    private Usuario consultoElUsuario(String correo, String clave) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         return this.servicioLogin.consultarUsuario(correo, clave);
     }
 

@@ -30,8 +30,7 @@ public class ControladorLoginTest {
     private ServicioLogin servicioLogin;
 
     @Before
-    public void Init()
-    {
+    public void Init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.servicioLogin = mock(ServicioLoginImpl.class);
         this.controladorLogin = new ControladorLogin(this.servicioLogin);
         when(this.servicioLogin.consultarUsuario(any(), any())).thenReturn(new Usuario());
@@ -61,7 +60,7 @@ public class ControladorLoginTest {
         this.ValidoLoginExitoso(modelAndView);
     }
     @Test
-    public void LoginNoExitoso(){
+    public void LoginNoExitoso() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         //preparacion
         this.dadoQueNoExisteUnUsuario();
 
@@ -77,23 +76,23 @@ public class ControladorLoginTest {
         this.ValidoLoginNoExitoso(modelAndView);
     }
 
-    private void ValidoLoginNoExitoso(ModelAndView modelAndView) {
+    private void ValidoLoginNoExitoso(ModelAndView modelAndView) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         assertThat(modelAndView.getViewName()).isEqualTo("login");
         assertThat(modelAndView.getModel().values().stream().findFirst().get()).isEqualTo("Correo o clave incorrectos");
         verify(servicioLogin, atLeastOnce()).consultarUsuario("miMail@gmail.com","1234");
     }
 
-    private void dadoQueNoExisteUnUsuario() {
+    private void dadoQueNoExisteUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         when(this.servicioLogin.consultarUsuario(any(),any())).thenThrow(new UsuarioNoEncontrado());
     }
 
-    private void ValidoLoginExitoso(ModelAndView result) {
+    private void ValidoLoginExitoso(ModelAndView result) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         assertThat(result.getViewName()).isEqualTo("redirect:/home");
         assertThat(result.getModel().size()).isEqualTo(0); // porque hace una redireccion a lahome
         verify(servicioLogin, atLeastOnce()).consultarUsuario("miMail@gmail.com","1234");
     }
 
-    private void dadoQueExisteUnUsuario() {
+    private void dadoQueExisteUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         when(this.servicioLogin.consultarUsuario(any(),any())).thenReturn(new Usuario());
     }
 
