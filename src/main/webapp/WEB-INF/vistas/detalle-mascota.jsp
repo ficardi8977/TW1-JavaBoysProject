@@ -9,7 +9,6 @@
 
 <body>
 
-
 <!-- NAV -->
 <jsp:include page="nav.jsp">
   <jsp:param name="nav" value="nav" />
@@ -148,5 +147,6 @@
     <link href="../css/comentarios.css" rel="stylesheet">
     <!-- FOOTER -->
   </div>
+</div>
 </body>
 </html>

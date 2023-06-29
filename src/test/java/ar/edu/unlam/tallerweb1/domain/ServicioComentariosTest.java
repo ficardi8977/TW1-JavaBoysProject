@@ -8,6 +8,7 @@ import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
 import ar.edu.unlam.tallerweb1.domain.excepciones.CuidadoNoExistenteExcepcion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoExistenteExcepcion;
+import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioComentario;
@@ -24,14 +25,17 @@ public class ServicioComentariosTest {
     private RepositorioComentario repositorioComentario;
     private ServicioComentario servicioComentario;
 
+    private ServicioMascota servicioMascota;
+
 
     @Before
     public void init() {
         this.servicioCuidado = mock(ServicioCuidado.class);
         this.servicioUsuario = mock(ServicioUsuario.class);
         this.repositorioComentario = mock(RepositorioComentario.class);
+        this.servicioMascota = mock(ServicioMascota.class);
 
-        this.servicioComentario = new ServicioComentarioImpl(this.repositorioComentario,this.servicioCuidado, this.servicioUsuario);
+        this.servicioComentario = new ServicioComentarioImpl(this.repositorioComentario,this.servicioMascota,this.servicioCuidado, this.servicioUsuario);
 
     }
     @Test

@@ -17,10 +17,6 @@ public class DatosComentario {
         return clasificacion;
     }
 
-    public void setClasificacion(int clasificacion) {
-        this.clasificacion = clasificacion;
-    }
-
     public String getMensaje() {
         return mensaje;
     }
@@ -51,5 +47,13 @@ public class DatosComentario {
 
     public void setIdComentarioPadre(Integer idComentarioPadre) {
         this.idComentarioPadre = idComentarioPadre;
+    }
+
+    public Integer getIdCuidado() {
+        return idCuidado;
+    }
+
+    public Integer getIdMascota() {
+        return idMascota;
     }
 }
