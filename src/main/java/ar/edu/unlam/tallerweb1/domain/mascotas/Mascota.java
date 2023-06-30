@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.mascotas;
 
+import ar.edu.unlam.tallerweb1.domain.comentarios.Comentario;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -42,6 +43,21 @@ public class Mascota {
     @JoinColumn(name = "idEstado")
     private Estado estado;
 
+    @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comentario> comentarios;
+
+    public void setVacunas(List<Vacunacion> vacunas) {
+        this.vacunas = vacunas;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
     public Estado getEstado() {
         return estado;
     }
@@ -57,7 +73,7 @@ public class Mascota {
     public void setTipoRaza(TipoRaza tipoRaza) {
         this.tipoRaza = tipoRaza;
     }
-    private Long idUsuario;
+    private int idUsuario;
 
 
     public Mascota() {
@@ -67,11 +83,11 @@ public class Mascota {
         return id;
     }
 
-    public Long getIdUsuario() {
+    public int getIdUsuario() {
         return this.idUsuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
+    public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 

@@ -112,7 +112,7 @@ public class RepositorioMascotaImplTests extends SpringTest {
         datos.setDescripcion("");
         datos.setTipo(1l);
         datos.setEstado(1l);
-        datos.setIdUsuario(1l);
+        datos.setIdUsuario(1);
         datos.setLatitud("0");
         datos.setLongitud("0");
 

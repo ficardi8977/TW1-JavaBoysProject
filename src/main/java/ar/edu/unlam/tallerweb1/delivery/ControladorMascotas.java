@@ -8,6 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -56,8 +60,6 @@ public class ControladorMascotas {
         ModelMap model = new ModelMap();
         Mascota result = this.servicioMascota.ObtenerDetalle(id);
         model.put("mascota", result);
-
-        // mapeada con la home pero faltaria definir con cual es
         return new ModelAndView("detalle-mascota", model);
     }
 
@@ -67,7 +69,7 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/usuario")
-    public ModelAndView getMascotaPorIdUsuario(long idUsuario) {
+    public ModelAndView getMascotaPorIdUsuario(int idUsuario) {
         ModelMap model = new ModelMap();
         List<Mascota> result = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         model.put("mascotas", result);
@@ -81,7 +83,7 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/mis-mascotas")
-    public ModelAndView getMascotasUsuario(long idUsuario) {
+    public ModelAndView getMascotasUsuario(int idUsuario) {
         ModelMap model = new ModelMap();
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         model.put("mascotas", mascotas);

@@ -40,7 +40,7 @@ public class ServicioMascotaImpl implements ServicioMascota {
         return repositorioMascota.BuscarDetalle(id);
     }
 
-    public List<Mascota> obtenerMascotaPorIdUsuario(Long idUsuario) {
+    public List<Mascota> obtenerMascotaPorIdUsuario(int idUsuario) {
         return this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuario);
     }
 
@@ -88,6 +88,12 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
         ubicacion = request.getUbicacion();
         List<Mascota> mascotasFiltradas = obtenerMascotasPorEstados(estados);
+
+        for (Mascota mascota : mascotasFiltradas) {
+            mascota.setComentarios(null);
+        }
+
+
 
         if (ubicacion != null) {
             double latitud = Double.parseDouble(ubicacion.getLatitud());

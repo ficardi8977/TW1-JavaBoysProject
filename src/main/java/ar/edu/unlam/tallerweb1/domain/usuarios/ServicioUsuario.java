@@ -5,9 +5,11 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 // Interface que define los metodos del Servicio de Usuarios.
-public interface ServicioLogin {
+public interface ServicioUsuario {
 
 	Usuario consultarUsuario(String email, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 
 	String encriptarClave(String clave) throws NoSuchAlgorithmException, UnsupportedEncodingException;
+
+	Usuario consultarUsuario(int id);
 }
