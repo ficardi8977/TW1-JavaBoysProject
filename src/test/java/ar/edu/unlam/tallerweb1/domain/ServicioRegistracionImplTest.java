@@ -5,14 +5,11 @@ import ar.edu.unlam.tallerweb1.domain.excepciones.EmailInvalido;
 import ar.edu.unlam.tallerweb1.domain.excepciones.EmailYaRegistrado;
 import ar.edu.unlam.tallerweb1.domain.excepciones.IngresarTelefono;
 import ar.edu.unlam.tallerweb1.domain.excepciones.PasswordInvalida;
-import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
+import ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracionImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
