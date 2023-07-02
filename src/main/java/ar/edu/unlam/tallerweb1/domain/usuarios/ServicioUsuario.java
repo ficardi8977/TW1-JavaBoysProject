@@ -11,5 +11,5 @@ public interface ServicioUsuario {
 
 	String encriptarClave(String clave) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 
-	Usuario consultarUsuario(int id);
+	Usuario consultarUsuario(Long id);
 }

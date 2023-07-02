@@ -49,7 +49,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		String passwordCifrada = sb.toString().toUpperCase();
 		return passwordCifrada;
 	}
-	public Usuario consultarUsuario (int id) {
+	public Usuario consultarUsuario (Long id) {
 		return servicioLoginDao.buscarUsuario(id);
 	}
 

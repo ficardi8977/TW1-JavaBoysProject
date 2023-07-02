@@ -70,7 +70,7 @@ public class RepositorioUsuarioImplTest extends SpringTest {
     }
 
     private Usuario loBusco(Usuario noRegistrado) {
-        return this.repositorioUsuario.buscar(noRegistrado.getEmail());
+        return this.repositorioUsuario.buscarGuardado(noRegistrado.getEmail());
     }
 
 

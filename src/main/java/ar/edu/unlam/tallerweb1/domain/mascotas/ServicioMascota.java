@@ -10,7 +10,7 @@ public interface ServicioMascota {
     List<Mascota> ObtenerMascotasPorTipo(long idTipoMascota);
     List<Mascota> ObtenerTodasLasMascotas();
     Mascota ObtenerDetalle(long id);
-    List<Mascota> obtenerMascotaPorIdUsuario(int idUsuario);
+    List<Mascota> obtenerMascotaPorIdUsuario(Long idUsuario);
 
     List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 

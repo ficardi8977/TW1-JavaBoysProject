@@ -69,7 +69,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
-    public List<Mascota> buscarMascotasPorIdUsuario(int idUsuario) {
+    public List<Mascota> buscarMascotasPorIdUsuario(Long idUsuario) {
         return this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .add(Restrictions.eq("idUsuario", idUsuario)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
@@ -136,7 +136,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
             mascota.setDescripcion(datosMascotas.getDescripcion());
         }
         mascota.setEstado(e);
-        mascota.setIdUsuario((int)datosMascotas.getIdUsuario());
+        mascota.setIdUsuario(datosMascotas.getIdUsuario());
         mascota.setLatitud(datosMascotas.getLatitud());
         mascota.setLongitud(datosMascotas.getLongitud());
         mascota.setTipoRaza(razaExistente);

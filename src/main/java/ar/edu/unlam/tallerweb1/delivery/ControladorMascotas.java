@@ -69,7 +69,7 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/usuario")
-    public ModelAndView getMascotaPorIdUsuario(int idUsuario) {
+    public ModelAndView getMascotaPorIdUsuario(Long idUsuario) {
         ModelMap model = new ModelMap();
         List<Mascota> result = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         model.put("mascotas", result);
@@ -83,7 +83,7 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/mis-mascotas")
-    public ModelAndView getMascotasUsuario(int idUsuario) {
+    public ModelAndView getMascotasUsuario(Long idUsuario) {
         ModelMap model = new ModelMap();
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         model.put("mascotas", mascotas);

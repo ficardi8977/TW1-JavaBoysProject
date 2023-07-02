@@ -28,9 +28,6 @@ public class ControladorLoginTest {
     private ServicioUsuario servicioLogin;
 
     @Before
-    public void Init()
-    {
-        this.servicioLogin = mock(ServicioUsuarioImpl.class);
     public void Init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.servicioLogin = mock(ServicioUsuarioImpl.class);
         this.controladorLogin = new ControladorLogin(this.servicioLogin);

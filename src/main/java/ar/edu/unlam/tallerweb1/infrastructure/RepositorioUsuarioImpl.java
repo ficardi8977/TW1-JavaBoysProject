@@ -39,16 +39,16 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				.add(Restrictions.eq("password", password))
 				.uniqueResult();
 
-		if(user==null)
+		if (user == null)
 			throw new UsuarioNoEncontrado();
 
 		return user;
 	}
 
 	@Override
-	public Usuario buscarUsuario(int id) {
+	public Usuario buscarUsuario(Long id) {
 		final Session session = sessionFactory.getCurrentSession();
-		var usuario =  (Usuario) session.createCriteria(Usuario.class)
+		var usuario = (Usuario) session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("id", id))
 				.uniqueResult();
 		return usuario;
@@ -65,11 +65,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		Usuario user = null;
 
 		user = (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-				.add(Restrictions.eq("email", email))
-				.uniqueResult();
-
-		if(user==null)
-			throw new UsuarioNoEncontrado();
+				.add(Restrictions.eq("email", email)).uniqueResult();
 
 		return user;
 	}
@@ -108,11 +104,24 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		}
 
 		// Se busca si el usuario guardado ahora existe en la base de datos
-		if (buscar(user.getEmail()) != null)
+		if (buscarGuardado(user.getEmail()) != null)
 			registrado = true;
 
 		return registrado;
 
 
+	}
+
+	@Override
+	public Usuario buscarGuardado(String email) {
+		Usuario user = null;
+
+		user = (Usuario) this.sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", email)).uniqueResult();
+
+		if (user == null)
+			throw new UsuarioNoEncontrado();
+
+		return user;
 	}
 }

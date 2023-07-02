@@ -35,7 +35,7 @@ public class ControladorMascotaTest {
         this.datosInvalidos = new DatosMascotas();
         this.redirectAttributes = new RedirectAttributesModelMap();
         this.datos = new DatosMascotas();
-        datos.setIdUsuario(1);
+        datos.setIdUsuario(1l);
         when(this.servicioMascota.validarDatos(datos)).thenReturn(true);
         when(this.servicioMascota.registrarMascota(datos)).thenReturn(true);
         when(this.servicioMascota.validarDatos(datosInvalidos)).thenReturn(false);
@@ -80,8 +80,8 @@ public class ControladorMascotaTest {
     }
     @Test
     public void buscarMascotaPorIdUsuarioIncorrecto(){
-        int idUsuario = 1;
-        int idUsuarioIncorrecto = 2;
+        Long idUsuario = 1l;
+        Long idUsuarioIncorrecto = 2l;
         dadoQueExisteMascota(idUsuario);
         ModelAndView mav = this.controladorMascotas.getMascotaPorIdUsuario(idUsuarioIncorrecto);
         assertThat(mav.getModel().get("mascotas").toString()).isEqualTo("[]");
@@ -157,7 +157,7 @@ public class ControladorMascotaTest {
     }
 
 
-    private void dadoQueExisteMascota(int idUsuario) {
+    private void dadoQueExisteMascota(Long idUsuario) {
         List<Mascota> mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
         mascota.setIdUsuario(idUsuario);
@@ -209,7 +209,7 @@ public class ControladorMascotaTest {
     }
     @Test
     public void buscarMascotaPorIdUsuario(){
-        int idUsuario = 1;
+        Long idUsuario = 1l;
         dadoQueExisteMascota(idUsuario);
         ModelAndView mav = this.controladorMascotas.getMascotaPorIdUsuario(idUsuario);
         assertThat(mav.getModel().get("mascotas")).isNotNull();
