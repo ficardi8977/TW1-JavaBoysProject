@@ -22,7 +22,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Autowired
     private RepositorioUsuario repositorioU;
 
-    private int idUsuario;
+    private Long idUsuario;
     private Mascota mascota;
     private Vacunacion vacuna;
 
@@ -69,7 +69,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Rollback
     public void NoObtenerNingunaMascota(){
 
-        int usuarioSinMascotas = dadoQueExisteUsuario();
+        long usuarioSinMascotas = dadoQueExisteUsuario();
 
         List<Mascota> mascotasEncontradas = buscoLasMascotasPorIdUsuario(usuarioSinMascotas);
 
@@ -108,18 +108,18 @@ public class RepositorioMascotaTest extends SpringTest {
         assertThat(mascotasEncontradas.size()).isEqualTo(1);
     }
 
-    private List<Mascota> buscoLasMascotasPorIdUsuario(int idUsuario) {
+    private List<Mascota> buscoLasMascotasPorIdUsuario(Long idUsuario) {
         return this.repositorioM.buscarMascotasPorIdUsuario(idUsuario);
     }
 
-    private Mascota dadoQueExisteMascota(int idUsuario) {
+    private Mascota dadoQueExisteMascota(Long idUsuario) {
         Mascota mascota = new Mascota();
         mascota.setIdUsuario(idUsuario);
         this.repositorioM.guardar(mascota);
         return mascota;
     }
 
-    private int dadoQueExisteUsuario() {
+    private Long dadoQueExisteUsuario() {
         Usuario user = new Usuario();
         this.repositorioU.guardar(user);
         return user.getId();

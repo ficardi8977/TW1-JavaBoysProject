@@ -1,4 +1,8 @@
-let contadorSubcomentarios = 0;
+const diccionarioUrl = {};
+
+diccionarioUrl["mascotas"] = "/mascota/detalle?id=";
+diccionarioUrl["cuidadores"] = "/cuidador/detalle?id=";
+diccionarioUrl["refugios"] = "/refugio/";
 
 function agregarSubcomentario(idComentario, idUsuario, idCuidado) {
     var contenedorSubcomentarios = document.getElementById('contenedorSubcomentarios' + idComentario);
@@ -45,4 +49,23 @@ function cargarFormularioComentario(idComentario, idUsuario, idCuidado){
     divCardFooter.appendChild(divFlex);
     formulario.appendChild(divCardFooter);
     return formulario;
+}
+function borrarComentario(idComentario, idUsuario, idFuncionalidad, funcionalidad)
+{
+    let urlDeFuncionalidad = diccionarioUrl[funcionalidad];
+
+    fetch(`/comentario/${idComentario}?idUsuario=${idUsuario}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (response.ok) {
+                const url = '/cuidador/detalle?id=13';
+                window.location.replace(urlDeFuncionalidad+idFuncionalidad);
+            } else{
+                alert("error" + response);
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
 }

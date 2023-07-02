@@ -20,7 +20,7 @@ public interface RepositorioMascota {
     //void modificar(Mascota mascota);
     void guardar(Mascota mascota);
 
-    List<Mascota> buscarMascotasPorIdUsuario(int idUsuario);
+    List<Mascota> buscarMascotasPorIdUsuario(long idUsuario);
 
     List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 

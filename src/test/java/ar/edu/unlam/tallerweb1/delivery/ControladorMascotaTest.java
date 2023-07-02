@@ -161,7 +161,7 @@ public class ControladorMascotaTest {
     }
 
 
-    private void dadoQueExisteMascota(int idUsuario) {
+    private void dadoQueExisteMascota(long idUsuario) {
         List<Mascota> mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
         mascota.setIdUsuario(idUsuario);

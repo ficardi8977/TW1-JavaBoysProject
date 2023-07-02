@@ -24,10 +24,10 @@ public class ControladorComentariosTest{
     @Test
     public void guardarComentario(){
         DatosComentario request = new DatosComentario();
-        request.setIdCuidado(1);
+        request.setIdCuidado(1L);
         this.dadoQueExisteCuidadoyUsuario();
         var result = controladorComentarios.getComentariosDeCuidador(request);
-        assertThat(result.getViewName()).isEqualTo("redirect:../cuidador/detalle?id=" + Integer.toString(request.getIdCuidado()));
+        assertThat(result.getViewName()).isEqualTo("redirect:../cuidador/detalle?id=" + Long.toString(request.getIdCuidado()));
         verify(servicioComentario, atLeastOnce()).guardar(request);
 
     }
@@ -35,7 +35,7 @@ public class ControladorComentariosTest{
     public void guardarComentarioExcepcionUsuario(){
         DatosComentario request = new DatosComentario();
         this.dadoQueNoExisteUsuario();
-        request.setIdCuidado(1);
+        request.setIdCuidado(1L);
         var result = controladorComentarios.getComentariosDeCuidador(request);
         assertThat(result.getViewName()).isEqualTo("error");
         verify(servicioComentario, atLeastOnce()).guardar(request);
@@ -44,7 +44,7 @@ public class ControladorComentariosTest{
     public void guardarComentarioExcepcionCuidado(){
         DatosComentario request = new DatosComentario();
         this.dadoQueNoExisteCuidado();
-        request.setIdCuidado(1);
+        request.setIdCuidado(1l);
         var result = controladorComentarios.getComentariosDeCuidador(request);
         assertThat(result.getViewName()).isEqualTo("error");
         verify(servicioComentario, atLeastOnce()).guardar(request);

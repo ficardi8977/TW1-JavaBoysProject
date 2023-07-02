@@ -3,7 +3,6 @@ package ar.edu.unlam.tallerweb1.domain.mascotas;
 import ar.edu.unlam.tallerweb1.domain.comentarios.Comentario;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 
 import javax.persistence.*;
@@ -73,7 +72,7 @@ public class Mascota {
     public void setTipoRaza(TipoRaza tipoRaza) {
         this.tipoRaza = tipoRaza;
     }
-    private int idUsuario;
+    private long idUsuario;
 
 
     public Mascota() {
@@ -83,11 +82,11 @@ public class Mascota {
         return id;
     }
 
-    public int getIdUsuario() {
+    public Long getIdUsuario() {
         return this.idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 

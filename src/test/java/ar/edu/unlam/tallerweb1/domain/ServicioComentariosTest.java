@@ -41,7 +41,7 @@ public class ServicioComentariosTest {
     @Test
     public void guardarComentario(){
         DatosComentario request = new DatosComentario();
-        request.setIdCuidado(1);
+        request.setIdCuidado(1l);
         request.setIdUsuario(1);
         this.dadoQueExisteCuidadoyUsuario();
 
@@ -55,7 +55,7 @@ public class ServicioComentariosTest {
     @Test
     public void guardarComentarioExcepcionUsuario(){
         DatosComentario request = new DatosComentario();
-        request.setIdCuidado(1);
+        request.setIdCuidado(1l);
         request.setIdUsuario(2);
         this.dadoQueNoExisteUsuario();
 
@@ -75,7 +75,7 @@ public class ServicioComentariosTest {
     @Test
     public void guardarComentarioExcepcionCuidado(){
         DatosComentario request = new DatosComentario();
-        request.setIdCuidado(2);
+        request.setIdCuidado(2l);
         request.setIdUsuario(1);
         this.dadoQueNoExisteCuidado();
         try {

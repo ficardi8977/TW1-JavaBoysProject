@@ -17,7 +17,7 @@ public class Usuario {
 	// La anotacion id indica que este atributo es el utilizado como clave primaria de la entity, se indica que el valor es autogenerado.
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	// para el resto de los atributo no se usan anotaciones entonces se usa el default de hibernate: la columna se llama igual que
 	// el atributo, la misma admite nulos, y el tipo de dato se deduce del tipo de dato de java.
 	private String email;
@@ -32,8 +32,6 @@ public class Usuario {
 	private String latitud;
 
 	private String longitud;
-
-	private String rol;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdTipoUsuario")
@@ -63,11 +61,11 @@ public class Usuario {
 		this.longitud = longitud;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -143,14 +141,6 @@ public class Usuario {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
-
-	public String getRol() {
-		return rol;
-	}
-
-	public void setRol(String rol) {
-		this.rol = rol;
 	}
 
 	public String getImagen() {

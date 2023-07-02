@@ -8,5 +8,5 @@ public interface ServicioUsuario {
 
 	String encriptarClave(String clave);
 
-	Usuario consultarUsuario(int id);
+	Usuario consultarUsuario(long id);
 }

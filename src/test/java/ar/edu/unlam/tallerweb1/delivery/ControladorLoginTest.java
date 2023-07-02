@@ -50,7 +50,7 @@ public class ControladorLoginTest {
         HttpSession sessionMock = Mockito.mock(HttpSession.class);
 
         Mockito.when(requestE.getSession()).thenReturn(sessionMock);
-        Mockito.when(requestE.getSession().getAttribute("ROL")).thenReturn("admin");
+        Mockito.when(requestE.getSession().getAttribute("ROL")).thenReturn("Masivo");
         Mockito.when(requestE.getSession().getAttribute("NOMBRE")).thenReturn("John Doe");
         Mockito.when(requestE.getSession().getAttribute("IDUSUARIO")).thenReturn(1L);
 

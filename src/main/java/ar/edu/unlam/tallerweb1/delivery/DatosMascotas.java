@@ -12,9 +12,9 @@ public class DatosMascotas {
     private String imagen;
 
     private Long tipo;
-    private int idUsuario;
+    private Long idUsuario;
 
-    public DatosMascotas(String nombre, String descripcion, String imagen, String raza, Long estado, Long tipo, int idUsuario){
+    public DatosMascotas(String nombre, String descripcion, String imagen, String raza, Long estado, Long tipo, Long idUsuario){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -84,11 +84,11 @@ public class DatosMascotas {
     }
 
 
-    public int getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(long idUsuario) {
         this.idUsuario = idUsuario;
     }
 

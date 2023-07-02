@@ -83,18 +83,16 @@
                   </p>
 
                   <div class="small d-flex justify-content-start">
-                    <a href="#!" class="d-flex align-items-center me-3">
-                      <i class="far fa-thumbs-up me-2"></i>
-                      <p class="mb-0">Like</p>
-                    </a>
-                    <a href="#!" class="d-flex align-items-center me-3">
+                    <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${mascota.id})" class="d-flex align-items-center me-3">
                       <i class="far fa-comment-dots me-2"></i>
-                      <p class="mb-0">Comment</p>
+                      <p class="mb-0">comentar</p>
                     </a>
-                    <a href="#!" class="d-flex align-items-center me-3">
-                      <i class="fas fa-share me-2"></i>
-                      <p class="mb-0">Share</p>
-                    </a>
+                    <c:if test="${sessionScope.ROL eq 'Administrador'}">
+                      <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.mascota.id},'mascotas')" class="d-flex align-items-center me-3">
+                        <i class="fa fa-light fa-trash me-2"></i>
+                        <p class="mb-0">eliminar</p>
+                      </a>
+                    </c:if>
                   </div>
                 </div>
               </c:forEach>
@@ -145,6 +143,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
     <script src="../js/detalle-mapa.js"></script>
     <link href="../css/comentarios.css" rel="stylesheet">
+    <script src="../js/comentarios.js"></script>
     <!-- FOOTER -->
   </div>
 </div>

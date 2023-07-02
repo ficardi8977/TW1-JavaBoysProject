@@ -56,7 +56,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		String passwordCifrada = sb.toString().toUpperCase();
 		return passwordCifrada;
 	}
-	public Usuario consultarUsuario (int id) {
+	public Usuario consultarUsuario (long id) {
 		return servicioLoginDao.buscarUsuario(id);
 	}
 
