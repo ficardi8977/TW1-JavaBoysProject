@@ -99,6 +99,14 @@ function agregarMarcadoresMascotasPerdidas(mascotasPerdidas) {
             title: nombre,
             icon: Object.assign({}, iconoPerdidas) // Clonar el objeto de ícono para evitar la referencia compartida
         });
+
+        // Agregar evento click al marcador
+        google.maps.event.addListener(marker, "click", function() {
+            var idMascota = mascota.id; // Obtener el ID de la mascota asociada al marcador
+
+            // Redirigir al controlador de detalle de mascota con el ID
+            window.location.href = "/mascota/detalle?id=" + idMascota;
+        });
     });
 }
 
@@ -121,6 +129,14 @@ function agregarMarcadoresMascotasAdopcion(mascotasAdopcion) {
             map: mapa,
             title: nombre,
             icon: Object.assign({}, iconoAdopcion) // Clonar el objeto de ícono para evitar la referencia compartida
+        });
+
+        // Agregar evento click al marcador
+        google.maps.event.addListener(marker, "click", function() {
+            var idMascota = mascota.id; // Obtener el ID de la mascota asociada al marcador
+
+            // Redirigir al controlador de detalle de mascota con el ID
+            window.location.href = "/mascota/detalle?id=" + idMascota;
         });
     });
 }
