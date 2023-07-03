@@ -59,7 +59,6 @@ function borrarComentario(idComentario, idUsuario, idFuncionalidad, funcionalida
     })
         .then(response => {
             if (response.ok) {
-                const url = '/cuidador/detalle?id=13';
                 window.location.replace(urlDeFuncionalidad+idFuncionalidad);
             } else{
                 alert("error" + response);
