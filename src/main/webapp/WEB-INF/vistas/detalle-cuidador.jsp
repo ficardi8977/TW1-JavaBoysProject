@@ -50,6 +50,11 @@
             <br>
         </c:if>
     </div>
+
+        <!-- mercado pago-->
+        <div id="wallet_container"></div>
+
+
         <section id="comentarios">
             <div class="container my-5 py-5">
                 <h1>Comentarios</h1>
@@ -157,6 +162,9 @@
     </jsp:include>
         <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>-->
          <script src="../js/detalle-mapa.js"></script>
+        <script src="../js/mercado-pago.js"></script>
+        // SDK MercadoPago.js
+        <script src="https://sdk.mercadopago.com/js/v2"></script>
         <link href="../css/comentarios.css" rel="stylesheet" >
          <!-- FOOTER -->
 </div>
