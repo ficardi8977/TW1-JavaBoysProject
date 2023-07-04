@@ -1,11 +1,28 @@
 var mapa;
-var btnPermitirUbicacion = document.getElementById("btnPermitirUbicacion");
 const perdido = "Perdido";
 const enAdopcion = "EnAdopcion";
+var aceptoPermisos = "false";
+    aceptoPermisos = localStorage.getItem("aceptoPermisos") != null;
+var canceloPermisos = "false";
+    canceloPermisos = localStorage.getItem("canceloPermisos") != null;
 
 function solicitarUbicacion() {
-    if (confirm("Se solicitará tu ubicación. ¿Deseas continuar?")) {
-        obtenerUbicacion();
+    if (!aceptoPermisos){
+        if(confirm("permisos")){
+            obtenerUbicacion();
+            aceptoPermisos = "true";
+            localStorage.setItem("aceptoPermisos", "true");
+        }else{
+            aceptoPermisos = "true";
+            localStorage.setItem("aceptoPermisos", "true");
+            canceloPermisos = "true";
+            localStorage.setItem("canceloPermisos", "true");
+        }
+
+    }else{
+        if (!canceloPermisos) {
+            obtenerUbicacion();
+        }
     }
 }
 
