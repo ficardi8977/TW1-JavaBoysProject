@@ -1,5 +1,10 @@
 var copiarTexto = document.querySelector('.copiar-enlace');
 var copiar = document.querySelector('.copiar');
+var enlaceTw = document.querySelector(".enlace-compartir-tw");
+var enlaceWpp = document.querySelector(".enlace-compartir-wpp");
+var enlaceTwHref = enlaceTw.href.valueOf();
+var enlaceWppHref = enlaceWpp.href.valueOf();
+var currentURL = encodeURIComponent(window.location.href);
 
 
 $(document).ready(function() {
@@ -37,3 +42,11 @@ function copyToClipboard(text) {
     document.execCommand('copy');
     $temp.remove();
 }
+
+$(enlaceTw).click(function() {
+    enlaceTw.href = enlaceTwHref + " " + currentURL;
+});
+
+$(enlaceWpp).click(function() {
+    enlaceWpp.href = enlaceWppHref + " " + currentURL;
+});

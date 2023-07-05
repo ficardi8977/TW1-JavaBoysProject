@@ -17,7 +17,7 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre, latitud, longitud, imagen, descripcion;
+    private String nombre, latitud, longitud, imagen, descripcion, telefono, nombreUsuario;
     private Date fechaAdopcion;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -140,5 +140,21 @@ public class Mascota {
 
     public void setDescripcion( String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }

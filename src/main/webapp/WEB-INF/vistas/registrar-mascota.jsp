@@ -61,6 +61,9 @@
             </div>
         </div>
 
+        <input type="hidden" id="telefono" name="telefono" value="${sessionScope.TELEFONO}">
+        <input type="hidden" id="nombreUsuario" name="nombreUsuario" value="${sessionScope.NOMBRE}">
+
         <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">
             <label for="address" class="m-0 mr-2">Ubicación</label>
             <input type="text" class="form-control form-control-lg" id="address" placeholder="Introduce una ubicación o haz clic en el mapa"><br>

@@ -64,7 +64,7 @@
 
       <div class="form-outline my-3 h6">
         <label class="form-label" for="telefono">Telefono</label>
-        <input type="tel" name="telefono" id="telefono" class="form-control form-control-lg" pattern="^\d{7,10}$" maxlength="10" title="Ingrese un número de teléfono de 7 u 10 digitos" required/>
+        <input type="tel" name="telefono" id="telefono" class="form-control form-control-lg" pattern="^\d{7,11}$" maxlength="11" title="Ingrese un número de teléfono de 7 u 11 digitos" placeholder="1112345678" required/>
       </div>
 
       <div>
