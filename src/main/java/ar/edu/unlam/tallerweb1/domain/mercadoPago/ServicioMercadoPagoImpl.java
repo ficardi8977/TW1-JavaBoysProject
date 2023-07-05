@@ -20,20 +20,20 @@ import java.util.List;
 public class ServicioMercadoPagoImpl implements  ServicioMercadoPago {
     @Override
     public void crearPedido() throws MPException, MPApiException {
-        // Configurar las credenciales de Mercado Pago
-        MercadoPagoConfig.setAccessToken("TEST-2059267312759682-062718-5ba84f97b8aa1a37f9449c9812a377bd-793324980");
+
+        MercadoPagoConfig.setAccessToken("TEST-5599099813004507-070419-16a9a1be36cf4d15bf0d4d97dc9387b6-221225807");
 
         // creado un pedido
         PreferenceItemRequest itemRequest =
                 PreferenceItemRequest.builder()
-                        .id("1234")
+                        .id("793324980")
                         .title("Games")
                         .description("PS5")
                         .pictureUrl("http://picture.com/PS5")
                         .categoryId("games")
                         .quantity(2)
                         .currencyId("BRL")
-                        .unitPrice(new BigDecimal("4000"))
+                        .unitPrice(new BigDecimal("100"))
                         .build();
         List<PreferenceItemRequest> items = new ArrayList<>();
         items.add(itemRequest);
@@ -43,14 +43,11 @@ public class ServicioMercadoPagoImpl implements  ServicioMercadoPago {
         client.create(preferenceRequest);
 
         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                        .success("http://localhost:8080//detalle-cuidador")
-                        .pending("http://localhost:8080//mascota")
-                        .failure("http://localhost:8080//detalle-cuidador")
+                        .success("http://localhost:8080//home")
+                        .pending("http://localhost:8080//home")
+                        .failure("http://localhost:8080//home")
                         .build();
 
         PreferenceRequest.builder().backUrls(backUrls).build();
-// ...
-
-
     }
 }
