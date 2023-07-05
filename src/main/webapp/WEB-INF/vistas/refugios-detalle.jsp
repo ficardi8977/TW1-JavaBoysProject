@@ -7,6 +7,8 @@
   <jsp:include page="head.jsp">
     <jsp:param name="head" value="head" />
   </jsp:include>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -31,15 +33,37 @@
                  <div id="map" class="col-lg-6 col-md-6 col-sm-12 d-flex"></div>
          </div>
         </div>
+        <div class="d-flex">
             <div class="card-body">
-          <h5 class="card-title">${refugio.nombre}</h5>
-          <p class="card-text">Email: ${refugio.email}</p>
-          <p class="card-text">Direccion: ${refugio.direccion}</p>
-          <p class="card-text">Telefono: ${refugio.telefono}</p>
-          <p class="card-text">CBU: ${refugio.cbu}</p>
-          <input type="hidden" value="${refugio.latitud}" id="refugioLatitud">
-          <input type="hidden" value="${refugio.longitud}" id="refugioLongitud">
-            <input type="hidden" value="${refugio.nombre}" id="nombreRefugio">
+                <h5 class="card-title">${refugio.nombre}</h5>
+                <p class="card-text">Email: ${refugio.email}</p>
+                <p class="card-text mb-2">Direccion: ${refugio.direccion}</p>
+                <div class="d-flex align-items-center mb-2">
+                    <p class="card-text m-0">Telefono: ${refugio.telefono}</p>
+                    <button class="compartir ml-3" style="width: 40px;height: 40px">
+                        <a href="http://wa.me/${refugio.telefono}" class="d-flex" style="text-decoration: none" target="_blank" title="Contactar por WhatsApp">
+                            <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
+                        </a>
+                    </button>
+                </div>
+                <p class="card-text">CBU: ${refugio.cbu}</p>
+                <input type="hidden" value="${refugio.latitud}" id="refugioLatitud">
+                <input type="hidden" value="${refugio.longitud}" id="refugioLongitud">
+                <input type="hidden" value="${refugio.nombre}" id="nombreRefugio">
+            </div>
+            <div class="share-button d-flex">
+                <div class="copy-link m-2">
+                    <ul style="list-style:none;border-radius: 10px;overflow: hidden" class="p-0">
+                        <li class="lista-compartir copiar">
+                            <span class="material-symbols-outlined icono-copiar-enlace mr-1 text-center">link</span>
+                            <span class="copiar-enlace">Copiar enlace</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body btn-share p-0 m-2">
+                    <button class="compartir" title="Compartir"><span class="material-symbols-outlined" style="color:white">share</span></button>
+                </div>
+            </div>
         </div>
       </div>
     </c:if>
@@ -165,5 +189,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
 <script src="../js/detalle-refugio.js"></script>
 <link href="../css/comentarios.css" rel="stylesheet" >
+<script src="../js/redes-sociales.js"></script>
+<link rel="stylesheet" href="../css/redes-sociales.css">
 </body>
 </html>
