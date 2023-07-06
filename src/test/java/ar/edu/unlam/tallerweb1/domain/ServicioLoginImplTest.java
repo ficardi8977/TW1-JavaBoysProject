@@ -1,13 +1,12 @@
 package ar.edu.unlam.tallerweb1.domain;
 
-import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
+import ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuarioImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 
-import static ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuarioImplTest.CLAVE;
 import static ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuarioImplTest.CORREO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

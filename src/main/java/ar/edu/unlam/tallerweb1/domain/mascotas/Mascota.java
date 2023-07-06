@@ -5,6 +5,8 @@ import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -44,12 +46,14 @@ public class Mascota {
     private Estado estado;
 
     @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Comentario> comentarios;
 
     public void setVacunas(List<Vacunacion> vacunas) {
         this.vacunas = vacunas;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<Comentario> getComentarios() {
         return comentarios;
     }
