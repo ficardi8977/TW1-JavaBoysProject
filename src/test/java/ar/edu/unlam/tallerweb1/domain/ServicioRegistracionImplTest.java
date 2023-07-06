@@ -5,7 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.excepciones.EmailInvalido;
 import ar.edu.unlam.tallerweb1.domain.excepciones.EmailYaRegistrado;
 import ar.edu.unlam.tallerweb1.domain.excepciones.IngresarTelefono;
 import ar.edu.unlam.tallerweb1.domain.excepciones.PasswordInvalida;
-import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
+import ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracionImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
@@ -25,6 +25,7 @@ public class ServicioRegistracionImplTest {
     private final String CORREO_INVALIDO = "correo@gmail";
     private final String CLAVE = "Admin1";
     private final String CLAVE_INVALIDA = "admin1";
+    private DatosRegistracion datos;
 
 
     @Before
@@ -32,8 +33,10 @@ public class ServicioRegistracionImplTest {
         this.repositorioUsuario = mock(RepositorioUsuario.class);
         this.servicioRegistracion = new ServicioRegistracionImpl(repositorioUsuario);
         Usuario usuarioExistente = new Usuario();
+        datos = dadoQueSeEnviaUnForm();
         usuarioExistente.setEmail(CORREO_EXISTENTE);
         when(this.repositorioUsuario.buscar(CORREO_EXISTENTE)).thenReturn(usuarioExistente);
+        when(this.repositorioUsuario.registroUsuario(datos)).thenReturn(true);
     }
 
     @Test
@@ -45,32 +48,66 @@ public class ServicioRegistracionImplTest {
         entoncesSonValidos(datosValidos);
     }
 
+    @Test
+    public void queSePuedaRegistrarUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        seValidanLosDatos(datos);
+        Boolean registrado = loRegistro(datos);
+
+        entoncesSeRegistro(registrado);
+    }
+
+    @Test (expected = PasswordInvalida.class)
+    public void queNoSePuedaRegistrarUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        seValidanLosDatos(datos);
+        datos.setPassword(CLAVE_INVALIDA);
+        loRegistro(datos);
+    }
+
+    @Test
+    public void queSeEncripteLaClave() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        seValidanLosDatos(datos);
+        String nuevaClave = encriptoLaClave(datos.getPassword());
+        entoncesSeEncripto(datos.getPassword(),  nuevaClave);
+    }
+
     @Test (expected = EmailInvalido.class)
     public void queNoPermitaDatosInvalidosExcepcionEmail(){
-        DatosRegistracion datos = dadoQueSeEnviaUnForm();
         datos.setEmail(CORREO_INVALIDO);
         seValidanLosDatos(datos);
     }
 
     @Test (expected = PasswordInvalida.class)
     public void queNoPermitaDatosInvalidosExcepcionPassword(){
-        DatosRegistracion datos = dadoQueSeEnviaUnForm();
         datos.setPassword(CLAVE_INVALIDA);
         seValidanLosDatos(datos);
     }
 
     @Test (expected = IngresarTelefono.class)
     public void queNoPermitaDatosInvalidosExcepcionTelefono(){
-        DatosRegistracion datos = dadoQueSeEnviaUnForm();
         datos.setTelefono("");
         seValidanLosDatos(datos);
     }
 
     @Test (expected = EmailYaRegistrado.class)
     public void queNoPermitaDatosInvalidosExcepcionEmailExistente() {
-        DatosRegistracion datos = dadoQueSeEnviaUnForm();
         datos.setEmail(CORREO_EXISTENTE);
         seValidanLosDatos(datos);
+    }
+
+    private void entoncesSeRegistro(Boolean registrado) {
+        assertThat(registrado).isTrue();
+    }
+
+    private Boolean loRegistro(DatosRegistracion datos) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        return this.servicioRegistracion.registroUsuario(datos);
+    }
+
+    private void entoncesSeEncripto(String password, String nuevaClave) {
+        assertThat(password).isNotEqualTo(nuevaClave);
+    }
+
+    private String encriptoLaClave(String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        return this.servicioRegistracion.encriptarClave(password);
     }
 
     private void entoncesSonValidos(Boolean datosValidos) {

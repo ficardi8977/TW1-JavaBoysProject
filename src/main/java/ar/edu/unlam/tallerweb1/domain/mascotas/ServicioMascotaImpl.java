@@ -40,7 +40,7 @@ public class ServicioMascotaImpl implements ServicioMascota {
         return repositorioMascota.BuscarDetalle(id);
     }
 
-    public List<Mascota> obtenerMascotaPorIdUsuario(long idUsuario) {
+    public List<Mascota> obtenerMascotaPorIdUsuario(Long idUsuario) {
         return this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuario);
     }
 

@@ -28,12 +28,12 @@ public class ControladorRegistracion {
 
     @RequestMapping(path = "/registrar-usuario", method = RequestMethod.POST)
     public ModelAndView registrarUsuario(@ModelAttribute("datosRegistracion") DatosRegistracion datosRegistracion, RedirectAttributes redirectAttributes) {
-        ModelMap model = new ModelMap();
 
         try {
             this.servicioRegistracion.registroUsuario(datosRegistracion);
             redirectAttributes.addFlashAttribute("error", "Usuario registrado");
         } catch (Exception e){
+            ModelMap model = new ModelMap();
             model.put("error", e.getMessage());
             return new ModelAndView("registrar-usuario", model);
         }

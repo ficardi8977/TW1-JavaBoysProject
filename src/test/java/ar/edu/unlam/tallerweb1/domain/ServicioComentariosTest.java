@@ -42,21 +42,21 @@ public class ServicioComentariosTest {
     public void guardarComentario(){
         DatosComentario request = new DatosComentario();
         request.setIdCuidado(1l);
-        request.setIdUsuario(1);
+        request.setIdUsuario(1l);
         this.dadoQueExisteCuidadoyUsuario();
 
         var result = servicioComentario.guardar(request);
 
         verify(repositorioComentario, atLeastOnce()).guardar(any(Comentario.class));
         verify(servicioCuidado, atLeastOnce()).ObtenerDetalle(anyLong());
-        verify(servicioUsuario, atLeastOnce()).consultarUsuario(anyInt());
+        verify(servicioUsuario, atLeastOnce()).consultarUsuario(anyLong());
         assertThat(result).isNotNull();
     }
     @Test
     public void guardarComentarioExcepcionUsuario(){
         DatosComentario request = new DatosComentario();
         request.setIdCuidado(1l);
-        request.setIdUsuario(2);
+        request.setIdUsuario(2l);
         this.dadoQueNoExisteUsuario();
 
         try {
@@ -67,7 +67,7 @@ public class ServicioComentariosTest {
         }finally {
             verify(repositorioComentario, never()).guardar(any(Comentario.class));
             verify(servicioCuidado, atLeastOnce()).ObtenerDetalle(anyLong());
-            verify(servicioUsuario, atLeastOnce()).consultarUsuario(anyInt());
+            verify(servicioUsuario, atLeastOnce()).consultarUsuario(anyLong());
         }
 
 
@@ -76,7 +76,7 @@ public class ServicioComentariosTest {
     public void guardarComentarioExcepcionCuidado(){
         DatosComentario request = new DatosComentario();
         request.setIdCuidado(2l);
-        request.setIdUsuario(1);
+        request.setIdUsuario(1l);
         this.dadoQueNoExisteCuidado();
         try {
             var result = this.servicioComentario.guardar(request);
@@ -86,23 +86,23 @@ public class ServicioComentariosTest {
         }finally {
             verify(this.repositorioComentario, never()).guardar(any(Comentario.class));
             verify(servicioCuidado, atLeastOnce()).ObtenerDetalle(anyLong());
-            verify(servicioUsuario, never()).consultarUsuario(anyInt());
+            verify(servicioUsuario, never()).consultarUsuario(anyLong());
         }
     }
 
 
     private void dadoQueExisteCuidadoyUsuario() {
         when(this.servicioCuidado.ObtenerDetalle(1)).thenReturn(new Cuidado());
-        when(this.servicioUsuario.consultarUsuario(1)).thenReturn(new Usuario());
+        when(this.servicioUsuario.consultarUsuario(1l)).thenReturn(new Usuario());
     }
     private void dadoQueNoExisteCuidado() {
         when(this.servicioCuidado.ObtenerDetalle(anyLong())).thenReturn(null);
-        when(this.servicioUsuario.consultarUsuario(1)).thenReturn(new Usuario());
+        when(this.servicioUsuario.consultarUsuario(1l)).thenReturn(new Usuario());
     }
 
     private void dadoQueNoExisteUsuario() {
         when(this.servicioCuidado.ObtenerDetalle(1)).thenReturn(new Cuidado());
-        when(this.servicioUsuario.consultarUsuario(anyInt())).thenReturn(null);
+        when(this.servicioUsuario.consultarUsuario(anyLong())).thenReturn(null);
     }
 
 }

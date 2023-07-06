@@ -1,0 +1,52 @@
+.copy-link {
+    display: none;
+    position: relative;
+}
+
+.copy-link .btn-copy {
+    display: block;
+    margin-top: 5px;
+}
+
+.copy-link ul{
+    margin:0;
+}
+
+.copy-link a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.copy-link a:link, .copy-link a:visited, .copy-link a:active, .copy-link a:hover {
+    text-decoration:none;
+    color: #212529;
+    height: auto;
+}
+
+.compartir{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lista-compartir{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+    padding: 6px;
+    background-color: #e6b9a0;
+    cursor: pointer;
+}
+.lista-compartir *{
+    margin: 7px;
+}
+.lista-compartir:hover{
+    background-color: #b28a73;
+}
+.compartir:hover{
+    background-color: #b28a73;
+}

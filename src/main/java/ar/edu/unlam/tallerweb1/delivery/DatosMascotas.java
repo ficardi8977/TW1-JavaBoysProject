@@ -7,6 +7,8 @@ public class DatosMascotas {
     private String descripcion;
     private String latitud;
     private String longitud;
+    private String nombreUsuario;
+    private String telefono;
     private Long estado;
 
     private String imagen;
@@ -84,11 +86,11 @@ public class DatosMascotas {
     }
 
 
-    public long getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(long idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -98,6 +100,22 @@ public class DatosMascotas {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }
 

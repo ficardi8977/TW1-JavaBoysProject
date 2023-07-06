@@ -4,6 +4,8 @@ import ar.edu.unlam.tallerweb1.domain.comentarios.Comentario;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class Mascota {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre, latitud, longitud, imagen, descripcion;
+    private String nombre, latitud, longitud, imagen, descripcion, telefono, nombreUsuario;
     private Date fechaAdopcion;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -43,12 +45,14 @@ public class Mascota {
     private Estado estado;
 
     @OneToMany(mappedBy = "mascota", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Comentario> comentarios;
 
     public void setVacunas(List<Vacunacion> vacunas) {
         this.vacunas = vacunas;
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public List<Comentario> getComentarios() {
         return comentarios;
     }
@@ -72,7 +76,7 @@ public class Mascota {
     public void setTipoRaza(TipoRaza tipoRaza) {
         this.tipoRaza = tipoRaza;
     }
-    private long idUsuario;
+    private Long idUsuario;
 
 
     public Mascota() {
@@ -139,5 +143,21 @@ public class Mascota {
 
     public void setDescripcion( String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }

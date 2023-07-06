@@ -4,10 +4,12 @@ import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.excepciones.NoSeRegistroLaMascota;
+import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoEncontrado;
 import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
 import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -69,7 +71,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
-    public List<Mascota> buscarMascotasPorIdUsuario(long idUsuario) {
+    public List<Mascota> buscarMascotasPorIdUsuario(Long idUsuario) {
         return this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .add(Restrictions.eq("idUsuario", idUsuario)).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
@@ -130,11 +132,14 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
         Mascota mascota = new Mascota();
         mascota.setNombre(datosMascotas.getNombre());
-        if(datosMascotas.getDescripcion()==""){
+        if(datosMascotas.getDescripcion().equals("")){
             mascota.setDescripcion("Sin descripción");
         } else {
             mascota.setDescripcion(datosMascotas.getDescripcion());
         }
+
+        mascota.setNombreUsuario(datosMascotas.getNombreUsuario());
+        mascota.setTelefono(datosMascotas.getTelefono());
         mascota.setEstado(e);
         mascota.setIdUsuario(datosMascotas.getIdUsuario());
         mascota.setLatitud(datosMascotas.getLatitud());
