@@ -1,7 +1,4 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
-
-import ar.edu.unlam.tallerweb1.domain.excepciones.AlgoritmoNoDisponible;
-import ar.edu.unlam.tallerweb1.domain.excepciones.CodificacionNoDisponible;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
