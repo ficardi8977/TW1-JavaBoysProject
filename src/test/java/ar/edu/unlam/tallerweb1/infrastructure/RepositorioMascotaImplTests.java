@@ -1,6 +1,8 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
+import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import ar.edu.unlam.tallerweb1.domain.tipoRaza.TipoRaza;
@@ -59,9 +61,9 @@ public class RepositorioMascotaImplTests extends SpringTest {
     @Test
     @Transactional
     @Rollback
-    public void ObtenerMascotasDetalle_Encontrado()
-    {
-        long idParametro = 1;
+    public void ObtenerMascotasDetalle_Encontrado() {
+        Mascota masc = dadoQueExisteMascota();
+        long idParametro = masc.getId();
 
         Mascota mascota = this.repositorioMascota.BuscarDetalle(idParametro);
         assertThat(mascota).isNotNull();
@@ -77,6 +79,53 @@ public class RepositorioMascotaImplTests extends SpringTest {
         Mascota mascota = this.repositorioMascota.BuscarDetalle(idMascotaParametro);
         assertThat(mascota).isNull();
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void ObtenerTodasLasMascotas(){
+        List<Mascota> mascotaList = repositorioMascota.TodasLasMascotas();
+        verificoQueLaListaNoEsteVacia(mascotaList);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void queSePuedaRegistarUnaMascota(){
+        DatosMascotas datos = seLlenaUnForm();
+        Boolean registrada = entoncesLaRegistro(datos);
+        verificoQueSeRegistro(registrada);
+    }
+
+    private void verificoQueSeRegistro(Boolean registrada) {
+        assertThat(registrada).isTrue();
+    }
+
+    private Boolean entoncesLaRegistro(DatosMascotas datos) {
+        return this.repositorioMascota.registrarMascota(datos);
+    }
+
+    private DatosMascotas seLlenaUnForm() {
+        DatosMascotas datos = new DatosMascotas();
+        datos.setNombre("Pancho");
+        datos.setRaza("Labrador");
+        datos.setDescripcion("");
+        datos.setTipo(1l);
+        datos.setEstado(1l);
+        datos.setIdUsuario(1);
+        datos.setLatitud("0");
+        datos.setLongitud("0");
+
+        return datos;
+    }
+
+    private Mascota dadoQueExisteMascota() {
+        Mascota mascota = new Mascota();
+        this.repositorioMascota.guardar(mascota);
+        return mascota;
+    }
+
+
 
     private TipoMascota existeUnaMascotaDeTipoMascota()
     {
@@ -102,13 +151,7 @@ public class RepositorioMascotaImplTests extends SpringTest {
         repositorioMascota.Guardar(mascota);
         return mascota;
     }
-    @Test
-    @Transactional
-    @Rollback
-    public void ObtenerTodasLasMascotas(){
-        List<Mascota> mascotaList = repositorioMascota.TodasLasMascotas();
-        verificoQueLaListaNoEsteVacia(mascotaList);
-    }
+
     private void verificoQueLaListaNoEsteVacia(List<Mascota> mascotaList) {
         assertThat(mascotaList.size()).isGreaterThanOrEqualTo(1);
     }

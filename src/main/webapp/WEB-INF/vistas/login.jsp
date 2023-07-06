@@ -50,7 +50,8 @@
 										</div>
 										<a class="small text-muted" href="#!">Olvidaste tu contraseña?</a>
 										<p class="mb-5 pb-lg-2" style="color: #393f81;">No tienes cuenta?
-											<a href="#!"style="color: #393f81;">Registrarte aqui</a></p>
+											<a href="/registrarme" style="color: #393f81;">Registrarte aqui</a>
+										</p>
 									</form>
 
 								</div>

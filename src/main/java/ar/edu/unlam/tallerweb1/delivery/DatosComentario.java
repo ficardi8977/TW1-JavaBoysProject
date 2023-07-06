@@ -7,13 +7,14 @@ public class DatosComentario {
     private Integer idCuidado;
     private Integer idMascota;
 
-
-    public int getClasificacion() {
-        return clasificacion;
-    }
+    private Integer idComentarioPadre;
 
     public void setClasificacion(int clasificacion) {
         this.clasificacion = clasificacion;
+    }
+
+    public int getClasificacion() {
+        return clasificacion;
     }
 
     public String getMensaje() {
@@ -32,19 +33,27 @@ public class DatosComentario {
         this.idUsuario = idUsuario;
     }
 
-    public Integer getIdCuidado() {
-        return idCuidado;
-    }
-
     public void setIdCuidado(Integer idCuidado) {
         this.idCuidado = idCuidado;
     }
 
-    public Integer getIdMascota() {
-        return idMascota;
-    }
-
     public void setIdMascota(Integer idMascota) {
         this.idMascota = idMascota;
+    }
+
+    public Integer getIdComentarioPadre() {
+        return idComentarioPadre;
+    }
+
+    public void setIdComentarioPadre(Integer idComentarioPadre) {
+        this.idComentarioPadre = idComentarioPadre;
+    }
+
+    public Integer getIdCuidado() {
+        return idCuidado;
+    }
+
+    public Integer getIdMascota() {
+        return idMascota;
     }
 }

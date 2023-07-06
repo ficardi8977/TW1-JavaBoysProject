@@ -91,26 +91,25 @@
                                     ${comentario.mensaje}
                                 </p>
 
-                                <div class="small d-flex justify-content-start">
-                                    <a href="#!" class="d-flex align-items-center me-3">
-                                        <i class="far fa-thumbs-up me-2"></i>
-                                        <p class="mb-0">Like</p>
-                                    </a>
-                                    <a href="#!" class="d-flex align-items-center me-3">
-                                        <i class="far fa-comment-dots me-2"></i>
-                                        <p class="mb-0">Comment</p>
-                                    </a>
-                                    <a href="#!" class="d-flex align-items-center me-3">
-                                        <i class="fas fa-share me-2"></i>
-                                        <p class="mb-0">Share</p>
-                                    </a>
-                                </div>
+                                <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${cuidado.id})" class="d-flex align-items-center me-3">
+                                    <i class="far fa-comment-dots me-2"></i>
+                                    <p class="mb-0">comentar</p>
+                                </a>
+                                <div id="contenedorSubcomentarios${comentario.id}"></div>
                             </div>
                             </c:forEach>
-                            <c:if test="${empty sessionScope.IDUSUARIO}">
-                                <h3><span>No hay comentarios</span></h3>
-                                <br>
-                            </c:if>
+                            <c:choose>
+                            <c:when test="${empty sessionScope.IDUSUARIO}">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-auto">
+                                            <h5 class="d-inline mr-2">Para comentar debe tener una cuenta</h5>
+                                            <a class="btn btn-primary btn-sm d-inline" href="/login">Ingresar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
                             <form method="post" action="/comentario/cuidador">
                             <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                                 <div class="d-flex flex-start w-100">
@@ -149,6 +148,8 @@
                                 </div>
                             </div>
                             </form>
+                            </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
@@ -160,12 +161,13 @@
     <jsp:include page="foot.jsp">
         <jsp:param name="foot" value="foot"/>
     </jsp:include>
-        <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>-->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
          <script src="../js/detalle-mapa.js"></script>
         <script src="../js/mercado-pago.js"></script>
         // SDK MercadoPago.js
         <script src="https://sdk.mercadopago.com/js/v2"></script>
         <link href="../css/comentarios.css" rel="stylesheet" >
+        <script src="../js/comentarios.js"></script>
          <!-- FOOTER -->
 </div>
 

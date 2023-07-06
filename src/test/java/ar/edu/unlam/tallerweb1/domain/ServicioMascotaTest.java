@@ -1,5 +1,10 @@
 package ar.edu.unlam.tallerweb1.domain;
 
+import ar.edu.unlam.tallerweb1.domain.estado.ServicioEstado;
+import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
+import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirRaza;
+import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirTipo;
+import ar.edu.unlam.tallerweb1.domain.excepciones.NombreInvalido;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascotaImpl;
@@ -22,6 +27,10 @@ public class ServicioMascotaTest {
     private RepositorioMascota repositorioMascota;
 
     private List<Mascota> mascotas;
+    private DatosMascotas formulario;
+
+    private int idUsuarioExiste = 1;
+    private int idUsuarioNoExiste = 2;
 
 
     @Before
@@ -30,26 +39,35 @@ public class ServicioMascotaTest {
         this.servicioMascota = new ServicioMascotaImpl(this.repositorioMascota);
         this.mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
+        mascota.setVacunas(new Vacunacion());
         Mascota mascota2 = new Mascota();
-        Vacunacion vacuna = new Vacunacion();
-        mascota.setVacunas(vacuna);
         mascotas.add(mascota);
         mascotas.add(mascota2);
+        formulario = seLlenaUnForm();
+        when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuarioExiste)).thenReturn(mascotas);
+        when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuarioNoExiste)).thenReturn(null);
+        when(this.repositorioMascota.registrarMascota(formulario)).thenReturn(true);
         int idUsuario = 1;
-        when(this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuario)).thenReturn(mascotas);
 
     }
 
     @Test
     public void buscarMascotasPorIdUsuario(){
         int idUsuario = 1;
-        List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
+        List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuarioExiste);
         assertThat(mascotas.size()).isEqualTo(2);
+    }
+
+
+    @Test
+    public void noMeTraeMascotasSiElUsuarioNoTieneMascotas(){
+        List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuarioNoExiste);
+        assertThat(mascotas).isNull();
     }
 
     @Test
     public void NoBuscarMascotasPorIdUsuario(){
-        int idUsuario = 2;
+        int idUsuario = 5;
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         assertThat(mascotas.size()).isEqualTo(0);
     }
@@ -61,6 +79,11 @@ public class ServicioMascotaTest {
         assertThat(vacunas).isNotNull();
         assertThat(vacunas.size()).isEqualTo(1);
     }
+    @Test
+    public void queMeRegistreUnaMascota(){
+        Boolean registroLaMascota = this.servicioMascota.registrarMascota(formulario);
+        entoncesSeRegistra(registroLaMascota);
+    }
 
     @Test
     public void queNoMeTraigaLasVacunas(){
@@ -68,13 +91,41 @@ public class ServicioMascotaTest {
         List <Vacunacion> vacunas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario).get(1).getVacunas();
         assertThat(vacunas.size()).isEqualTo(0);
     }
+    @Test (expected = NombreInvalido.class)
+    public void queNoMeRegistreUnaMascotaNombreInvalido(){
+        formulario.setNombre("");
+        Boolean registroLaMascota = this.servicioMascota.registrarMascota(formulario);
+        entoncesSeRegistra(registroLaMascota);
+    }
+    private void entoncesSeRegistra(Boolean registroLaMascota) {
+        assertThat(registroLaMascota).isTrue();
+    }
 
+    @Test (expected = ElegirTipo.class)
+    public void queNoMeRegistreUnaMascotaTipoInvalido(){
+        formulario.setTipo(0l); // En el formulario de registrar mascota es el "seleccionar tipo"
+        Boolean registroLaMascota = this.servicioMascota.registrarMascota(formulario);
+        entoncesSeRegistra(registroLaMascota);
+    }
 
+    @Test (expected = ElegirRaza.class)
+    public void queNoMeRegistreUnaMascotaRazaInvalida(){
+        formulario.setRaza(null);
+        Boolean registroLaMascota = this.servicioMascota.registrarMascota(formulario);
+        entoncesSeRegistra(registroLaMascota);
+    }
 
+    private DatosMascotas seLlenaUnForm() {
+        DatosMascotas datos = new DatosMascotas();
+        datos.setNombre("Pancho");
+        datos.setRaza("Labrador");
+        datos.setDescripcion("");
+        datos.setTipo(1l);
+        datos.setEstado(1l);
+        datos.setIdUsuario(1);
+        datos.setLatitud("0");
+        datos.setLongitud("0");
 
-
-
-
-
-
+        return datos;
+    }
 }

@@ -9,17 +9,16 @@
 
 <body>
 
-
-  <!-- NAV -->
-  <jsp:include page="nav.jsp">
-    <jsp:param name="nav" value="nav" />
-  </jsp:include>
-  <!-- NAV -->
-  <div class="container">
+<!-- NAV -->
+<jsp:include page="nav.jsp">
+  <jsp:param name="nav" value="nav" />
+</jsp:include>
+<!-- NAV -->
+<div class="container">
   <!-- CONTENT -->
   <div class="content" style="width: 100%">
     <c:if test="${not empty mascota}">
-    <h1 style="text-align: center;">${mascota.nombre}</h1>
+      <h1 style="text-align: center;">${mascota.nombre}</h1>
       <div class="card" style="width: 100%;">
         <div class="h-100 d-flex">
           <img src="../img/${mascota.imagen}" class="card-img-top col-lg-6 p-0" alt="Mascota....">
@@ -28,20 +27,20 @@
           <div id="map" class="col-lg-6"></div>
         </div>
 
-      <div class="card-body">
-        <p class="card-text" id="mascotaNombre">Raza: ${mascota.tipoRaza.nombre}</p>
-        <p class="card-text">Estado: ${mascota.estado.nombre}</p>
-        <c:if test="${not empty mascota.fechaAdopcion}">
-          <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
-        </c:if>
-        <p class="card-text">${mascota.descripcion}</p>
+        <div class="card-body">
+          <p class="card-text" id="mascotaNombre">Raza: ${mascota.tipoRaza.nombre}</p>
+          <p class="card-text">Estado: ${mascota.estado.nombre}</p>
+          <c:if test="${not empty mascota.fechaAdopcion}">
+            <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
+          </c:if>
+          <p class="card-text">${mascota.descripcion}</p>
 
-        <!--Valores para dibujar el mapa -->
-        <input type="hidden" value="${mascota.latitud}" id="latitud">
-        <input type="hidden" value="${mascota.longitud}" id="longitud">
-        <input type="hidden" value="${mascota.nombre}" id="nombrePin">
+          <!--Valores para dibujar el mapa -->
+          <input type="hidden" value="${mascota.latitud}" id="latitud">
+          <input type="hidden" value="${mascota.longitud}" id="longitud">
+          <input type="hidden" value="${mascota.nombre}" id="nombrePin">
+        </div>
       </div>
-    </div>
     </c:if>
     <c:if test="${empty mascota}">
       <h3><span>No existe mascota</span></h3>
@@ -100,36 +99,36 @@
                 </div>
               </c:forEach>
               <c:choose>
-              <c:when test="${empty sessionScope.IDUSUARIO}">
-                <div class="container">
-                  <div class="row justify-content-center">
-                    <div class="col-auto m-3">
-                      <h5 class="d-inline">Para comentar debe tener una cuenta</h5>
-                      <a class="btn btn-primary btn-sm d-inline" href="/login">Ingresar</a>
-                    </div>
-                  </div>
-                </div>
-              </c:when>
-              <c:otherwise>
-              <form method="post" action="/comentario/mascota">
-                <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
-                  <div class="d-flex flex-start w-100">
-                    <img class="rounded-circle shadow-1-strong me-3"
-                         src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
-                         height="40" />
-                    <div class="form-outline w-100">
-                      <textarea class="form-control" id="mensaje" name="mensaje" value = "mensaje" rows="4" style="background: #fff;"></textarea>
-                      <input type="hidden" name="idUsuario" value="${sessionScope.IDUSUARIO}">
-                      <input type="hidden" name="idMascota" value="${mascota.id}">
-                      <label class="form-label" for="mensaje">Mensaje</label>
-                      <div class="float-end mt-2 pt-1">
-                        <input type=submit class="btn btn-primary btn-sm">
+                <c:when test="${empty sessionScope.IDUSUARIO}">
+                  <div class="container">
+                    <div class="row justify-content-center">
+                      <div class="col-auto m-3">
+                        <h5 class="d-inline">Para comentar debe tener una cuenta</h5>
+                        <a class="btn btn-primary btn-sm d-inline" href="/login">Ingresar</a>
                       </div>
                     </div>
                   </div>
-                </div>
-              </form>
-              </c:otherwise>
+                </c:when>
+                <c:otherwise>
+                  <form method="post" action="/comentario/mascota">
+                    <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                      <div class="d-flex flex-start w-100">
+                        <img class="rounded-circle shadow-1-strong me-3"
+                             src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                             height="40" />
+                        <div class="form-outline w-100">
+                          <textarea class="form-control" id="mensaje" name="mensaje" value = "mensaje" rows="4" style="background: #fff;"></textarea>
+                          <input type="hidden" name="idUsuario" value="${sessionScope.IDUSUARIO}">
+                          <input type="hidden" name="idMascota" value="${mascota.id}">
+                          <label class="form-label" for="mensaje">Mensaje</label>
+                          <div class="float-end mt-2 pt-1">
+                            <input type=submit class="btn btn-primary btn-sm">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </c:otherwise>
               </c:choose>
             </div>
           </div>
@@ -137,16 +136,17 @@
       </div>
     </section>
 
-  <!-- CONTENT -->
+    <!-- CONTENT -->
 
-  <!-- FOOTER -->
-  <jsp:include page="foot.jsp">
-    <jsp:param name="foot" value="foot" />
-  </jsp:include>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
-  <script src="../js/detalle-mapa.js"></script>
+    <!-- FOOTER -->
+    <jsp:include page="foot.jsp">
+      <jsp:param name="foot" value="foot" />
+    </jsp:include>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
+    <script src="../js/detalle-mapa.js"></script>
     <link href="../css/comentarios.css" rel="stylesheet">
     <!-- FOOTER -->
-    </div>
-  </body>
+  </div>
+</div>
+</body>
 </html>

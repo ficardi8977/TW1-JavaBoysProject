@@ -15,6 +15,12 @@ public class TipoRaza {
     @JoinColumn(name = "IdTipoMascota")
     private TipoMascota tipoMascota;
 
+    public TipoRaza (String nombre, TipoMascota tipoMascota){
+        this.nombre = nombre;
+        this.tipoMascota = tipoMascota;
+    }
+    public TipoRaza(){}
+
     public TipoMascota getTipoMascota() {
         return tipoMascota;
     }

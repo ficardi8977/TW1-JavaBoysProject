@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoEncontrado;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuarioImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -10,6 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
@@ -26,10 +32,11 @@ public class ControladorLoginTest {
     {
         this.servicioLogin = mock(ServicioUsuarioImpl.class);
         this.controladorLogin = new ControladorLogin(this.servicioLogin);
+        when(this.servicioLogin.consultarUsuario(any(), any())).thenReturn(new Usuario());
     }
 
     @Test
-    public void LoginExitoso(){
+    public void LoginExitoso() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         //preparacion
         this.dadoQueExisteUnUsuario();
 
@@ -70,12 +77,12 @@ public class ControladorLoginTest {
 
     private void ValidoLoginNoExitoso(ModelAndView modelAndView) {
         assertThat(modelAndView.getViewName()).isEqualTo("login");
-        assertThat(modelAndView.getModel().values().stream().findFirst().get()).isEqualTo("Usuario o clave incorrecta");
+        assertThat(modelAndView.getModel().values().stream().findFirst().get()).isEqualTo("Correo o clave incorrectos");
         verify(servicioLogin, atLeastOnce()).consultarUsuario("miMail@gmail.com","1234");
     }
 
     private void dadoQueNoExisteUnUsuario() {
-        when(this.servicioLogin.consultarUsuario(any(),any())).thenReturn(null);
+        when(this.servicioLogin.consultarUsuario(any(),any())).thenThrow(new UsuarioNoEncontrado());
     }
 
     private void ValidoLoginExitoso(ModelAndView result) {

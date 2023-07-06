@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.delivery.DatosComentario;
 import ar.edu.unlam.tallerweb1.domain.comentarios.Comentario;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +24,10 @@ public class RepositorioComentarioImpl implements RepositorioComentario{
     public int guardar(Comentario comentario) {
         this.sessionFactory.getCurrentSession().save(comentario);
         return  Math.toIntExact(comentario.getId());
+    }
+    @Override
+    public Comentario obtener(int id){
+        return  (Comentario) this.sessionFactory.getCurrentSession().createCriteria(Comentario.class)
+                .add(Restrictions.eq("id",id)).uniqueResult();
     }
 }

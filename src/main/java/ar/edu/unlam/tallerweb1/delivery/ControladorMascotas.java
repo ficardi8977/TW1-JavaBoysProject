@@ -7,18 +7,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class ControladorMascotas {
 
     private ServicioMascota servicioMascota;
+
     @Autowired
     public ControladorMascotas(ServicioMascota servicioMascota) {
         this.servicioMascota = servicioMascota;
@@ -84,5 +89,50 @@ public class ControladorMascotas {
         model.put("mascotas", mascotas);
         return new ModelAndView("mis-mascotas", model);
     }
+
+    @RequestMapping(value = "/mascotas/cercanas", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Mascota>> buscarMascotasCercanas(@RequestParam("latitud") String latitud,
+                                                                           @RequestParam("longitud") String longitud,
+                                                                           @RequestParam("radio") double radio,
+                                                                           HttpSession session) {
+        DatosMascotasFiltradas request = new DatosMascotasFiltradas();
+        DatosUbicacion ubicacion = new DatosUbicacion();
+        ubicacion.setLatitud(latitud);
+        ubicacion.setLongitud(longitud);
+        ubicacion.setRadio(radio);
+
+        request.setUbicacion(ubicacion);
+
+        // Guardar los datos en la sesión
+        session.setAttribute("ubicacion", request.getUbicacion());
+        session.setAttribute("radio", request.getUbicacion().getRadio());
+
+        List<Mascota> response = this.servicioMascota.obtenerMascotasCercanas(request);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
+    @RequestMapping(path = "/registrar-mascota")
+    public ModelAndView registrarMascota() {
+        return new ModelAndView("registrar-mascota");
+    }
+
+    @RequestMapping(path = "/alta-mascota", method = RequestMethod.POST)
+    public ModelAndView altaMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas, RedirectAttributes redirectAttributes) {
+
+        try{
+            this.servicioMascota.registrarMascota(datosMascotas);
+            redirectAttributes.addFlashAttribute("error", "Mascota registrada!");
+        } catch (Exception e){
+            ModelMap model = new ModelMap();
+            model.put("error", e.getMessage());
+            return new ModelAndView("registrar-mascota", model);
+        }
+
+        return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + datosMascotas.getIdUsuario() + ""));
+    }
+
 
 }

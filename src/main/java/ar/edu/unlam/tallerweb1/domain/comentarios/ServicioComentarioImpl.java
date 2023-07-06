@@ -4,6 +4,8 @@ import ar.edu.unlam.tallerweb1.delivery.DatosComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
 import ar.edu.unlam.tallerweb1.domain.excepciones.mascotas.UsuarioExcepcion;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
+import ar.edu.unlam.tallerweb1.domain.excepciones.CuidadoNoExistenteExcepcion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoExistenteExcepcion;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.excepciones.mascotas.EncontrarMascotaExcepcion;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioComentario;
@@ -39,11 +41,15 @@ public class ServicioComentarioImpl implements ServicioComentario
         comentario.setMensaje(request.getMensaje());
         comentario.setFecha(Date.from(Instant.now()));
 
-        //obtener cuidador
+        if(request.getIdComentarioPadre() != null)
+        {
+            comentario.setComentarioPadre(this.repositorioComentario.obtener(request.getIdComentarioPadre()));
+        }
+
         var cuidado = this.servicioCuidado.ObtenerDetalle(request.getIdCuidado());
         if(cuidado == null)
         {
-            // excepcion al no encontrar cuidado
+            throw new CuidadoNoExistenteExcepcion();
         }
         comentario.setCuidado(cuidado);
 
@@ -51,7 +57,7 @@ public class ServicioComentarioImpl implements ServicioComentario
         var usuario = this.servicioUsuario.consultarUsuario(request.getIdUsuario());
         if(usuario == null)
         {
-            // excepcion al no encontrar usuario
+            throw new UsuarioNoExistenteExcepcion();
         }
         comentario.setUsuario(usuario);
         var idComentario = this.repositorioComentario.guardar(comentario);

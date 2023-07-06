@@ -5,6 +5,7 @@ import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Comentario {
@@ -19,6 +20,7 @@ public class Comentario {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdUsuario")
     private Usuario usuario;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdCuidado")
     private Cuidado cuidado;
@@ -26,6 +28,11 @@ public class Comentario {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "IdMascota")
     private Mascota mascota;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdComentarioPadre")
+    private Comentario comentarioPadre;
+
     private Date fecha;
 
     public Mascota getMascota() {
@@ -84,5 +91,13 @@ public class Comentario {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    public void setComentarioPadre(Comentario comentarioPadre) {
+        this.comentarioPadre = comentarioPadre;
+    }
+
+    public Comentario getComentarioPadre() {
+        return comentarioPadre;
     }
 }

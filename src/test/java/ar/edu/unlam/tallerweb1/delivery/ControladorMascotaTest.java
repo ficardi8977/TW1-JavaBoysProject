@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.NoSeRegistroLaMascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
 import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
@@ -7,8 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
+import org.springframework.web.servlet.view.RedirectView;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -18,11 +24,20 @@ public class ControladorMascotaTest {
 
     private ControladorMascotas controladorMascotas;
     private ServicioMascota servicioMascota;
+    private DatosMascotas datos;
+    private DatosMascotas datosInvalidos;
 
     @Before
     public void init(){
         this.servicioMascota = mock(ServicioMascota.class);
         controladorMascotas = new ControladorMascotas(this.servicioMascota);
+        this.datosInvalidos = new DatosMascotas();
+        this.datos = new DatosMascotas();
+        datos.setIdUsuario(1);
+        when(this.servicioMascota.validarDatos(datos)).thenReturn(true);
+        when(this.servicioMascota.registrarMascota(datos)).thenReturn(true);
+        when(this.servicioMascota.validarDatos(datosInvalidos)).thenReturn(false);
+        when(this.servicioMascota.registrarMascota(datosInvalidos)).thenThrow(new NoSeRegistroLaMascota());
     }
     @Test
     public void getMascotaPorTipo_Ok()
@@ -96,6 +111,55 @@ public class ControladorMascotaTest {
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(result.getBody()).isNull();
     }
+
+    @Test
+    public void cuandoQuieroRegistrarUnaMascotaQueMeLleveAlFormulario() {
+        ModelAndView mav = quieroRegistrarMiMascota();
+        assertThat(mav.getViewName()).isEqualTo("registrar-mascota");
+    }
+
+    @Test
+    public void cuandoRegistroMiMascotaMeDevuelveALaVistaMisMascotas() {
+        RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
+
+        ModelAndView mav = registroMiMascota(datos, redirectAttributes);
+        Object view = mav.getView();
+        String url = ((RedirectView) view).getUrl();
+
+        assertThat(view.getClass()).isEqualTo(RedirectView.class);
+        assertThat(url).isEqualTo("/mascotas/mis-mascotas?idUsuario=1");
+    }
+
+    @Test
+    public void cuandoRegistroMiMascotaMeDevuelveUnMensajeExitoso() {
+        RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
+
+        ModelAndView mav = registroMiMascota(datos, redirectAttributes);
+        Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
+        String mensaje = (String) flashAttributes.get("error");
+
+        assertThat(mensaje).isEqualTo("Mascota registrada!");
+    }
+
+    @Test
+    public void cuandoNoLogroRegistrarMiMascotaMeDevuelveAlFormConMensaje() {
+        RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
+
+        ModelAndView mav = registroMiMascota(datosInvalidos, redirectAttributes);
+
+        assertThat(mav.getViewName()).isEqualTo("registrar-mascota");
+        assertThat(mav.getModel().get("error")).isEqualTo("No se pudo registrar a la mascota");
+    }
+
+    private ModelAndView registroMiMascota(DatosMascotas datos, RedirectAttributes redirectAttributes) {
+        return this.controladorMascotas.altaMascota(datos, redirectAttributes);
+    }
+
+
+    private ModelAndView quieroRegistrarMiMascota() {
+        return this.controladorMascotas.registrarMascota();
+    }
+
 
     private void dadoQueExisteMascota(int idUsuario) {
         List<Mascota> mascotas = new ArrayList<>();

@@ -4,6 +4,8 @@ import ar.edu.unlam.tallerweb1.domain.comentarios.ServicioComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
 import ar.edu.unlam.tallerweb1.domain.excepciones.mascotas.EncontrarMascotaExcepcion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.CuidadoNoExistenteExcepcion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoExistenteExcepcion;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,10 +28,20 @@ public class ControladorComentarios {
         this.servicioComentarios = servicioComentarios;
     }
 
-    @RequestMapping(path = "/comentario/cuidador",method = RequestMethod.POST)
-    public ModelAndView getComentariosDeCuidado(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
-        var idComentario  =  this.servicioComentarios.guardar(datosComentario);
-        return new ModelAndView("redirect:../cuidador/detalle?id="+ Integer.toString(datosComentario.getIdCuidado()));
+    @RequestMapping(path = "/comentario/cuidador", method = RequestMethod.POST)
+    public ModelAndView getComentariosDeCuidador(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
+        try {
+            this.servicioComentarios.guardar(datosComentario);
+            return new ModelAndView("redirect:../cuidador/detalle?id=" + Integer.toString(datosComentario.getIdCuidado()));
+        } catch (UsuarioNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        } catch (CuidadoNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        }
     }
 
     @RequestMapping(path = "/comentario/mascota",method = RequestMethod.POST)
@@ -44,4 +56,21 @@ public class ControladorComentarios {
             return new ModelAndView("error",model);
         }
     }
+
+    @RequestMapping(path = "/comentario/refugio", method = RequestMethod.POST)
+    public ModelAndView getComentariosDeRefugio(@ModelAttribute("datosComentario") DatosComentario datosComentario) {
+        try {
+            this.servicioComentarios.guardar(datosComentario);
+            return new ModelAndView("redirect:../refugio/" + Integer.toString(datosComentario.getIdCuidado()));
+        } catch (UsuarioNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        } catch (CuidadoNoExistenteExcepcion e) {
+            ModelMap model = new ModelMap();
+            model.put("msg", e.getMessage());
+            return new ModelAndView("error",model);
+        }
+    }
 }
+

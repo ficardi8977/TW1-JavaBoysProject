@@ -32,15 +32,16 @@ public class ControladorLogin {
 	public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request) {
 		ModelMap model = new ModelMap();
 
-		Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
-		if (usuarioBuscado != null) {
+		try{
+			Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
 			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
 			request.getSession().setAttribute("NOMBRE", usuarioBuscado.getNombre());
 			request.getSession().setAttribute("IDUSUARIO", usuarioBuscado.getId());
 			return new ModelAndView("redirect:/home");
-		} else {
-			model.put("error", "Usuario o clave incorrecta");
+		} catch (Exception e){
+			model.put("error", e.getMessage());
 		}
+
 		return new ModelAndView("login", model);
 	}
 	@RequestMapping("/logout")
