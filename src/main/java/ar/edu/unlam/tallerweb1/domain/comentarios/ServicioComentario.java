@@ -8,5 +8,5 @@ public interface ServicioComentario {
 
     int guardarMascotas(DatosComentario request);
 
-    boolean eliminar(long id, long idUsuario);
+    void eliminar(long id, long idUsuario);
 }

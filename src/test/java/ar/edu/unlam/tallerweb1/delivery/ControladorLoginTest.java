@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoEncontrado;
+import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuarioImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -92,7 +93,13 @@ public class ControladorLoginTest {
     }
 
     private void dadoQueExisteUnUsuario() {
-        when(this.servicioLogin.consultarUsuario(any(),any())).thenReturn(new Usuario());
+        var tipoUsuario = new TipoUsuario();
+        tipoUsuario.setNombre("Masivo");
+        var usuario = new Usuario();
+        usuario.setNombre("John Doe");
+        usuario.setId(1L);
+        usuario.setTipoUsuario(tipoUsuario);
+        when(this.servicioLogin.consultarUsuario(any(),any())).thenReturn(usuario);
     }
 
 

@@ -63,49 +63,76 @@ public class ControladorComentariosTest{
     private void dadoQueNoExisteUsuario() {
         when(this.servicioComentario.guardar(any())).thenThrow(new UsuarioNoExistenteExcepcion());
     }
-    /*
+
     @Test
     public void BorradoComentario_OK(){
 
         var idComentario = 1;
         var idUsuario = 2;
         var result = this.controladorComentarios.eliminar(idComentario, idUsuario);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
     @Test
     public void BorradoComentario_NoExisteUsuarioExcepcion(){
-        var idComentario = 1;
-        var idUsuario = 1;
+        long idComentario = 1;
+        long idUsuario = 1;
         this.dadoQueNoExisteUsuario(idUsuario);
+
         var result = this.controladorComentarios.eliminar(idComentario, idUsuario);
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-        assertThat(result.getBody()).isEqualTo("");
+        assertThat(result.getBody()).isEqualTo("Usuario ingresado inexistente");
     }
     @Test
     public void BorradoComentario_ComentarioInexistenteExcepcion(){
+        long idComentario = 1;
+        long idUsuario = 1;
+
+        this.dadoQueNoExisteComentario(idComentario);
+
+        var result = this.controladorComentarios.eliminar(idComentario, idUsuario);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(result.getBody()).isEqualTo("Comentario inexistente");
 
     }
     @Test
     public void BorradoComentario_PermisosExcepcion(){
+        long idComentario = 1;
+        long idUsuario = 1;
 
+        this.dadoQueUsuarioNoTienePermiso(idUsuario);
+
+        var result = this.controladorComentarios.eliminar(idComentario, idUsuario);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+        assertThat(result.getBody()).isEqualTo("No tienes permisos necesarios para realizar esta operación");
     }
     @Test
     public void BorradoComentario_ExcepcionInternalServer(){
+        long idComentario = 1;
+        long idUsuario = 1;
+        this.dadoQueFallaServicio();
 
+        var result = this.controladorComentarios.eliminar(idComentario,idUsuario);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        assertThat(result.getBody()).isEqualTo("Error al procesar la baja");
     }
 
+    private void dadoQueNoExisteComentario(long idComentarioQueNoExiste) {
+        Mockito.doThrow(new ComentarioInexistenteExcepcion()).when(servicioComentario).eliminar(Mockito.eq(idComentarioQueNoExiste),Mockito.anyLong());
 
-
-
-    private void dadoQueNoExisteComentario(int idComentarioQueNoExiste) {
-        Mockito.doThrow(new ComentarioInexistenteExcepcion()).when(this.servicioComentario).eliminar(idComentarioQueNoExiste,any();
+            }
+    private void dadoQueNoExisteUsuario(long idUsuarioQueNoExiste) {
+        Mockito.doThrow(new UsuarioNoExistenteExcepcion()).when(servicioComentario).eliminar(Mockito.anyLong(), Mockito.eq(idUsuarioQueNoExiste));
     }
-    private void dadoQueNoExisteUsuario(int idUsuarioQueNoExiste) {
-        Mockito.doThrow(new UsuarioNoExistenteExcepcion()).when(this.servicioComentario).eliminar(any(),idUsuarioQueNoExiste);
-    }    private void dadoQueUsuarioNoTienePermiso(int idUsuarioNoAdministrador) {
-        Mockito.doThrow(new PermisosExcepcion()).when(this.servicioComentario).eliminar(any(),idUsuarioNoAdministrador);
-    }  /*  private void dadoQueFallaServicio(int idComentarioQueNoExiste) {
-        Mockito.doThrow(new UsuarioNoExistenteExcepcion()).when(this.servicioComentario).eliminar(idComentarioQueNoExiste,any();
-    }*/
+    private void dadoQueUsuarioNoTienePermiso(long idUsuarioNoAdministrador) {
+        Mockito.doThrow(new PermisosExcepcion()).when(servicioComentario).eliminar(Mockito.anyLong(), Mockito.eq(idUsuarioNoAdministrador));
+    }
+    private void dadoQueFallaServicio() {
+        doAnswer(invocation -> {throw new Exception("Error al eliminar");}).when(this.servicioComentario).eliminar(anyLong(), anyLong());
+    }
 
 }
