@@ -2,14 +2,15 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.domain.comentarios.Comentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
-import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.InitBinder;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class RepositorioComentarioTest extends SpringTest {
     @Autowired
@@ -61,4 +62,29 @@ public class RepositorioComentarioTest extends SpringTest {
         this.comentario.setUsuario(usuario);
         this.comentario.setCuidado(cuidado);
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void eliminar() {
+
+        Cuidado cuidado = dadoUnCuidadoExistente();
+        Usuario usuario = dadoUnUsuarioExistente();
+
+        dadoUnComentarioQueQuieroGuardar(usuario, cuidado);
+
+        var idComentarioExistente = this.dadoQueExisteUnComentario();
+        Comentario comentarioObtenidoAntes = repositorioComentario.obtener(idComentarioExistente);
+
+        repositorioComentario.eliminar(comentarioObtenidoAntes);
+        Comentario comentarioObtenidoDespues = repositorioComentario.obtener(idComentarioExistente);
+
+        assertNotNull(comentarioObtenidoAntes);
+        assertNull(comentarioObtenidoDespues);
+    }
+    private int dadoQueExisteUnComentario()
+    {
+        return repositorioComentario.guardar(comentario);
+    }
+
 }

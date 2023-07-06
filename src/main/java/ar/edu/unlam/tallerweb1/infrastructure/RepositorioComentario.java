@@ -7,5 +7,7 @@ public interface RepositorioComentario {
 
     int guardar(Comentario request);
 
-    Comentario obtener(int id);
+    Comentario obtener(long id);
+
+    void eliminar(Comentario comentario);
 }

@@ -6,9 +6,9 @@ import ar.edu.unlam.tallerweb1.domain.comentarios.ServicioComentario;
 import ar.edu.unlam.tallerweb1.domain.comentarios.ServicioComentarioImpl;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
-import ar.edu.unlam.tallerweb1.domain.excepciones.CuidadoNoExistenteExcepcion;
-import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoExistenteExcepcion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.*;
 import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
+import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioComentario;
@@ -41,7 +41,7 @@ public class ServicioComentariosTest {
     @Test
     public void guardarComentario(){
         DatosComentario request = new DatosComentario();
-        request.setIdCuidado(1);
+        request.setIdCuidado(1l);
         request.setIdUsuario(1l);
         this.dadoQueExisteCuidadoyUsuario();
 
@@ -52,44 +52,104 @@ public class ServicioComentariosTest {
         verify(servicioUsuario, atLeastOnce()).consultarUsuario(anyLong());
         assertThat(result).isNotNull();
     }
-    @Test
+    @Test(expected = UsuarioNoExistenteExcepcion.class)
     public void guardarComentarioExcepcionUsuario(){
         DatosComentario request = new DatosComentario();
-        request.setIdCuidado(1);
+        request.setIdCuidado(1l);
         request.setIdUsuario(2l);
         this.dadoQueNoExisteUsuario();
 
-        try {
-            var result = servicioComentario.guardar(request);
-        }catch (UsuarioNoExistenteExcepcion e)
-        {
-            assertThat(e.getMessage()).isEqualTo("Usuario ingresado inexistente");
-        }finally {
-            verify(repositorioComentario, never()).guardar(any(Comentario.class));
-            verify(servicioCuidado, atLeastOnce()).ObtenerDetalle(anyLong());
-            verify(servicioUsuario, atLeastOnce()).consultarUsuario(anyLong());
-        }
+        var result = servicioComentario.guardar(request);
 
-
+        verify(repositorioComentario, never()).guardar(any(Comentario.class));
+        verify(servicioCuidado, atLeastOnce()).ObtenerDetalle(anyLong());
+        verify(servicioUsuario, atLeastOnce()).consultarUsuario(anyLong());
     }
-    @Test
+    @Test(expected = CuidadoNoExistenteExcepcion.class)
     public void guardarComentarioExcepcionCuidado(){
         DatosComentario request = new DatosComentario();
-        request.setIdCuidado(2);
+        request.setIdCuidado(2l);
         request.setIdUsuario(1l);
         this.dadoQueNoExisteCuidado();
-        try {
-            var result = this.servicioComentario.guardar(request);
-        }catch(CuidadoNoExistenteExcepcion e)
-        {
-            assertThat(e.getMessage()).isEqualTo("Cuidado ingresado inexistente");
-        }finally {
-            verify(this.repositorioComentario, never()).guardar(any(Comentario.class));
-            verify(servicioCuidado, atLeastOnce()).ObtenerDetalle(anyLong());
-            verify(servicioUsuario, never()).consultarUsuario(anyLong());
-        }
+        var result = this.servicioComentario.guardar(request);
+        verify(this.repositorioComentario, never()).guardar(any(Comentario.class));
+        verify(servicioCuidado, atLeastOnce()).ObtenerDetalle(anyLong());
+        verify(servicioUsuario, never()).consultarUsuario(anyLong());
     }
 
+    @Test
+    public void eliminar_DebeEliminarComentarioCuandoUsuarioEsValido() {
+        long id = 1;
+        long idUsuario = 2;
+
+        Usuario usuario = new Usuario();
+        TipoUsuario tipoUsuarioAdministrador = new TipoUsuario();
+        tipoUsuarioAdministrador.setNombre("Administrador");
+        usuario.setTipoUsuario(tipoUsuarioAdministrador);
+
+        Comentario comentario = new Comentario();
+
+        when(servicioUsuario.consultarUsuario(idUsuario)).thenReturn(usuario);
+        when(repositorioComentario.obtener(id)).thenReturn(comentario);
+
+        this.servicioComentario.eliminar(id, idUsuario);
+
+
+        verify(repositorioComentario, atLeastOnce()).eliminar(comentario);
+    }
+
+    @Test(expected = UsuarioNoExistenteExcepcion.class)
+    public void eliminar_DebeLanzarUsuarioNoExistenteExcepcionCuandoUsuarioEsNulo() {
+        long id = 1;
+        long idUsuario = 2;
+
+        this.dadoUnUsuarioInexistente(idUsuario);
+
+        servicioComentario.eliminar(id, idUsuario);
+    }
+
+    private void dadoUnUsuarioInexistente(long idUsuario) {
+        when(servicioUsuario.consultarUsuario(idUsuario)).thenReturn(null);
+    }
+
+    @Test(expected = ComentarioInexistenteExcepcion.class)
+    public void eliminar_DebeLanzarComentarioInexistenteExcepcionCuandoComentarioEsNulo() {
+        long id = 1;
+        long idUsuario = 2;
+
+        this.dadoUnUsuarioAdministrador(idUsuario);
+        this.dadoUnComentarioInexistente(id);
+
+        this.servicioComentario.eliminar(id, idUsuario);
+    }
+
+    private void dadoUnComentarioInexistente(long id) {
+        when(repositorioComentario.obtener(id)).thenReturn(null);
+    }
+
+    @Test(expected = PermisosExcepcion.class)
+    public void eliminar_DebeLanzarPermisosExcepcionCuandoUsuarioNoEsAdministrador() {
+        long id = 1;
+        long idUsuario = 2;
+
+        this.dadoUnUsuarioMasivo(idUsuario);
+        this.dadoUnComentarioExistente(id);
+
+        this.servicioComentario.eliminar(id, idUsuario);
+    }
+
+    private void dadoUnComentarioExistente(long id) {
+        Comentario comentario = new Comentario();
+        when(repositorioComentario.obtener(id)).thenReturn(comentario);
+    }
+
+    private void dadoUnUsuarioMasivo(long idUsuario) {
+        Usuario usuario = new Usuario();
+        TipoUsuario tipoUsuarioMasivo = new TipoUsuario();
+        tipoUsuarioMasivo.setNombre("Masivo");
+        usuario.setTipoUsuario(tipoUsuarioMasivo);
+        when(servicioUsuario.consultarUsuario(idUsuario)).thenReturn(usuario);
+    }
 
     private void dadoQueExisteCuidadoyUsuario() {
         when(this.servicioCuidado.ObtenerDetalle(1)).thenReturn(new Cuidado());
@@ -103,6 +163,15 @@ public class ServicioComentariosTest {
     private void dadoQueNoExisteUsuario() {
         when(this.servicioCuidado.ObtenerDetalle(1)).thenReturn(new Cuidado());
         when(this.servicioUsuario.consultarUsuario(anyLong())).thenReturn(null);
+    }
+
+    private void dadoUnUsuarioAdministrador(long idUsuario) {
+        Usuario usuario = new Usuario();
+        TipoUsuario tipoUsuarioAdministrador = new TipoUsuario();
+        tipoUsuarioAdministrador.setNombre("Administrador");
+        usuario.setTipoUsuario(tipoUsuarioAdministrador);
+
+        when(servicioUsuario.consultarUsuario(idUsuario)).thenReturn(usuario);
     }
 
 }

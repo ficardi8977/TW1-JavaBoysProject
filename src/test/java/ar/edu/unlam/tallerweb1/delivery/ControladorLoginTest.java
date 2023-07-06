@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoEncontrado;
+import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuarioImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -49,7 +50,7 @@ public class ControladorLoginTest {
         HttpSession sessionMock = Mockito.mock(HttpSession.class);
 
         Mockito.when(requestE.getSession()).thenReturn(sessionMock);
-        Mockito.when(requestE.getSession().getAttribute("ROL")).thenReturn("admin");
+        Mockito.when(requestE.getSession().getAttribute("ROL")).thenReturn("Masivo");
         Mockito.when(requestE.getSession().getAttribute("NOMBRE")).thenReturn("John Doe");
         Mockito.when(requestE.getSession().getAttribute("IDUSUARIO")).thenReturn(1L);
 
@@ -91,7 +92,13 @@ public class ControladorLoginTest {
     }
 
     private void dadoQueExisteUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        when(this.servicioLogin.consultarUsuario(any(),any())).thenReturn(new Usuario());
+        var usuario = new Usuario();
+        var tipoUsuario = new TipoUsuario();
+        tipoUsuario.setNombre("Masivo");
+        usuario.setTipoUsuario(tipoUsuario);
+        usuario.setId(1l);
+        usuario.setNombre("John Doe");
+        when(this.servicioLogin.consultarUsuario(any(), any())).thenReturn(usuario);
     }
 
 

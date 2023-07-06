@@ -3,7 +3,6 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.*;
 import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
-import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

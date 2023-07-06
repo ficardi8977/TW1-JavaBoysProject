@@ -82,6 +82,8 @@
       </div>
     </c:if>
 </div>
+<!-- mercado pago-->
+<div id="wallet_container"></div>
 
 <c:if test="${empty refugio}">
   <h3><span>No hay Refugio</span></h3>
@@ -123,20 +125,18 @@
                             <p class="mt-3 mb-4 pb-2">
                                     ${comentario.mensaje}
                             </p>
-                            <!--  <div class="small d-flex justify-content-start">
-                                <a href="#!" class="d-flex align-items-center me-3">
-                                    <i class="far fa-thumbs-up me-2"></i>
-                                    <p class="mb-0">Like</p>
-                                </a>
-                                <a href="#!" class="d-flex align-items-center me-3">
+                            <div class="small d-flex justify-content-start">
+                                <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${cuidado.id})" class="d-flex align-items-center me-3">
                                     <i class="far fa-comment-dots me-2"></i>
-                                    <p class="mb-0">Comment</p>
+                                    <p class="mb-0">comentar</p>
                                 </a>
-                                <a href="#!" class="d-flex align-items-center me-3">
-                                    <i class="fas fa-share me-2"></i>
-                                    <p class="mb-0">Share</p>
-                                </a>
-                            </div>-->
+                                <c:if test="${sessionScope.ROL eq 'Administrador'}">
+                                    <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.cuidado.id},'refugios')" class="d-flex align-items-center me-3">
+                                        <i class="fa fa-light fa-trash me-2"></i>
+                                        <p class="mb-0">eliminar</p>
+                                    </a>
+                                </c:if>
+                            </div>
                         </div>
                     </c:forEach>
                     <c:choose>
@@ -202,8 +202,11 @@
 </jsp:include>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
 <script src="../js/detalle-refugio.js"></script>
+<script src="../js/comentarios.js"></script>
 <link href="../css/comentarios.css" rel="stylesheet" >
 <script src="../js/redes-sociales.js"></script>
 <link rel="stylesheet" href="../css/redes-sociales.css">
+<script src="../js/mercado-pago.js"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 </body>
 </html>

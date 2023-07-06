@@ -16,6 +16,15 @@ public class DatosMascotas {
     private Long tipo;
     private Long idUsuario;
 
+    public DatosMascotas(String nombre, String descripcion, String imagen, String raza, Long estado, Long tipo, Long idUsuario){
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.raza = raza;
+        this.estado = estado;
+        this.tipo = tipo;
+        this.idUsuario = idUsuario;
+    }
 
     public DatosMascotas(){}
 

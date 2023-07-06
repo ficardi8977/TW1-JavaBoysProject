@@ -33,8 +33,6 @@ public class Usuario {
 
 	private String longitud;
 
-	private String rol;
-
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdTipoUsuario")
 	private TipoUsuario tipoUsuario;
@@ -143,14 +141,6 @@ public class Usuario {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
-
-	public String getRol() {
-		return rol;
-	}
-
-	public void setRol(String rol) {
-		this.rol = rol;
 	}
 
 	public String getImagen() {

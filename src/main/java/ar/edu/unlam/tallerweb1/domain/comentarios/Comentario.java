@@ -11,7 +11,7 @@ import java.util.List;
 public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(nullable = true)
     private int clasificacion;
     @Column(length = 255)
@@ -45,11 +45,11 @@ public class Comentario {
 
 
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
