@@ -3,7 +3,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 public class DatosComentario {
     private int clasificacion;
     private String mensaje;
-    private int idUsuario;
+    private Long idUsuario;
     private Integer idCuidado;
     private Integer idMascota;
 
@@ -25,11 +25,11 @@ public class DatosComentario {
         this.mensaje = mensaje;
     }
 
-    public int getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 

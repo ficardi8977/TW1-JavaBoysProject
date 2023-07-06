@@ -46,7 +46,7 @@
 
           <div class="col form-outline mb-4">
             <label class="form-label" for="password">Contraseña</label>
-            <input type="password" name="password" id="password" class="form-control form-control-lg" required/>
+            <input type="password" name="password" id="password" class="form-control form-control-lg" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$" title="Formato de contraseña: al menos una mayúscula, al menos una minúscula, al menos un digito y que sea de entre 4 y 8 caracteres de largo" required/>
           </div>
         </div>
 
@@ -64,7 +64,7 @@
 
       <div class="form-outline my-3 h6">
         <label class="form-label" for="telefono">Telefono</label>
-        <input type="tel" name="telefono" id="telefono" class="form-control form-control-lg" pattern="^\d{7,8}$" maxlength="8" title="Ingrese un número de teléfono de 7 u 8 digitos" required/>
+        <input type="tel" name="telefono" id="telefono" class="form-control form-control-lg" pattern="^\d{7,11}$" maxlength="11" title="Ingrese un número de teléfono de 7 u 11 digitos" placeholder="1112345678" required/>
       </div>
 
       <div>

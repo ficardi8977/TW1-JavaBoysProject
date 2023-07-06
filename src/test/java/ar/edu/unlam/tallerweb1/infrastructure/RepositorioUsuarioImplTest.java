@@ -3,6 +3,8 @@ package ar.edu.unlam.tallerweb1.infrastructure;
 import ar.edu.unlam.tallerweb1.SpringTest;
 import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.EmailYaRegistrado;
+import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoEncontrado;
+import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +19,14 @@ public class RepositorioUsuarioImplTest extends SpringTest {
     @Autowired
     private RepositorioUsuario repositorioUsuario;
     public static final String CORREO = "magliano@gmail.com";
+
+    public static final String CORREO_NO_REGISTRADO = "magliano2@gmail.com";
     public static final String CLAVE = "Admin123";
 
     @Test
     @Transactional
     @Rollback
     public void queSePuedaRegistrarUnUsuario() {
-
         DatosRegistracion datos = seLlenaUnFormulario();
 
         registroAlUsuario(datos);
@@ -32,29 +35,44 @@ public class RepositorioUsuarioImplTest extends SpringTest {
         entoncesSeRegistro(nuevoUsuario);
     }
 
-    @Test (expected = EmailYaRegistrado.class)
+    @Test (expected = UsuarioNoEncontrado.class)
     @Transactional
     @Rollback
-    public void queNoPuedaRegistrarUnCorreoYaExistenteExcepcion() {
+    public void seBuscaUnUsuarioNoRegistrado() {
+        Usuario noRegistrado = new Usuario();
+        noRegistrado.setEmail(CORREO_NO_REGISTRADO);
 
-        dadoQueYaExisteUnEmail();
-        DatosRegistracion datos = seLlenaUnFormularioRepetido();
+        Usuario encontrado = loBusco(noRegistrado);
+
+        entoncesNoLoEncuentro(encontrado);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void seBuscaUnUsuarioRegistrado() {
+        DatosRegistracion datos = seLlenaUnFormulario();
+        Usuario usuarioRegistrado = new Usuario();
+        usuarioRegistrado.setEmail(datos.getEmail());
 
         registroAlUsuario(datos);
+        Usuario encontrado = loBusco(usuarioRegistrado);
+
+        entoncesLoEncuentro(encontrado);
     }
 
-    private DatosRegistracion seLlenaUnFormularioRepetido() {
-        DatosRegistracion datosForm = new DatosRegistracion();
-        datosForm.setNombre("Tomas");
-        datosForm.setApellido("Magliano");
-        datosForm.setEmail("tomas@gmail.com");
-        datosForm.setPassword(CLAVE);
-        datosForm.setTelefono("112");
-        datosForm.setLatitud("-34.6157959");
-        datosForm.setLongitud("-58.5158707");
-
-        return datosForm;
+    private void entoncesLoEncuentro(Usuario encontrado) {
+        assertThat(encontrado).isNotNull();
     }
+
+    private void entoncesNoLoEncuentro(Usuario encontrado) {
+        assertThat(encontrado).isNull();
+    }
+
+    private Usuario loBusco(Usuario noRegistrado) {
+        return this.repositorioUsuario.buscarGuardado(noRegistrado.getEmail());
+    }
+
 
     private void registroAlUsuario(DatosRegistracion datos) {
         this.repositorioUsuario.registroUsuario(datos);
@@ -81,11 +99,6 @@ public class RepositorioUsuarioImplTest extends SpringTest {
         datosForm.setLongitud("-58.5158707");
 
         return datosForm;
-    }
-
-    private void dadoQueYaExisteUnEmail() {
-        DatosRegistracion datos = seLlenaUnFormularioRepetido();
-        registroAlUsuario(datos);
     }
 
 }

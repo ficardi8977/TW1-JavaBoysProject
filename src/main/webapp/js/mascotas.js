@@ -154,29 +154,4 @@ function actualizarRazas() {
     // Agrega más condiciones para otros tipos de mascotas si es necesario
 }
 
-function mostrarFormularioVacuna() {
-    var vacunasDiv = document.getElementById('vacunas');
-    if (vacunasDiv.style.display === 'block') {
-        vacunasDiv.style.display = 'none';
-    } else {
-        vacunasDiv.style.display = 'block';
-    }
-}
-
-function agregarVacuna() {
-    var nombreVacunaInput = document.getElementById('nombre-vacuna');
-    var nombreVacuna = nombreVacunaInput.value;
-
-    if (nombreVacuna !== '') {
-        var listaVacunas = document.getElementById('listaVacunas');
-        var nuevaVacuna = document.createElement('li');
-        nuevaVacuna.textContent = "- " + nombreVacuna;
-        nuevaVacuna.setAttribute("value", nombreVacuna);
-        nuevaVacuna.setAttribute("name", "vacuna");
-        listaVacunas.appendChild(nuevaVacuna);
-
-        nombreVacunaInput.value = '';
-    }
-}
-
 mostrarTiposMascotas();

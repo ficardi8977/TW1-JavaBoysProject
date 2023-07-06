@@ -29,24 +29,19 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 	}
 
 	@Override
-	public Usuario consultarUsuario (String email, String password) {
+	public Usuario consultarUsuario (String email, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 		String nuevaPassword = encriptarClave(password);
 		return servicioLoginDao.buscarUsuario(email, nuevaPassword);
 	}
 
 	@Override
-	public String encriptarClave(String clave) {
+	public String encriptarClave(String clave) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest md;
 		byte[] bytesClave;
+
 		// Se encripta la contraseña ingresada con el algoritmo MD5
-		try{
-			md = MessageDigest.getInstance("MD5");
-			bytesClave = clave.getBytes("UTF-8");
-		} catch (NoSuchAlgorithmException e) {
-			throw new AlgoritmoNoDisponible();
-		} catch (UnsupportedEncodingException e){
-			throw new CodificacionNoDisponible();
-		}
+		md = MessageDigest.getInstance("MD5");
+		bytesClave = clave.getBytes("UTF-8");
 
 		byte[] hashClave = md.digest(bytesClave);
 
@@ -57,7 +52,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario {
 		String passwordCifrada = sb.toString().toUpperCase();
 		return passwordCifrada;
 	}
-	public Usuario consultarUsuario (int id) {
+	public Usuario consultarUsuario (Long id) {
 		return servicioLoginDao.buscarUsuario(id);
 	}
 

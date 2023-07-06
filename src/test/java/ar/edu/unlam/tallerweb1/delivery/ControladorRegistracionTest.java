@@ -32,7 +32,7 @@ ControladorRegistracionTest {
     private RedirectAttributes redirectAttributes;
 
     @Before
-    public void init() {
+    public void init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.servicioRegistracion = mock(ServicioRegistracionImpl.class);
         this.controladorRegistracion = new ControladorRegistracion(servicioRegistracion);
         this.redirectAttributes = new RedirectAttributesModelMap();
@@ -43,7 +43,7 @@ ControladorRegistracionTest {
         formularioInvalido.setEmail(CORREO_INVALIDO);
         formularioInvalido.setPassword(CLAVE);
         when(this.servicioRegistracion.registroUsuario(formulario)).thenReturn(true);
-        when(this.servicioRegistracion.registroUsuario(formularioInvalido)).thenThrow(EmailInvalido.class);
+        when(this.servicioRegistracion.registroUsuario(formularioInvalido)).thenThrow(new EmailInvalido());
     }
 
     @Test
@@ -67,6 +67,12 @@ ControladorRegistracionTest {
     public void alIngresarCredencialesIncorrectasNoMeRegistro() {
         ModelAndView mav = meRegistro(formularioInvalido, redirectAttributes);
         assertThat(mav.getViewName()).isEqualTo("registrar-usuario");
+    }
+
+    @Test
+    public void alIngresarCredencialesIncorrectasNoMeRegistroYMeDevuelveUnMensajeDeError() {
+        ModelAndView mav = meRegistro(formularioInvalido, redirectAttributes);
+        assertThat(mav.getModel().get("error")).isEqualTo("Formato de email invalido");
     }
 
     @Test
