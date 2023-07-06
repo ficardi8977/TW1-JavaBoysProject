@@ -8,15 +8,15 @@ var canceloPermisos = "false";
 
 function solicitarUbicacion() {
     if (!aceptoPermisos){
-        if(confirm("permisos")){
+        if(confirm("¡Encuentra mascotas cercanas! Permítenos acceder a tu ubicación.")){
             obtenerUbicacion();
             aceptoPermisos = "true";
             localStorage.setItem("aceptoPermisos", "true");
         }else{
             aceptoPermisos = "true";
             localStorage.setItem("aceptoPermisos", "true");
-            canceloPermisos = "true";
             localStorage.setItem("canceloPermisos", "true");
+            canceloPermisos = "true";
         }
 
     }else{
