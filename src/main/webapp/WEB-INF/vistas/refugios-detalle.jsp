@@ -44,6 +44,8 @@
       </div>
     </c:if>
 </div>
+<!-- mercado pago-->
+<div id="wallet_container"></div>
 
 <c:if test="${empty refugio}">
   <h3><span>No hay Refugio</span></h3>
@@ -165,5 +167,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
 <script src="../js/detalle-refugio.js"></script>
 <link href="../css/comentarios.css" rel="stylesheet" >
+<script src="../js/mercado-pago.js"></script>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
 </body>
 </html>

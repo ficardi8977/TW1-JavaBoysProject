@@ -1,3 +1,13 @@
+// tarjetas para pruebas
+/*Mastercard
+numero tarjeta : 5031 7557 3453 0604
+codigo seguridad : 123
+vencimiento : 11/25
+DNI : 12345678
+mail : fernando.icardi@gmail.com
+*/
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
     //var idpreferencia = generarPreferencia();
