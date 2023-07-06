@@ -92,7 +92,13 @@ public class ControladorLoginTest {
     }
 
     private void dadoQueExisteUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        when(this.servicioLogin.consultarUsuario(any(), any())).thenReturn(new Usuario());
+        var usuario = new Usuario();
+        var tipoUsuario = new TipoUsuario();
+        tipoUsuario.setNombre("Masivo");
+        usuario.setTipoUsuario(tipoUsuario);
+        usuario.setId(1l);
+        usuario.setNombre("John Doe");
+        when(this.servicioLogin.consultarUsuario(any(), any())).thenReturn(usuario);
     }
 
 

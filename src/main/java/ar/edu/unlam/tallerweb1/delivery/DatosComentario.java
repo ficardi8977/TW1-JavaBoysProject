@@ -3,7 +3,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 public class DatosComentario {
     private int clasificacion;
     private String mensaje;
-    private int idUsuario;
+    private Long idUsuario;
     private Long idCuidado;
     private Long idMascota;
 
