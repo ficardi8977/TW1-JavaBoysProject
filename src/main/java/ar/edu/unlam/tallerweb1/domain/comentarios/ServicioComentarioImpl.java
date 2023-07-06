@@ -84,7 +84,7 @@ public class ServicioComentarioImpl implements ServicioComentario
     }
 
     @Override
-    public void eliminar(long id, long idUsuario) {
+    public boolean eliminar(long id, long idUsuario) {
 
         var usuario = this.servicioUsuario.consultarUsuario(idUsuario);
         esUsuarioValidoParaComentario(usuario);
@@ -94,6 +94,7 @@ public class ServicioComentarioImpl implements ServicioComentario
         existeComentario(comentario);
 
         this.repositorioComentario.eliminar(comentario);
+        return  true;
     }
 
     private void existeComentario(Comentario comentario) {
