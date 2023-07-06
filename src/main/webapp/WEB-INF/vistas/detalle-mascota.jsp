@@ -30,15 +30,14 @@
             <div id="map" class="col-lg-6"></div>
           </div>
 
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between" style="height: 150px;">
           <div>
             <div class="card-body">
-              <p class="card-text" id="mascotaNombre">Raza: ${mascota.tipoRaza.nombre}</p>
-              <p class="card-text">Estado: ${mascota.estado.nombre}</p>
+              <p class="card-text" id="mascotaNombre" style="margin: 30px 0 30px 0;">Raza: ${mascota.tipoRaza.nombre}</p>
+              <p class="card-text" style="margin: 30px 0 30px 0;">Estado: ${mascota.estado.nombre}</p>
               <c:if test="${not empty mascota.fechaAdopcion}">
                 <p class="card-text">Fecha de Adopcion: ${mascota.fechaAdopcion}</p>
               </c:if>
-              <p class="card-text">${mascota.descripcion}</p>
 
               <!--Valores para dibujar el mapa -->
               <input type="hidden" value="${mascota.latitud}" id="latitud">
@@ -46,7 +45,7 @@
               <input type="hidden" value="${mascota.nombre}" id="nombrePin">
             </div>
           </div>
-          <c:if test="${mascota.estado.nombre eq 'Perdido'}">
+          <c:if test="${mascota.estado.nombre eq 'Perdido' || mascota.estado.nombre eq 'EnAdopcion'}">
             <div class="share-button d-flex">
               <div class="copy-link m-2">
                 <ul style="list-style:none;border-radius: 10px;overflow: hidden" class="p-0">
@@ -54,20 +53,38 @@
                     <span class="material-symbols-outlined icono-copiar-enlace mr-1 text-center">link</span>
                     <span class="copiar-enlace">Copiar enlace</span>
                   </li>
-                  <li class="lista-compartir">
-                    <div>
-                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
-                    </div>
-                    <a class="enlace-compartir-tw m-0" href='https://twitter.com/intent/tweet?text=${mascota.nombre} está perdido/a, ayuda a encontrar su paradero: ' data-action="share/tweet" target="_blank">
-                      <span class="copiar-enlace">Twitter</span>
-                    </a>
-                  </li>
-                  <li class="lista-compartir">
-                    <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
-                    <a class="enlace-compartir-wpp m-0" href='https://web.whatsapp.com/send?text=${mascota.nombre} está perdido/a, ayuda a encontrar su paradero: ' target="_blank">
-                      <span class="copiar-enlace">WhatsApp</span>
-                    </a>
-                  </li>
+                  <c:if test="${mascota.estado.nombre eq 'Perdido'}">
+                    <li class="lista-compartir">
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+                      </div>
+                      <a class="enlace-compartir-tw m-0" href='https://twitter.com/intent/tweet?text=${mascota.nombre} está perdido/a, ayuda a encontrar su paradero: ' data-action="share/tweet" target="_blank">
+                        <span class="copiar-enlace">Twitter</span>
+                      </a>
+                    </li>
+                    <li class="lista-compartir">
+                      <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
+                      <a class="enlace-compartir-wpp m-0" href='https://web.whatsapp.com/send?text=${mascota.nombre} está perdido/a, ayuda a encontrar su paradero: ' target="_blank">
+                        <span class="copiar-enlace">WhatsApp</span>
+                      </a>
+                    </li>
+                  </c:if>
+                  <c:if test="${mascota.estado.nombre eq 'EnAdopcion'}">
+                    <li class="lista-compartir">
+                      <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+                      </div>
+                      <a class="enlace-compartir-tw m-0" href='https://twitter.com/intent/tweet?text=${mascota.nombre} está en adopción, si te interesa adoptarlo/a entra al siguiente enlace: ' data-action="share/tweet" target="_blank">
+                        <span class="copiar-enlace">Twitter</span>
+                      </a>
+                    </li>
+                    <li class="lista-compartir">
+                      <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
+                      <a class="enlace-compartir-wpp m-0" href='https://web.whatsapp.com/send?text=${mascota.nombre} está en adopción, si te interesa adoptarlo/a entra al siguiente enlace: ' target="_blank">
+                        <span class="copiar-enlace">WhatsApp</span>
+                      </a>
+                    </li>
+                  </c:if>
                 </ul>
               </div>
               <div class="card-body btn-share p-0 m-2">
@@ -75,12 +92,29 @@
               </div>
             </div>
           </c:if>
+
+        </div>
+
+        <div>
+          <p class="card-text mb-3 mt-4" style="padding:20px;">${mascota.descripcion}</p>
         </div>
 
         <c:if test="${mascota.estado.nombre eq 'Perdido'}">
           <c:if test="${not empty mascota.telefono}">
-            <div class="d-flex align-items-center m-3">
+            <div class="d-flex align-items-center" style="margin:20px;">
               <p class="m-0">Si tenés información del paradero de ${mascota.nombre}, por favor contactate con ${mascota.nombreUsuario} (${mascota.telefono})</p>
+              <button class="compartir ml-2" style="width: 40px;height: 40px">
+                <a href="http://wa.me/${mascota.telefono}" class="d-flex" style="text-decoration: none" target="_blank" title="Contactar por WhatsApp">
+                  <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
+                </a>
+              </button>
+            </div>
+          </c:if>
+        </c:if>
+        <c:if test="${mascota.estado.nombre eq 'EnAdopcion'}">
+          <c:if test="${not empty mascota.telefono}">
+            <div class="d-flex align-items-center m-3">
+              <p class="m-0">Si estás interesado/a en adoptar a ${mascota.nombre}, por favor contactate con ${mascota.nombreUsuario} (${mascota.telefono})</p>
               <button class="compartir ml-2" style="width: 40px;height: 40px">
                 <a href="http://wa.me/${mascota.telefono}" class="d-flex" style="text-decoration: none" target="_blank" title="Contactar por WhatsApp">
                   <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
