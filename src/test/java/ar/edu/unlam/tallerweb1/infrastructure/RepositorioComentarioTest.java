@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 public class RepositorioComentarioTest extends SpringTest {
     @Autowired
     private RepositorioComentario repositorioComentario;
@@ -59,4 +62,29 @@ public class RepositorioComentarioTest extends SpringTest {
         this.comentario.setUsuario(usuario);
         this.comentario.setCuidado(cuidado);
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void eliminar() {
+
+        Cuidado cuidado = dadoUnCuidadoExistente();
+        Usuario usuario = dadoUnUsuarioExistente();
+
+        dadoUnComentarioQueQuieroGuardar(usuario, cuidado);
+
+        var idComentarioExistente = this.dadoQueExisteUnComentario();
+        Comentario comentarioObtenidoAntes = repositorioComentario.obtener(idComentarioExistente);
+
+        repositorioComentario.eliminar(comentarioObtenidoAntes);
+        Comentario comentarioObtenidoDespues = repositorioComentario.obtener(idComentarioExistente);
+
+        assertNotNull(comentarioObtenidoAntes);
+        assertNull(comentarioObtenidoDespues);
+    }
+    private int dadoQueExisteUnComentario()
+    {
+        return repositorioComentario.guardar(comentario);
+    }
+
 }
