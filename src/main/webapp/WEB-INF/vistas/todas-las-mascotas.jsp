@@ -18,17 +18,12 @@
 <div class="container-fluid">
     <h1>Bienvenidos a todas las mascotas</h1>
 
-
-<div id="tiposMascotasContainer"></div>
-    <div class="dropdown">
-        <estad
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Perdidos</a>
-            <a class="dropdown-item" href="#">Adopcion</a>
-            <a class="dropdown-item" href="#">Todos</a>
+    <div class="row">
+        <div class="col-md-3">
+            <div id="tiposMascotasContainer" class="mb-3"></div>
+        </div>
+        <div class="col-md-3">
+            <div id="estadosMascotasContainer" class="mb-3"></div>
         </div>
     </div>
 <div id="contenido-home">
