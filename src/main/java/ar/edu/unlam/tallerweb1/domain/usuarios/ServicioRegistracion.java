@@ -1,7 +1,9 @@
 package ar.edu.unlam.tallerweb1.domain.usuarios;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosRegistracion;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
@@ -15,4 +17,7 @@ public interface ServicioRegistracion {
     String encriptarClave(String clave) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 
     Boolean datosValidos(DatosRegistracion datosRegistracion);
+
+    String registrarImagen(MultipartFile img) throws IOException;
+
 }

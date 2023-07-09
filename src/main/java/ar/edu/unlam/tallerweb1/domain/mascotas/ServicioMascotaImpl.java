@@ -9,7 +9,12 @@ import ar.edu.unlam.tallerweb1.domain.excepciones.NombreInvalido;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,6 +64,17 @@ public class ServicioMascotaImpl implements ServicioMascota {
         validarDatos(datosMascotas);
         return this.repositorioMascota.registrarMascota(datosMascotas);
     }
+
+    @Override
+    public String registrarImagen(MultipartFile img) throws IOException {
+        String rutaImagen = "C:\\Taller Web\\TW1-JavaBoysProject\\src\\main\\webapp\\img\\" + img.getOriginalFilename();
+        byte[] bytes = img.getBytes();
+        Path path = Paths.get(rutaImagen);
+        Files.write(path, bytes);
+
+        return img.getOriginalFilename();
+    }
+
     @Override
     public Boolean validarDatos(DatosMascotas datosMascotas){
         Boolean datosValidos = false;

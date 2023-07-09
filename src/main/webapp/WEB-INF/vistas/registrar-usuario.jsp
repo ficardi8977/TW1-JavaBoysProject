@@ -16,7 +16,7 @@
 
   <div class="container p-4 m-4 w-80 rounded-4 mx-auto" style="background-color: white;">
 
-    <form action="/registrar-usuario" method="post">
+    <form action="/registrar-usuario" method="post" enctype="multipart/form-data">
 
       <div class="d-flex align-items-center mb-3 pb-1">
         <img class="img-fluid img-thumbnail border-0 rounded mx-auto d-block" style="width: 20%; height: auto;" src="img/AMIPETS2.PNG" alt="AmiPets">
@@ -50,6 +50,11 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="h6">
+        <label for="img">Imagen</label>
+        <input type="file" id="img" name="img" class="form-control form-control-lg">
       </div>
 
       <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">

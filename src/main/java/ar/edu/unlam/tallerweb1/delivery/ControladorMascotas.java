@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -120,9 +121,12 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/alta-mascota", method = RequestMethod.POST)
-    public ModelAndView altaMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas, RedirectAttributes redirectAttributes) {
+    public ModelAndView altaMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas, @RequestParam("img") MultipartFile img, RedirectAttributes redirectAttributes) {
 
         try{
+            if(!img.isEmpty()){
+                datosMascotas.setImagen(this.servicioMascota.registrarImagen(img));
+            }
             this.servicioMascota.registrarMascota(datosMascotas);
             redirectAttributes.addFlashAttribute("error", "Mascota registrada!");
         } catch (Exception e){

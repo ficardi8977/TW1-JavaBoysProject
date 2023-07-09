@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
@@ -27,6 +28,7 @@ public class ControladorMascotaTest {
     private DatosMascotas datos;
     private DatosMascotas datosInvalidos;
     private RedirectAttributes redirectAttributes;
+    private MultipartFile img;
 
     @Before
     public void init(){
@@ -34,6 +36,7 @@ public class ControladorMascotaTest {
         controladorMascotas = new ControladorMascotas(this.servicioMascota);
         this.datosInvalidos = new DatosMascotas();
         this.redirectAttributes = new RedirectAttributesModelMap();
+        this.img = mock(MultipartFile.class);
         this.datos = new DatosMascotas();
         datos.setIdUsuario(1l);
         when(this.servicioMascota.validarDatos(datos)).thenReturn(true);
@@ -122,7 +125,7 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoRegistroMiMascotaMeDevuelveALaVistaMisMascotas() {
-        ModelAndView mav = registroMiMascota(datos, redirectAttributes);
+        ModelAndView mav = registroMiMascota(datos, img, redirectAttributes);
         Object view = mav.getView();
         String url = ((RedirectView) view).getUrl();
 
@@ -132,7 +135,7 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoRegistroMiMascotaMeDevuelveUnMensajeExitoso() {
-        ModelAndView mav = registroMiMascota(datos, redirectAttributes);
+        ModelAndView mav = registroMiMascota(datos, img, redirectAttributes);
         Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
         String mensaje = (String) flashAttributes.get("error");
 
@@ -141,14 +144,14 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoNoLogroRegistrarMiMascotaMeDevuelveAlFormConMensaje() {
-        ModelAndView mav = registroMiMascota(datosInvalidos, redirectAttributes);
+        ModelAndView mav = registroMiMascota(datosInvalidos, img, redirectAttributes);
 
         assertThat(mav.getViewName()).isEqualTo("registrar-mascota");
         assertThat(mav.getModel().get("error")).isEqualTo("No se pudo registrar a la mascota");
     }
 
-    private ModelAndView registroMiMascota(DatosMascotas datos, RedirectAttributes redirectAttributes) {
-        return this.controladorMascotas.altaMascota(datos, redirectAttributes);
+    private ModelAndView registroMiMascota(DatosMascotas datos, MultipartFile img, RedirectAttributes redirectAttributes) {
+        return this.controladorMascotas.altaMascota(datos, img, redirectAttributes);
     }
 
 

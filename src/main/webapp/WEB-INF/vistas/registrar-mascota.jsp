@@ -16,7 +16,7 @@
 </jsp:include>
 
 <div class="container pt-4 pb-2 px-4 m-4 w-80 rounded-4 mx-auto" style="background-color: white">
-    <form action="/alta-mascota" method="post" >
+    <form action="/alta-mascota" method="post" enctype="multipart/form-data" >
         <div class="d-flex align-items-center mb-3 pb-1">
             <img class="img-fluid img-thumbnail border-0 rounded mx-auto d-block" style="width: 20%; height: auto;" src="img/AMIPETS2.PNG" alt="AmiPets">
         </div>
@@ -61,6 +61,11 @@
             </div>
         </div>
 
+        <div class="h6">
+            <label for="img">Imagen</label>
+            <input type="file" id="img" name="img" class="form-control form-control-lg">
+        </div>
+
         <input type="hidden" id="telefono" name="telefono" value="${sessionScope.TELEFONO}">
         <input type="hidden" id="nombreUsuario" name="nombreUsuario" value="${sessionScope.NOMBRE}">
 
@@ -87,8 +92,6 @@
             <button type="submit" class="btn btn-dark btn-lg btn-block">Agregar Mascota</button>
         </div>
     </form>
-
-
 </div>
 
 

@@ -5,8 +5,13 @@ import ar.edu.unlam.tallerweb1.domain.excepciones.*;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -85,5 +90,14 @@ public class ServicioRegistracionImpl implements ServicioRegistracion {
         datosRegistracion.setPassword(nuevaPassword);
 
         return this.repositorioUsuario.registroUsuario(datosRegistracion);
+    }
+    @Override
+    public String registrarImagen(MultipartFile img) throws IOException {
+        String rutaImagen = "C:\\Taller Web\\TW1-JavaBoysProject\\src\\main\\webapp\\img\\" + img.getOriginalFilename();
+        byte[] bytes = img.getBytes();
+        Path path = Paths.get(rutaImagen);
+        Files.write(path, bytes);
+
+        return img.getOriginalFilename();
     }
 }
