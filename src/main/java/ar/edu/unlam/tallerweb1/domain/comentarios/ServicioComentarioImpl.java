@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.comentarios;
 
+import ar.edu.unlam.tallerweb1.delivery.DTOComentario;
 import ar.edu.unlam.tallerweb1.delivery.DatosComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
@@ -17,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ServicioComentarioImpl implements ServicioComentario
@@ -96,6 +100,20 @@ public class ServicioComentarioImpl implements ServicioComentario
         this.repositorioComentario.eliminar(comentario);
     }
 
+    @Override
+    public List<DTOComentario> obtenerPorIdCuidado(long idCuidado) {
+
+        var comentarios = this.repositorioComentario.obtenerPorIdCuidado(idCuidado);
+
+        List<DTOComentario> listaDTO = new ArrayList<>();
+
+        if (!comentarios.isEmpty())
+        {
+             listaDTO = this.construirComentariosDTO(comentarios);
+        }
+        return listaDTO;
+    }
+
     private void existeComentario(Comentario comentario) {
         if(comentario == null)
         {
@@ -131,5 +149,43 @@ public class ServicioComentarioImpl implements ServicioComentario
         {
             throw new EncontrarMascotaExcepcion();
         }
+    }
+
+    private List<DTOComentario> construirComentariosDTO(List<Comentario> comentarios) {
+        List<DTOComentario> comentariosDTO = new ArrayList<>();
+
+        for (Comentario comentario : comentarios) {
+            DTOComentario comentarioDTO = new DTOComentario();
+            comentarioDTO.setId(comentario.getId());
+            comentarioDTO.setClasificacion(comentario.getClasificacion());
+            comentarioDTO.setMensaje(comentario.getMensaje());
+            comentarioDTO.setIdUsuario(comentario.getUsuario().getId());
+            if(comentario.getMascota() != null){
+                comentarioDTO.setIdMascota(comentario.getMascota().getId());
+            }
+            if(comentario.getCuidado() != null){
+                comentarioDTO.setIdCuidado(comentario.getCuidado().getId());
+            }
+            comentarioDTO.setFecha(comentario.getFecha());
+
+            Comentario comentarioPadre = comentario.getComentarioPadre();
+            if (comentarioPadre != null) {
+                for (DTOComentario elemento : comentariosDTO) {
+                    if (elemento.getId() == comentarioPadre.getId()) {
+                        var subcomentarios = elemento.getSubComentarios();
+                        if(subcomentarios == null) {
+                            subcomentarios = new ArrayList<DTOComentario>();
+                        }
+                        subcomentarios.add(comentarioDTO);
+                        elemento.setSubComentarios(subcomentarios);
+                        break;
+                    }
+                }
+            }else {
+                comentariosDTO.add(comentarioDTO);
+            }
+        }
+
+        return comentariosDTO;
     }
 }

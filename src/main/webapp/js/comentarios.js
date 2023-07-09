@@ -68,3 +68,21 @@ function borrarComentario(idComentario, idUsuario, idFuncionalidad, funcionalida
             console.error('Error en la solicitud:', error);
         });
 }
+
+function cargarComentario(idComentario) {
+    fetch(`/api/comentarios/${idComentario}`)
+        .then(response => response.json())
+        .then(data => {
+            const contenedorSubcomentarios = document.getElementById(`contenedorSubcomentarios${idComentario}`);
+            contenedorSubcomentarios.innerHTML = ''; // Limpiar el contenedor antes de agregar los nuevos subcomentarios
+
+            data.forEach(subcomentario => {
+                const subcomentarioElement = document.createElement('div');
+                subcomentarioElement.textContent = subcomentario.mensaje;
+                contenedorSubcomentarios.appendChild(subcomentarioElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error al cargar los subcomentarios:', error);
+        });
+}

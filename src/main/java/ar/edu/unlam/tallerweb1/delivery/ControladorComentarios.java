@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
+import ar.edu.unlam.tallerweb1.domain.comentarios.Comentario;
 import ar.edu.unlam.tallerweb1.domain.comentarios.ServicioComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
@@ -18,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -84,6 +86,19 @@ public class ControladorComentarios {
             return new ResponseEntity<String>(ex.getMessage(), HttpStatus.FORBIDDEN);
         } catch (Exception ex) {
             return new ResponseEntity<String>("Error al procesar la baja", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @RequestMapping(path = "/comentarios/cuidado/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<DTOComentario>> getComentariosDeCuidador(@PathVariable("id") long id) {
+        try {
+            var response = this.servicioComentarios.obtenerPorIdCuidado(id);
+            return new ResponseEntity<List<DTOComentario>>(response, HttpStatus.OK);
+        } catch (CuidadoNoExistenteExcepcion ex) {
+            return new ResponseEntity<List<DTOComentario>>(new ArrayList<DTOComentario>(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<List<DTOComentario>>(new ArrayList<DTOComentario>(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
