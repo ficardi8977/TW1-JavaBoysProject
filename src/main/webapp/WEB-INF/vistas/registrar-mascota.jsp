@@ -62,8 +62,11 @@
         </div>
 
         <div class="h6">
-            <label for="img">Imagen</label>
-            <input type="file" id="img" name="img" class="form-control form-control-lg">
+            <label for="img" class="mb-2">Imagen</label>
+            <div class="d-flex align-items-center mb-2">
+                <img src="../img/huellita.jpg" id="profile-pic" style="height: 100px;">
+                <input type="file" id="img" name="img" accept="image/jpeg, image/png, image/jpg" class="form-control form-control-lg ml-2">
+            </div>
         </div>
 
         <input type="hidden" id="telefono" name="telefono" value="${sessionScope.TELEFONO}">
@@ -102,7 +105,7 @@
 
 <script src="../js/mapa-registro.js"></script>
 <script src="../js/mascotas.js"></script>
+<script src="../js/registro-imagen.js"></script>
 </body>
 </html>
-
 

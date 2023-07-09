@@ -53,8 +53,11 @@
       </div>
 
       <div class="h6">
-        <label for="img">Imagen</label>
-        <input type="file" id="img" name="img" class="form-control form-control-lg">
+        <label for="img" class="mb-2">Imagen</label>
+        <div class="d-flex align-items-center mb-2">
+          <img src="../img/defaultUser.png" id="profile-pic" style="height: 100px;">
+          <input type="file" id="img" name="img" accept="image/jpeg, image/png, image/jpg" class="form-control form-control-lg ml-2">
+        </div>
       </div>
 
       <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">
@@ -95,6 +98,7 @@
   </jsp:include>
 
   <script src="../js/mapa-registro.js"></script>
+  <script src="../js/registro-imagen.js"></script>
 </body>
 </html>
 
@@ -102,5 +106,7 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&libraries=places&callback=initAutocomplete"></script>
 -->
+
+
 
 

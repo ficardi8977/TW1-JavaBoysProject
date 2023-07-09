@@ -8,9 +8,11 @@ import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirTipo;
 import ar.edu.unlam.tallerweb1.domain.excepciones.NombreInvalido;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +25,8 @@ import java.util.stream.Collectors;
 public class ServicioMascotaImpl implements ServicioMascota {
 
     private RepositorioMascota repositorioMascota;
+    @Autowired
+    private ServletContext servletContext;
 
     @Autowired
     public ServicioMascotaImpl(RepositorioMascota repositorioMascota) {
@@ -67,7 +71,9 @@ public class ServicioMascotaImpl implements ServicioMascota {
 
     @Override
     public String registrarImagen(MultipartFile img) throws IOException {
-        String rutaImagen = "C:\\Taller Web\\TW1-JavaBoysProject\\src\\main\\webapp\\img\\" + img.getOriginalFilename();
+        // String rutaImagen = "C:\\Taller Web\\TW1-JavaBoysProject\\src\\main\\resources\\imgs\\" + img.getOriginalFilename();
+        String directorioImagenes = servletContext.getRealPath("/img/");
+        String rutaImagen = directorioImagenes + img.getOriginalFilename();
         byte[] bytes = img.getBytes();
         Path path = Paths.get(rutaImagen);
         Files.write(path, bytes);

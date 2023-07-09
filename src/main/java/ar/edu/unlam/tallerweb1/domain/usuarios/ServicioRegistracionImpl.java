@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
@@ -19,6 +20,9 @@ import java.security.NoSuchAlgorithmException;
 public class ServicioRegistracionImpl implements ServicioRegistracion {
 
     private RepositorioUsuario repositorioUsuario;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @Autowired
     public ServicioRegistracionImpl (RepositorioUsuario repositorioUsuario) {
@@ -93,7 +97,8 @@ public class ServicioRegistracionImpl implements ServicioRegistracion {
     }
     @Override
     public String registrarImagen(MultipartFile img) throws IOException {
-        String rutaImagen = "C:\\Taller Web\\TW1-JavaBoysProject\\src\\main\\webapp\\img\\" + img.getOriginalFilename();
+        String directorioImagenes = servletContext.getRealPath("/img/");
+        String rutaImagen = directorioImagenes + img.getOriginalFilename();
         byte[] bytes = img.getBytes();
         Path path = Paths.get(rutaImagen);
         Files.write(path, bytes);
