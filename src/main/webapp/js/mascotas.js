@@ -1,9 +1,13 @@
-var submenuSeleccionadoGlobal = 0;
-
 var latitud = sessionStorage.getItem('ubicacion.latitud');
 var longitud = sessionStorage.getItem('ubicacion.longitud');
 var radio = sessionStorage.getItem('radio');
-
+const labelPerdidoMascota = "Perdidos";
+const labelAdopcionMascota = "Adopción";
+const estadoPerdidoMascota = 'Perdido';
+const estadoAdopcionMascota = 'EnAdopcion';
+const estadoOpcion = 'estado';
+const tipoOpcion = 'tipo';
+var tipoSeleccion = "";
 var url =
     "/mascotas/cercanas?latitud=" +
     latitud +
@@ -11,75 +15,105 @@ var url =
     longitud+
     "&radio=" +
     radio;
-function actualizarSubmenuSeleccionado(opcion) {
-    submenuSeleccionadoGlobal = opcion;
-}
 
-async function obtenerTiposMascotas() {
+async function obtenerDatosSelect(url) {
     try {
-        const response = await fetch('/tipoMascota');
+        const response = await fetch(url);
         if (!response.ok) {
-            throw new Error('Error al obtener los tipos de mascotas.');
+            throw new Error('Error al obtener los datos del select.');
         }
-        const tiposMascotas = await response.json();
-        return tiposMascotas;
+        const datos = await response.json();
+        return datos;
     } catch (error) {
         console.error(error);
         return [];
     }
 }
 
-async function mostrarTiposMascotas() {
-    const tiposMascotasContainer = document.getElementById('tiposMascotasContainer');
-    tiposMascotasContainer.innerHTML = 'Cargando tipos de mascotas...';
+function crearSelect(containerId, labelNombre, selectId, defaultOptionText, datos, tipoSeleccion) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = `Cargando ${labelNombre}...`;
 
     try {
-        const tiposMascotas = await obtenerTiposMascotas();
-        tiposMascotasContainer.innerHTML = '';
-        // creando label
+        container.innerHTML = '';
+        // Crear div de columna para el título
+        const titleColumnDiv = document.createElement('div');
+        titleColumnDiv.classList.add('col-auto'); // Establecer el ancho automático de la columna
+        container.appendChild(titleColumnDiv);
+        // Crear label con estilos de Bootstrap dentro de la columna
         const label = document.createElement('label');
-        label.textContent = "Tipo de Mascota";
-        tiposMascotasContainer.appendChild(label);
-        // creando select
+        label.textContent = labelNombre;
+        label.classList.add('form-label', 'mb-1', 'fw-bold'); // Agregar clases de Bootstrap
+        titleColumnDiv.appendChild(label);
+
+        // Crear div de columna para el select
+        const selectColumnDiv = document.createElement('div');
+        selectColumnDiv.classList.add('col'); // Establecer el ancho de la columna al 100%
+        container.appendChild(selectColumnDiv);
+        // Crear select con estilos de Bootstrap dentro de la columna
         const selectElement = document.createElement('select');
-        selectElement.id = "tipoMascotaSelector"
-        selectElement.value = "tipoMascotaSelector"
-        selectElement.classList.add('form-select');
+        selectElement.id = selectId;
+        selectElement.value = selectId;
+        selectElement.classList.add('form-select', 'w-100'); // Agregar clase de Bootstrap para establecer el ancho al 100%
         selectElement.setAttribute('aria-label', 'Default select example');
 
         const optionDefault = document.createElement('option');
         optionDefault.value = 0;
         optionDefault.selected = true;
-        optionDefault.textContent = "Todos";
+        optionDefault.textContent = defaultOptionText;
         selectElement.appendChild(optionDefault);
 
-        tiposMascotas.forEach(tipo => {
-            const optionElement = document.createElement('option');
-            optionElement.value = tipo.id;
-            optionElement.textContent = tipo.nombre;
-            selectElement.appendChild(optionElement);
+        datos.forEach(dato => {
+            // Agregar condición para mostrar solo "Perdidos" y "Adopción" en el select de estados
+            if (tipoSeleccion === 'estado' && (dato.nombre === estadoPerdidoMascota || dato.nombre === estadoAdopcionMascota)) {
+                if (dato.nombre === estadoPerdidoMascota) {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = dato.id;
+                    optionElement.textContent = labelPerdidoMascota;
+                    selectElement.appendChild(optionElement);
+                } else {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = dato.id;
+                    optionElement.textContent = labelAdopcionMascota;
+                    selectElement.appendChild(optionElement);
+                }
+            } else if (tipoSeleccion === 'tipo') { // Mostrar todas las opciones en el select de tipo
+                const optionElement = document.createElement('option');
+                optionElement.value = dato.id;
+                optionElement.textContent = dato.nombre;
+                selectElement.appendChild(optionElement);
+            }
         });
-        tiposMascotasContainer.appendChild(selectElement);
+        selectColumnDiv.appendChild(selectElement);
     } catch (error) {
-        tiposMascotasContainer.innerHTML = 'Error al cargar los tipos de mascotas.';
+        container.innerHTML = `Error al cargar ${labelNombre}.`;
     }
 }
 
-$(document).on('change', '#tipoMascotaSelector', function() {
-    const tipoMascotaSeleccionada = $(this).val();
 
-    cargarHomeConFiltros(tipoMascotaSeleccionada, submenuSeleccionadoGlobal);
+async function mostrarTiposMascotas() {
+    const url = '/tipoMascota';
+    const datos = await obtenerDatosSelect(url);
+    tipoSeleccion = tipoOpcion;
+    crearSelect('tiposMascotasContainer', 'Tipo de Mascota',
+        'tipoMascotaSelector', 'Todos', datos, tipoSeleccion);
+}
+
+async function mostrarEstadosMascotas() {
+    const url = '/estadoMascota';
+    const datos = await obtenerDatosSelect(url);
+    tipoSeleccion = estadoOpcion;
+    crearSelect('estadosMascotasContainer', 'Estado de Mascota',
+        'estadoMascotaSelector', 'Todos', datos, tipoSeleccion);
+}
+
+$(document).on('change', '#tipoMascotaSelector, #estadoMascotaSelector', function() {
+    const tipoMascotaSeleccionado = $('#tipoMascotaSelector').val();
+    const estadoMascotaSeleccionado = $('#estadoMascotaSelector').val();
+
+    cargarHomeConFiltros(tipoMascotaSeleccionado, estadoMascotaSeleccionado);
 });
 
-$(document).on('click', '.dropdown-item', function() {
-    const submenuSeleccionado = parseInt($(this).attr('onclick').match(/\d+/)[0]);
-    actualizarSubmenuSeleccionado(submenuSeleccionado);
-
-    // Ejecutar los filtros al hacer clic en el submenu
-    const tipoMascotaSeleccionada = $('#tipoMascotaSelector').val();
-
-    cargarHomeConFiltros(tipoMascotaSeleccionada, submenuSeleccionadoGlobal);
-});
 function cargarHomeConFiltros(idTipoMascota, idEstado) {
     var parametros = {
         idTipoMascota: idTipoMascota,
@@ -154,4 +188,30 @@ function actualizarRazas() {
     // Agrega más condiciones para otros tipos de mascotas si es necesario
 }
 
+function mostrarFormularioVacuna() {
+    var vacunasDiv = document.getElementById('vacunas');
+    if (vacunasDiv.style.display === 'block') {
+        vacunasDiv.style.display = 'none';
+    } else {
+        vacunasDiv.style.display = 'block';
+    }
+}
+
+function agregarVacuna() {
+    var nombreVacunaInput = document.getElementById('nombre-vacuna');
+    var nombreVacuna = nombreVacunaInput.value;
+
+    if (nombreVacuna !== '') {
+        var listaVacunas = document.getElementById('listaVacunas');
+        var nuevaVacuna = document.createElement('li');
+        nuevaVacuna.textContent = "- " + nombreVacuna;
+        nuevaVacuna.setAttribute("value", nombreVacuna);
+        nuevaVacuna.setAttribute("name", "vacuna");
+        listaVacunas.appendChild(nuevaVacuna);
+
+        nombreVacunaInput.value = '';
+    }
+}
+
 mostrarTiposMascotas();
+mostrarEstadosMascotas();
