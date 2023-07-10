@@ -4,18 +4,19 @@ package ar.edu.unlam.tallerweb1.domain.mercadoPago;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercadopago.MercadoPagoConfig;
-import com.mercadopago.client.preference.PreferenceBackUrlsRequest;
 import com.mercadopago.client.preference.PreferenceClient;
 import com.mercadopago.client.preference.PreferenceItemRequest;
 import com.mercadopago.client.preference.PreferenceRequest;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.preference.Preference;
+import com.mercadopago.resources.payment.PaymentItem;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -30,21 +31,18 @@ public class ServicioMercadoPagoImpl implements  ServicioMercadoPago {
 
     @Override
     public String crearPedido() throws MPException, MPApiException, IOException {
+        MercadoPagoConfig.setAccessToken(ACCESS_TOKEN);
 
-        MercadoPagoConfig.setAccessToken("TEST-5599099813004507-070419-16a9a1be36cf4d15bf0d4d97dc9387b6-221225807");
+        PreferenceItemRequest itemRequest = PreferenceItemRequest.builder()
+                .id("793324980")
+                .title("Games")
+                .description("PS5")
+                .categoryId("games")
+                .quantity(2)
+                .currencyId("es-Ar")
+                .unitPrice(new BigDecimal("500"))
+                .build();
 
-        // creado un pedido
-        PreferenceItemRequest itemRequest =
-                PreferenceItemRequest.builder()
-                        .id("793324980")
-                        .title("Games")
-                        .description("PS5")
-                        .pictureUrl("http://picture.com/PS5")
-                        .categoryId("games")
-                        .quantity(2)
-                        .currencyId("BRL")
-                        .unitPrice(new BigDecimal("100"))
-                        .build();
         List<PreferenceItemRequest> items = new ArrayList<>();
         items.add(itemRequest);
         PreferenceRequest preferenceRequest = PreferenceRequest.builder()
@@ -56,7 +54,7 @@ public class ServicioMercadoPagoImpl implements  ServicioMercadoPago {
         RestTemplate restTemplate = new RestTemplate();
         headers.add("Authorization", "Bearer " + ACCESS_TOKEN);
 
-        HttpEntity<String> entity = new HttpEntity<>(items.toString(),headers);
+        HttpEntity<PreferenceRequest> entity = new HttpEntity<>(preferenceRequest,headers);
         ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, entity, String.class);
         String responseBody = response.getBody();
 

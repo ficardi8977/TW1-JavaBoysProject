@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mp.bricks().create("wallet", "wallet_container", {
         initialization: {
-            preferenceId: "221225807-2fb3adef-86e1-4724-aa95-fe343b3dd1ff",
-            //preferenceId: idpreferencia,
+            //preferenceId: "221225807-2fb3adef-86e1-4724-aa95-fe343b3dd1ff",
+            preferenceId: idpreferencia,
             redirectMode: "modal"
         },
     });
