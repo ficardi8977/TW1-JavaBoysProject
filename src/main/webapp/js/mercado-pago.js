@@ -10,7 +10,7 @@ mail : fernando.icardi@gmail.com
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    //var idpreferencia = generarPreferencia();
+    var idpreferencia = generarPreferencia();
 
     //llave publica
     const mp = new MercadoPago('TEST-cdd4aff4-315b-4d01-bd19-b422d835c0b9',{
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     mp.bricks().create("wallet", "wallet_container", {
         initialization: {
             preferenceId: "221225807-2fb3adef-86e1-4724-aa95-fe343b3dd1ff",
+            //preferenceId: idpreferencia,
             redirectMode: "modal"
         },
     });
