@@ -18,9 +18,14 @@
 <div class="container-fluid">
     <h1>Bienvenidos a todas las mascotas</h1>
 
-
-<div id="tiposMascotasContainer"></div>
-
+    <div class="row">
+        <div class="col-md-3">
+            <div id="tiposMascotasContainer" class="mb-3"></div>
+        </div>
+        <div class="col-md-3">
+            <div id="estadosMascotasContainer" class="mb-3"></div>
+        </div>
+    </div>
 <div id="contenido-home">
     <c:if test="${not empty mascotas}">
     <div class="cards-container cards-container">

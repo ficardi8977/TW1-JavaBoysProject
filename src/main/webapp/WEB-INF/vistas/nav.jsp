@@ -12,13 +12,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/home" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Mascotas
-                        </a>
-                        <div class="dropdown-menu" id="estadoSubmenu" aria-labelledby="navbarDropdown">
-                            <!-- Opciones del submenu -->
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/mascotas">Mascotas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/refugios">Refugios</a>
