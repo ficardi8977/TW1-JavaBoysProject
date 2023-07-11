@@ -6,6 +6,7 @@ import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirRaza;
 import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirTipo;
 import ar.edu.unlam.tallerweb1.domain.excepciones.NombreInvalido;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -100,6 +101,17 @@ public class ServicioMascotaImpl implements ServicioMascota {
             datosValidos = true;
         return datosValidos;
     }
+
+    @Override
+    public void registrarVacuna(String nuevaVacuna, Long idMascota) {
+        this.repositorioMascota.registrarVacuna(nuevaVacuna, idMascota);
+    }
+
+    @Override
+    public void eliminarVacuna(Long idVacuna) {
+        this.repositorioMascota.eliminarVacuna(idVacuna);
+    }
+
     @Override
     public List<Mascota> obtenerMascotasCercanas(DatosMascotasFiltradas request) {
         EstadoMascotasEnum perdido = EstadoMascotasEnum.Perdido;

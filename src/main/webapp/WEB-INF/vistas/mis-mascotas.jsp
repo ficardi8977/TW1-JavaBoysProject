@@ -47,14 +47,42 @@
             <p class="card-text">${mascota.descripcion}</p>
           </div>
           <div class="card-body">
-            <h2 style="text-align: center">Vacunacion</h2>
+            <div class="d-flex align-items-center justify-content-center">
+              <h2 style="text-align: center; margin-right:10px;">Vacunacion</h2>
+              <button class="btn-success agregarBtn" style="display: flex; height: 40px; width: 40px; border-radius: 50%; justify-content: center; align-items: center;" title="Agregar vacuna">
+                <div class="d-flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                </div>
+              </button>
+            </div>
+            <div class="formVacuna" style="display:none">
+              <form action="/registrar-vacuna" method="post" class="nuevaVacunaForm d-flex m-3">
+                <input type="text" class="form-control form-control-lg" name="nuevaVacuna" placeholder="Nombre de la vacuna" required>
+                <input type="hidden" name="idUsuario" value="${mascota.idUsuario}">
+                <input type="hidden" name="idMascota" value="${mascota.id}">
+                <button type="submit" class="btn-success" style="display: flex; justify-content: center; align-items: center;">
+                  <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                  </div>
+                </button>
+              </form>
+            </div>
             <c:if test="${not empty mascota.vacunas}">
               <c:forEach  var="vacuna" items="${mascota.vacunas}">
-                <p class="card-text"> - ${vacuna.nombre}</p>
+                <div class="d-flex align-items-center">
+                  <p class="card-text my-2"> - ${vacuna.nombre}</p>
+                  <form action="/eliminar-vacuna" method="post">
+                    <input type="hidden" name="idUsuario" value="${mascota.idUsuario}">
+                    <input type="hidden" name="idVacuna" value="${vacuna.id}">
+                    <input type="hidden" name="idMascota" value="${mascota.id}">
+                    <button type="submit" style="padding:10px;color:red;background-color: transparent" title="Eliminar vacuna"><b>-</b></button>
+                  </form>
+                </div>
+
               </c:forEach>
             </c:if>
             <c:if test="${empty mascota.vacunas}">
-              <p><span>No se encontraron vacunas</span></p>
+              <p class="mt-4"><span>No se encontraron vacunas</span></p>
               <br>
             </c:if>
           </div>
@@ -72,6 +100,6 @@
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />
 </jsp:include>
-
+<script src="../js/mascotas.js"></script>
 </body>
 </html>

@@ -13,6 +13,7 @@ import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.hibernate.criterion.Disjunction;
@@ -43,6 +44,18 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
+    public void eliminarVacuna(Long idVacuna) {
+
+        Session sesion = sessionFactory.getCurrentSession();
+
+        Vacunacion vacunaBuscada = (Vacunacion) this.sessionFactory.getCurrentSession().createCriteria(Vacunacion.class)
+                .add(Restrictions.eq("id", idVacuna)).uniqueResult();
+
+        sesion.delete(vacunaBuscada);
+    }
+
+
+    @Override
     public Mascota BuscarDetalle(long id) {
         var  mascota=  (Mascota)this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .add(Restrictions.eq("id", id)).uniqueResult();
@@ -62,7 +75,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
     @Override
     public List<Mascota> TodasLasMascotas() {
-        return (List<Mascota>) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class).list();
+        return (List<Mascota>) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 
     @Override
@@ -91,7 +104,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
                 .createAlias("tipoRaza.tipoMascota", "tipoMascota")
                 .add(Restrictions.eq("tipoMascota.id", request.getIdTipoMascota()));
         }
-        var result =  session.list();
+        var result =  session.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
         return result;
     }
@@ -116,7 +129,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
         criteria.add(disjunction);
 
         // Obtener el resultado de la búsqueda
-        return criteria.list();
+        return criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 
 
@@ -165,5 +178,23 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
         return registrado;
 
+    }
+
+    @Override
+    public void registrarVacuna(String nuevaVacuna, Long idMascota) {
+        Vacunacion vacuna = new Vacunacion();
+        vacuna.setNombre(nuevaVacuna);
+        this.sessionFactory.getCurrentSession().save(vacuna);
+
+        Mascota mascota = buscarPorId(idMascota);
+        mascota.setVacunas(vacuna);
+    }
+
+    @Override
+    public Mascota buscarPorId(Long idMascota) {
+        Mascota mascotaBuscada = (Mascota) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", idMascota)).uniqueResult();
+
+        return mascotaBuscada;
     }
 }

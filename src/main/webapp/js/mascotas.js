@@ -154,4 +154,23 @@ function actualizarRazas() {
     // Agrega más condiciones para otros tipos de mascotas si es necesario
 }
 
+// Obtén una lista de todos los botones y formularios
+const botonesAgregar = document.querySelectorAll('.agregarBtn');
+const formularios = document.querySelectorAll('.formVacuna');
+
+// Agrega eventos de clic a todos los botones "Agregar vacuna"
+botonesAgregar.forEach((boton, index) => {
+    boton.addEventListener('click', function() {
+        // Verifica el estilo actual del formulario asociado al botón clicado
+        const estiloActual = formularios[index].style.display;
+        if (estiloActual === 'none') {
+            // Si está oculto, cambia a 'display: block' para mostrarlo
+            formularios[index].style.display = 'block';
+        } else {
+            // Si está visible, cambia a 'display: none' para ocultarlo
+            formularios[index].style.display = 'none';
+        }
+    });
+});
+
 mostrarTiposMascotas();

@@ -2,6 +2,7 @@ package ar.edu.unlam.tallerweb1.domain.mascotas;
 
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotas;
 import ar.edu.unlam.tallerweb1.delivery.DatosMascotasFiltradas;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,4 +26,8 @@ public interface ServicioMascota {
     Boolean registrarMascota(DatosMascotas datosMascotas);
 
     Boolean validarDatos(DatosMascotas datosMascotas);
+
+    void registrarVacuna(String nuevaVacuna, Long idMascota);
+
+    void eliminarVacuna(Long idVacuna);
 }

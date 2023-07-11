@@ -138,5 +138,17 @@ public class ControladorMascotas {
         return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + datosMascotas.getIdUsuario() + ""));
     }
 
+    @RequestMapping(path = "/registrar-vacuna")
+    public ModelAndView registrarVacuna(@RequestParam("nuevaVacuna") String nuevaVacuna, @RequestParam("idMascota") Long idMascota, @RequestParam("idUsuario") Long idUsuario){
+        this.servicioMascota.registrarVacuna(nuevaVacuna, idMascota);
+
+        return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + idUsuario + ""));
+    }
+
+    @RequestMapping(path = "/eliminar-vacuna")
+    public ModelAndView eliminarVacuna(@RequestParam("idVacuna") Long idVacuna, @RequestParam("idUsuario") Long idUsuario){
+        this.servicioMascota.eliminarVacuna(idVacuna);
+        return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + idUsuario + ""));
+    }
 
 }
