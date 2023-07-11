@@ -108,8 +108,8 @@ public class ServicioMascotaImpl implements ServicioMascota {
     }
 
     @Override
-    public void eliminarVacuna(Long idVacuna) {
-        this.repositorioMascota.eliminarVacuna(idVacuna);
+    public void eliminarVacuna(Long idVacuna, Long idMascota) {
+        this.repositorioMascota.eliminarVacuna(idVacuna, idMascota);
     }
 
     @Override

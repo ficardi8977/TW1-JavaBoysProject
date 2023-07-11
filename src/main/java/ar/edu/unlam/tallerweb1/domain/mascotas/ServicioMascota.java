@@ -29,5 +29,5 @@ public interface ServicioMascota {
 
     void registrarVacuna(String nuevaVacuna, Long idMascota);
 
-    void eliminarVacuna(Long idVacuna);
+    void eliminarVacuna(Long idVacuna, Long idMascota);
 }

@@ -35,5 +35,5 @@ public interface RepositorioMascota {
 
     Mascota buscarPorId(Long idMascota);
 
-    void eliminarVacuna(Long idVacuna);
+    void eliminarVacuna(Long idVacuna, Long idMascota);
 }

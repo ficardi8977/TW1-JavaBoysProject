@@ -146,8 +146,8 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/eliminar-vacuna")
-    public ModelAndView eliminarVacuna(@RequestParam("idVacuna") Long idVacuna, @RequestParam("idUsuario") Long idUsuario){
-        this.servicioMascota.eliminarVacuna(idVacuna);
+    public ModelAndView eliminarVacuna(@RequestParam("idVacuna") Long idVacuna, @RequestParam("idMascota") Long idMascota, @RequestParam("idUsuario") Long idUsuario){
+        this.servicioMascota.eliminarVacuna(idVacuna, idMascota);
         return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + idUsuario + ""));
     }
 
