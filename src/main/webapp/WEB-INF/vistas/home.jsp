@@ -25,7 +25,7 @@
 	</div>
 	<div class="carousel-item" data-interval="7000">
 		<a href="/refugios">
-			<img src="../img/banner_02.png" class="img-fluid w-100" alt="...">
+			<img src="../img/banner_02_nuevo.png" class="img-fluid w-100" alt="...">
 		</a>
 	</div>
 	<div class="carousel-item" data-interval="7000">
