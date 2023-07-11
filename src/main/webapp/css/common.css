@@ -39,6 +39,7 @@ button{
 }
 .banners-pagina-cuidadores, .banners-pagina-refugios{
     height: 513px;
+    position: relative;
     margin-bottom: 10px;
 }
 .banners-pagina-cuidadores h1, .banners-pagina-refugios h1{
