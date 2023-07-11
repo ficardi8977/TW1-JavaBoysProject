@@ -42,4 +42,10 @@ public class RepositorioComentarioImpl implements RepositorioComentario{
         return  (List<Comentario>) this.sessionFactory.getCurrentSession().createCriteria(Comentario.class)
                 .add(Restrictions.eq("cuidado.id",idCuidado)).list();
     }
+
+    @Override
+    public List<Comentario> obtenerSubcomentarios(long id) {
+        return  (List<Comentario>) this.sessionFactory.getCurrentSession().createCriteria(Comentario.class)
+                .add(Restrictions.eq("comentarioPadre.id",id)).list();
+    }
 }

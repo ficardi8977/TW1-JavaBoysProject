@@ -13,5 +13,7 @@ public interface ServicioComentario {
 
     void eliminar(long id, long idUsuario);
 
-    List<DTOComentario> obtenerPorIdCuidado(long id);
+    /*List<DTOComentario> obtenerPorIdCuidado(long id);*/
+
+    List<DTOComentario> obtenerSubcomentarios(long id);
 }

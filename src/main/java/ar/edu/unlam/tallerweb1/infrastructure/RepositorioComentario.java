@@ -14,4 +14,6 @@ public interface RepositorioComentario {
     void eliminar(Comentario comentario);
 
     List<Comentario> obtenerPorIdCuidado(long idCuidado);
+
+    List<Comentario> obtenerSubcomentarios(long id);
 }

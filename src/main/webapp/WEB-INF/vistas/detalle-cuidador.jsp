@@ -128,6 +128,10 @@
                                     <i class="far fa-comment-dots me-2"></i>
                                     <p class="mb-0">comentar</p>
                                 </a>
+                                    <a href="#!" onclick="obtenerSubcomentarios(${comentario.id},${sessionScope.IDUSUARIO},'${sessionScope.ROL}')" class="d-flex align-items-center me-3">
+                                        <i class="far fa-comment-dots me-2"></i>
+                                        <p class="mb-0">ver respuestas</p>
+                                    </a>
                                 <c:if test="${sessionScope.ROL eq 'Administrador'}">
                                     <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.cuidado.id},'cuidadores')" class="d-flex align-items-center me-3">
                                         <i class="fa fa-light fa-trash me-2"></i>

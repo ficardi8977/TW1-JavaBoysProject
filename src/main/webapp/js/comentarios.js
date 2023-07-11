@@ -4,6 +4,11 @@ diccionarioUrl["mascotas"] = "/mascota/detalle?id=";
 diccionarioUrl["cuidadores"] = "/cuidador/detalle?id=";
 diccionarioUrl["refugios"] = "/refugio/";
 
+/*const idCuidado = 11;
+const ROL = "Administrador";
+const NOMBRE = "FER";
+const IDUSUARIO = "FER";
+*/
 function agregarSubcomentario(idComentario, idUsuario, idCuidado) {
     var contenedorSubcomentarios = document.getElementById('contenedorSubcomentarios' + idComentario);
     contenedorSubcomentarios.appendChild(cargarFormularioComentario(idComentario, idUsuario, idCuidado));
@@ -69,20 +74,62 @@ function borrarComentario(idComentario, idUsuario, idFuncionalidad, funcionalida
         });
 }
 
-function cargarComentario(idComentario) {
-    fetch(`/api/comentarios/${idComentario}`)
+function obtenerComentarios(idCuidado) {
+    fetch(`/comentarios/cuidado/${idCuidado}`)
         .then(response => response.json())
         .then(data => {
-            const contenedorSubcomentarios = document.getElementById(`contenedorSubcomentarios${idComentario}`);
-            contenedorSubcomentarios.innerHTML = ''; // Limpiar el contenedor antes de agregar los nuevos subcomentarios
-
-            data.forEach(subcomentario => {
-                const subcomentarioElement = document.createElement('div');
-                subcomentarioElement.textContent = subcomentario.mensaje;
-                contenedorSubcomentarios.appendChild(subcomentarioElement);
-            });
+            cargarComentario(data);
         })
         .catch(error => {
             console.error('Error al cargar los subcomentarios:', error);
         });
+}
+function obtenerSubcomentarios(idComentario, sessionUsuarioId, sessionRol) {
+    fetch(`/subcomentarios/comentario/${idComentario}`)
+        .then(response => response.json())
+        .then(data => {
+            cargarSubComentarios(data,sessionUsuarioId, sessionRol, idComentario);
+        })
+        .catch(error => {
+            console.error('Error al cargar los subcomentarios:', error);
+        });
+}
+
+function cargarSubComentarios(data,sessionUsuarioId, sessionRol,idComentarioPadre){
+    let html = '';
+
+    data.forEach(comentario => {
+        html += `
+        <div class="card-body">
+            <div class="d-flex flex-start align-items-center">
+                ${comentario.imagenUsuario ? `
+                    <img class="rounded-circle shadow-1-strong me-3" src="../img/${comentario.imagenUsuario}" alt="avatar" width="60" height="60" />
+                ` : `
+                    <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60" height="60" />
+                `}
+                <div>
+                    <h6 class="fw-bold text-primary mb-1">${comentario.nombreUsuario}</h6>
+                    <p class="text-muted small mb-0">
+                        publicado ${comentario.fecha}
+                    </p>
+                </div>
+            </div>
+            <label class="puntaje">Puntaje indicado : &#9733;${comentario.clasificacion}</label>
+            <p class="mt-3 mb-4 pb-2">
+                ${comentario.mensaje}
+            </p>
+            <div class="small d-flex justify-content-start">
+                ${sessionRol === 'Administrador' ? `
+                    <a href="#!" onclick="borrarComentario(${comentario.id}, ${sessionUsuarioId}, ${comentario.idCuidado}, 'cuidadores')" class="d-flex align-items-center me-3">
+                        <i class="fa fa-light fa-trash me-2"></i>
+                        <p class="mb-0">eliminar</p>
+                    </a>
+                ` : ''}
+            </div>
+        </div>
+    `;
+        var contenedorSubcomentarios = document.getElementById('contenedorSubcomentarios' + idComentarioPadre);
+        contenedorSubcomentarios.innerHTML = html;
+    });
+
 }

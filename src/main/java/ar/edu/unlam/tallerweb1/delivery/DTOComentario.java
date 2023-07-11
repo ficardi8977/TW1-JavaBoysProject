@@ -19,6 +19,10 @@ public class DTOComentario {
 
     private Long idMascota;
 
+    private String nombreUsuario;
+
+    private String imagenUsuario;
+
     private ArrayList<DTOComentario> subComentarios;
 
     private Date fecha;
@@ -85,5 +89,37 @@ public class DTOComentario {
 
     public Long getIdUsuario() {
         return idUsuario;
+    }
+
+    public String getImagenUsuario() {
+        return imagenUsuario;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setImagenUsuario(String imagenUsuario) {
+        imagenUsuario = imagenUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        nombreUsuario = nombreUsuario;
+    }
+
+    public DTOComentario(Comentario comentario){
+        this.id = comentario.getId();
+        if(comentario.getCuidado() != null) {
+            this.idCuidado = comentario.getCuidado().getId();
+        }
+        if(comentario.getMascota() != null) {
+            this.idMascota = comentario.getMascota().getId();
+        }
+        this.clasificacion = comentario.getClasificacion();
+        this.idUsuario = comentario.getUsuario().getId();
+        this.nombreUsuario = comentario.getUsuario().getNombre();
+        this.imagenUsuario = comentario.getUsuario().getImagen();
+        this.mensaje = comentario.getMensaje();
+        this.fecha = comentario.getFecha();
     }
 }

@@ -100,7 +100,7 @@ public class ServicioComentarioImpl implements ServicioComentario
         this.repositorioComentario.eliminar(comentario);
     }
 
-    @Override
+   /* @Override
     public List<DTOComentario> obtenerPorIdCuidado(long idCuidado) {
 
         var comentarios = this.repositorioComentario.obtenerPorIdCuidado(idCuidado);
@@ -112,7 +112,7 @@ public class ServicioComentarioImpl implements ServicioComentario
              listaDTO = this.construirComentariosDTO(comentarios);
         }
         return listaDTO;
-    }
+    }*/
 
     private void existeComentario(Comentario comentario) {
         if(comentario == null)
@@ -151,7 +151,7 @@ public class ServicioComentarioImpl implements ServicioComentario
         }
     }
 
-    private List<DTOComentario> construirComentariosDTO(List<Comentario> comentarios) {
+    /*private List<DTOComentario> construirComentariosDTO(List<Comentario> comentarios) {
         List<DTOComentario> comentariosDTO = new ArrayList<>();
 
         for (Comentario comentario : comentarios) {
@@ -159,7 +159,11 @@ public class ServicioComentarioImpl implements ServicioComentario
             comentarioDTO.setId(comentario.getId());
             comentarioDTO.setClasificacion(comentario.getClasificacion());
             comentarioDTO.setMensaje(comentario.getMensaje());
+
             comentarioDTO.setIdUsuario(comentario.getUsuario().getId());
+            comentarioDTO.setNombreUsuario(comentario.getUsuario().getNombre());
+            comentarioDTO.setImagenUsuario(comentario.getUsuario().getImagen());
+
             if(comentario.getMascota() != null){
                 comentarioDTO.setIdMascota(comentario.getMascota().getId());
             }
@@ -185,7 +189,20 @@ public class ServicioComentarioImpl implements ServicioComentario
                 comentariosDTO.add(comentarioDTO);
             }
         }
-
         return comentariosDTO;
+    }*/
+
+    @Override
+    public List<DTOComentario> obtenerSubcomentarios(long id) {
+        var subcomentarios = this.repositorioComentario.obtenerSubcomentarios(id);
+
+        List<DTOComentario> listaDTO = new ArrayList<>();
+
+        if (!subcomentarios.isEmpty()) {
+            for (Comentario elemento : subcomentarios) {
+                listaDTO.add(new DTOComentario(elemento));
+            }
+        }
+        return listaDTO;
     }
 }

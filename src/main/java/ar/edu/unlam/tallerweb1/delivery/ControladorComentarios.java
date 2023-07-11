@@ -90,10 +90,22 @@ public class ControladorComentarios {
     }
 
 
-    @RequestMapping(path = "/comentarios/cuidado/{id}", method = RequestMethod.GET)
+   /* @RequestMapping(path = "/comentarios/cuidado/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<DTOComentario>> getComentariosDeCuidador(@PathVariable("id") long id) {
         try {
             var response = this.servicioComentarios.obtenerPorIdCuidado(id);
+            return new ResponseEntity<List<DTOComentario>>(response, HttpStatus.OK);
+        } catch (CuidadoNoExistenteExcepcion ex) {
+            return new ResponseEntity<List<DTOComentario>>(new ArrayList<DTOComentario>(), HttpStatus.NOT_FOUND);
+        } catch (Exception ex) {
+            return new ResponseEntity<List<DTOComentario>>(new ArrayList<DTOComentario>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }*/
+
+    @RequestMapping(path = "/subcomentarios/comentario/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<DTOComentario>> getSubComentarios(@PathVariable("id") long id) {
+        try {
+            var response = this.servicioComentarios.obtenerSubcomentarios(id);
             return new ResponseEntity<List<DTOComentario>>(response, HttpStatus.OK);
         } catch (CuidadoNoExistenteExcepcion ex) {
             return new ResponseEntity<List<DTOComentario>>(new ArrayList<DTOComentario>(), HttpStatus.NOT_FOUND);
