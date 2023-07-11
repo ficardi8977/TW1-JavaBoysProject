@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.delivery;
 
 import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoEncontrado;
+import ar.edu.unlam.tallerweb1.domain.tipoUsuario.TipoUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuarioImpl;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
@@ -28,8 +29,7 @@ public class ControladorLoginTest {
     private ServicioUsuario servicioLogin;
 
     @Before
-    public void Init()
-    {
+    public void Init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.servicioLogin = mock(ServicioUsuarioImpl.class);
         this.controladorLogin = new ControladorLogin(this.servicioLogin);
         when(this.servicioLogin.consultarUsuario(any(), any())).thenReturn(new Usuario());
@@ -50,7 +50,7 @@ public class ControladorLoginTest {
         HttpSession sessionMock = Mockito.mock(HttpSession.class);
 
         Mockito.when(requestE.getSession()).thenReturn(sessionMock);
-        Mockito.when(requestE.getSession().getAttribute("ROL")).thenReturn("admin");
+        Mockito.when(requestE.getSession().getAttribute("ROL")).thenReturn("Masivo");
         Mockito.when(requestE.getSession().getAttribute("NOMBRE")).thenReturn("John Doe");
         Mockito.when(requestE.getSession().getAttribute("IDUSUARIO")).thenReturn(1L);
 
@@ -59,7 +59,7 @@ public class ControladorLoginTest {
         this.ValidoLoginExitoso(modelAndView);
     }
     @Test
-    public void LoginNoExitoso(){
+    public void LoginNoExitoso() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         //preparacion
         this.dadoQueNoExisteUnUsuario();
 
@@ -75,24 +75,30 @@ public class ControladorLoginTest {
         this.ValidoLoginNoExitoso(modelAndView);
     }
 
-    private void ValidoLoginNoExitoso(ModelAndView modelAndView) {
+    private void ValidoLoginNoExitoso(ModelAndView modelAndView) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         assertThat(modelAndView.getViewName()).isEqualTo("login");
-        assertThat(modelAndView.getModel().values().stream().findFirst().get()).isEqualTo("Correo o clave incorrectos");
+        assertThat(modelAndView.getModel().values().stream().findFirst().get()).isEqualTo("No se encontró al usuario");
         verify(servicioLogin, atLeastOnce()).consultarUsuario("miMail@gmail.com","1234");
     }
 
-    private void dadoQueNoExisteUnUsuario() {
+    private void dadoQueNoExisteUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         when(this.servicioLogin.consultarUsuario(any(),any())).thenThrow(new UsuarioNoEncontrado());
     }
 
-    private void ValidoLoginExitoso(ModelAndView result) {
+    private void ValidoLoginExitoso(ModelAndView result) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         assertThat(result.getViewName()).isEqualTo("redirect:/home");
         assertThat(result.getModel().size()).isEqualTo(0); // porque hace una redireccion a lahome
         verify(servicioLogin, atLeastOnce()).consultarUsuario("miMail@gmail.com","1234");
     }
 
-    private void dadoQueExisteUnUsuario() {
-        when(this.servicioLogin.consultarUsuario(any(),any())).thenReturn(new Usuario());
+    private void dadoQueExisteUnUsuario() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        var usuario = new Usuario();
+        var tipoUsuario = new TipoUsuario();
+        tipoUsuario.setNombre("Masivo");
+        usuario.setTipoUsuario(tipoUsuario);
+        usuario.setId(1l);
+        usuario.setNombre("John Doe");
+        when(this.servicioLogin.consultarUsuario(any(), any())).thenReturn(usuario);
     }
 
 

@@ -16,11 +16,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ControladorLogin {
 
-	private ServicioUsuario servicioLogin;
+	private ServicioUsuario servicioUsuario;
 
 	@Autowired
-	public ControladorLogin(ServicioUsuario servicioLogin){
-		this.servicioLogin = servicioLogin;
+	public ControladorLogin(ServicioUsuario servicioUsuario){
+		this.servicioUsuario = servicioUsuario;
 	}
 
 	@RequestMapping(path = "/login")
@@ -33,10 +33,11 @@ public class ControladorLogin {
 		ModelMap model = new ModelMap();
 
 		try{
-			Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
-			request.getSession().setAttribute("ROL", usuarioBuscado.getRol());
+			Usuario usuarioBuscado = servicioUsuario.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
+			request.getSession().setAttribute("ROL", usuarioBuscado.getTipoUsuario().getNombre());
 			request.getSession().setAttribute("NOMBRE", usuarioBuscado.getNombre());
 			request.getSession().setAttribute("IDUSUARIO", usuarioBuscado.getId());
+			request.getSession().setAttribute("TELEFONO", usuarioBuscado.getTelefono());
 			return new ModelAndView("redirect:/home");
 		} catch (Exception e){
 			model.put("error", e.getMessage());

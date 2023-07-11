@@ -7,6 +7,9 @@ import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+
 import static ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuarioImplTest.CORREO;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -17,14 +20,12 @@ public class ServicioLoginImplTest {
     private ServicioUsuario servicioLogin;
 
     private RepositorioUsuario repositorioUsuario;
-
+    private final String CORREO = "miMail@gmail.com";
     private final String CORREO_INEXISTENTE = "miMail2@gmail.com";
     private final String CLAVE = "1234";
-
     @Before
-    public void init(){
+    public void init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.repositorioUsuario = mock(RepositorioUsuario.class);
-        this.servicioLogin = new ServicioUsuarioImpl(this.repositorioUsuario);
         this.servicioLogin = new ServicioUsuarioImpl(this.repositorioUsuario);
         String claveNueva = servicioLogin.encriptarClave(CLAVE);
         Usuario usuarioClave = new Usuario();
@@ -33,19 +34,19 @@ public class ServicioLoginImplTest {
         when(this.repositorioUsuario.buscarUsuario(CORREO_INEXISTENTE,claveNueva)).thenReturn(null);
     }
     @Test
-    public void obtenerUsuarioLogin() {
+    public void obtenerUsuarioLogin() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Usuario user = consultoElUsuario(CORREO, CLAVE);
         this.validarUsuarioExiste(user);
     }
 
     @Test
-    public void noObtenerUsuarioLogin(){
+    public void noObtenerUsuarioLogin() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Usuario user = consultoElUsuario(CORREO_INEXISTENTE, CLAVE);
         this.validarUsuarioNoExiste(user);
     }
 
     @Test
-    public void seEncriptaLaClave(){
+    public void seEncriptaLaClave() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Usuario user = consultoElUsuario(CORREO, CLAVE);
         validoQueLaClaveHayaCambiado(user.getPassword());
     }
@@ -54,7 +55,7 @@ public class ServicioLoginImplTest {
         assertThat(password).isNotEqualTo(CLAVE);
     }
 
-    private Usuario consultoElUsuario(String correo, String clave) {
+    private Usuario consultoElUsuario(String correo, String clave) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         return this.servicioLogin.consultarUsuario(correo, clave);
     }
 

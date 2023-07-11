@@ -56,18 +56,14 @@ public class ServicioRegistracionImpl implements ServicioRegistracion {
     }
 
     @Override
-    public String encriptarClave(String clave) {
+    public String encriptarClave(String clave) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md;
         byte[] bytesClave;
         // Se encripta la contraseña ingresada con el algoritmo MD5
-        try{
-            md = MessageDigest.getInstance("MD5");
-            bytesClave = clave.getBytes("UTF-8");
-        } catch (NoSuchAlgorithmException e) {
-            throw new AlgoritmoNoDisponible();
-        } catch (UnsupportedEncodingException e){
-            throw new CodificacionNoDisponible();
-        }
+
+        md = MessageDigest.getInstance("MD5");
+        bytesClave = clave.getBytes("UTF-8");
+
 
         byte[] hashClave = md.digest(bytesClave);
 
@@ -83,7 +79,7 @@ public class ServicioRegistracionImpl implements ServicioRegistracion {
         return true;
     }
 
-    public Boolean registroUsuario(DatosRegistracion datosRegistracion) {
+    public Boolean registroUsuario(DatosRegistracion datosRegistracion) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         datosValidos(datosRegistracion);
         String nuevaPassword = encriptarClave(datosRegistracion.getPassword());
         datosRegistracion.setPassword(nuevaPassword);

@@ -26,8 +26,13 @@ public class RepositorioComentarioImpl implements RepositorioComentario{
         return  Math.toIntExact(comentario.getId());
     }
     @Override
-    public Comentario obtener(int id){
+    public Comentario obtener(long id){
         return  (Comentario) this.sessionFactory.getCurrentSession().createCriteria(Comentario.class)
                 .add(Restrictions.eq("id",id)).uniqueResult();
+    }
+
+    @Override
+    public void eliminar(Comentario comentario){
+        this.sessionFactory.getCurrentSession().delete(comentario);
     }
 }

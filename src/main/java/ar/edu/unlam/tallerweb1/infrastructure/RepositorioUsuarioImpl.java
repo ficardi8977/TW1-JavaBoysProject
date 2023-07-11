@@ -38,16 +38,16 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				.add(Restrictions.eq("password", password))
 				.uniqueResult();
 
-		if(user==null)
+		if (user == null)
 			throw new UsuarioNoEncontrado();
 
 		return user;
 	}
 
 	@Override
-	public Usuario buscarUsuario(int id) {
+	public Usuario buscarUsuario(Long id) {
 		final Session session = sessionFactory.getCurrentSession();
-		var usuario =  (Usuario) session.createCriteria(Usuario.class)
+		var usuario = (Usuario) session.createCriteria(Usuario.class)
 				.add(Restrictions.eq("id", id))
 				.uniqueResult();
 		return usuario;
@@ -62,13 +62,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 	@Override
 	public Usuario buscar(String email) {
 		Usuario user = null;
-		try{
-			user = (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
-					.add(Restrictions.eq("email", email))
-					.uniqueResult();
-		} catch (Exception e) {
-			throw new EmailYaRegistrado();
-		}
+
+		user = (Usuario) sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", email)).uniqueResult();
 
 		return user;
 	}
@@ -80,6 +76,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
 	@Override
 	public Boolean registroUsuario(DatosRegistracion datosRegistracion) {
+
+		TipoUsuario tu = (TipoUsuario) this.sessionFactory.getCurrentSession().createCriteria(TipoUsuario.class)
+				.add(Restrictions.eq("id", 1l)).uniqueResult();
 
 		// Se registra el usuario con los datos ingresados
 		Boolean registrado = false;
@@ -94,9 +93,6 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				datosRegistracion.getLongitud()
 		);
 
-		// El tipo de usuario es de tipo masivo
-		TipoUsuario tu = new TipoUsuario(1l, "Masivo");
-		this.sessionFactory.getCurrentSession().save(tu);
 		user.setTipoUsuario(tu);
 
 		// Se guarda el objeto en la sesión
@@ -107,11 +103,24 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 		}
 
 		// Se busca si el usuario guardado ahora existe en la base de datos
-		if (buscar(user.getEmail()) != null)
+		if (buscarGuardado(user.getEmail()) != null)
 			registrado = true;
 
 		return registrado;
 
 
+	}
+
+	@Override
+	public Usuario buscarGuardado(String email) {
+		Usuario user = null;
+
+		user = (Usuario) this.sessionFactory.getCurrentSession().createCriteria(Usuario.class)
+				.add(Restrictions.eq("email", email)).uniqueResult();
+
+		if (user == null)
+			throw new UsuarioNoEncontrado();
+
+		return user;
 	}
 }
