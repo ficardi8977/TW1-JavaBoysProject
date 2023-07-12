@@ -28,7 +28,7 @@ public class ControladorCuidado {
         ModelMap model = new ModelMap();
         List<Cuidado> result = this.servicioCuidado.ObtenerTodosLosRefugios();
         model.put("cuidados", result);
-        return new ModelAndView("todos-los-refugios",model);
+        return new ModelAndView("todos-los-refugios-mdq",model);
     }
     @RequestMapping(path = "/refugio/{id}", method = RequestMethod.GET)
     public ModelAndView getDetalleRefugio(@PathVariable("id") long id) {
