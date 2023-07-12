@@ -44,7 +44,7 @@
             <h6>Telefono:</h6>
             <p class="card-text">${cuidado.telefono}</p>
             <div style="padding:10px">
-              <a href="refugio/${cuidado.id}" class="dog-paw-button btn-detalle">Detalles</a>
+              <a href="refugio/${cuidado.id}" class="dog-paw-button">Detalles</a>
             </div>
           </div>
         </div>

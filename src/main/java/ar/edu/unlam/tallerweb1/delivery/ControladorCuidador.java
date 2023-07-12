@@ -37,7 +37,7 @@ public class ControladorCuidador {
         ModelMap model = new ModelMap();
         Cuidado result = this.servicioCuidador.ObtenerDetalle(id);
         model.put("cuidado", result);
-        return new ModelAndView("detalle-cuidador", model);
+        return new ModelAndView("detalle-cuidador-mdq", model);
     }
 
 

@@ -60,6 +60,11 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     flex-basis: calc(50% - 10px);
 }
 
+.card a:hover{
+    text-decoration: none;
+    color: white;
+}
+
 @media (min-width: 768px) {
     .banners-pagina-cuidadores, .banners-pagina-refugios{
         height: 300px;

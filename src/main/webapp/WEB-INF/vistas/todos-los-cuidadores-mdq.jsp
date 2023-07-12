@@ -41,7 +41,7 @@
                         <h5 class="card-title" style="white-space: nowrap">${cuidado.nombre}</h5>
                         <form:form action="cuidador/detalle" method="GET">
                             <input name="id" value=${cuidado.id} id=${cuidado.id} type="hidden" class="form-control"/>
-                            <button class="dog-paw-button">Detalle</button>
+                            <button class="dog-paw-button">Detalles</button>
                         </form:form>
                     </div>
                 </div>
