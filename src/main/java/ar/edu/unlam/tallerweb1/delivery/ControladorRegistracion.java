@@ -24,7 +24,7 @@ public class ControladorRegistracion {
     public ModelAndView registrarme() {
         ModelMap model = new ModelMap();
         model.put("datosRegistracion", new DatosRegistracion());
-        return new ModelAndView("registrar-usuario",model);
+        return new ModelAndView("registrar-usuario-mdq",model);
     }
 
     @RequestMapping(path = "/registrar-usuario", method = RequestMethod.POST)

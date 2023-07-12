@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,7 +70,7 @@ public class ServicioMascotaImpl implements ServicioMascota {
         validarDatos(datosMascotas);
         return this.repositorioMascota.registrarMascota(datosMascotas);
     }
-
+/*
     @Override
     public String registrarImagen(MultipartFile img) throws IOException {
         // String rutaImagen = "C:\\Taller Web\\TW1-JavaBoysProject\\src\\main\\resources\\imgs\\" + img.getOriginalFilename();
@@ -80,6 +81,35 @@ public class ServicioMascotaImpl implements ServicioMascota {
         Files.write(path, bytes);
 
         return img.getOriginalFilename();
+    }
+
+ */
+
+    @Override
+    public String registrarImagen(MultipartFile img) throws IOException {
+        String directorioImagenes = servletContext.getRealPath("/img/");
+        String nombreOriginal = img.getOriginalFilename();
+        String extension = obtenerExtension(nombreOriginal);
+        String nombreUnico = generarNombreUnico(nombreOriginal, extension);
+        String rutaImagen = directorioImagenes + nombreUnico;
+        byte[] bytes = img.getBytes();
+        Path path = Paths.get(rutaImagen);
+        Files.write(path, bytes);
+
+        return nombreUnico;
+    }
+
+    private String obtenerExtension(String nombreArchivo) {
+        int ultimoPunto = nombreArchivo.lastIndexOf(".");
+        if (ultimoPunto != -1) {
+            return nombreArchivo.substring(ultimoPunto);
+        }
+        return "";
+    }
+
+    private String generarNombreUnico(String nombreOriginal, String extension) {
+        String uuid = UUID.randomUUID().toString();
+        return nombreOriginal + "_" + uuid + extension;
     }
 
     @Override
