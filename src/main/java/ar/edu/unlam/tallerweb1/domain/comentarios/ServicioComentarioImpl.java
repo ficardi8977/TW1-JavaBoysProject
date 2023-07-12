@@ -74,6 +74,11 @@ public class ServicioComentarioImpl implements ServicioComentario
         comentario.setMensaje(request.getMensaje());
         comentario.setFecha(Date.from(Instant.now()));
 
+        if(request.getIdComentarioPadre() != null)
+        {
+            comentario.setComentarioPadre(this.repositorioComentario.obtener(request.getIdComentarioPadre()));
+        }
+
         var mascota = this.servicioMascota.ObtenerDetalle(request.getIdMascota());
         existeMascota(mascota);
         comentario.setMascota(mascota);
@@ -99,20 +104,6 @@ public class ServicioComentarioImpl implements ServicioComentario
 
         this.repositorioComentario.eliminar(comentario);
     }
-
-   /* @Override
-    public List<DTOComentario> obtenerPorIdCuidado(long idCuidado) {
-
-        var comentarios = this.repositorioComentario.obtenerPorIdCuidado(idCuidado);
-
-        List<DTOComentario> listaDTO = new ArrayList<>();
-
-        if (!comentarios.isEmpty())
-        {
-             listaDTO = this.construirComentariosDTO(comentarios);
-        }
-        return listaDTO;
-    }*/
 
     private void existeComentario(Comentario comentario) {
         if(comentario == null)
@@ -151,49 +142,12 @@ public class ServicioComentarioImpl implements ServicioComentario
         }
     }
 
-    /*private List<DTOComentario> construirComentariosDTO(List<Comentario> comentarios) {
-        List<DTOComentario> comentariosDTO = new ArrayList<>();
-
-        for (Comentario comentario : comentarios) {
-            DTOComentario comentarioDTO = new DTOComentario();
-            comentarioDTO.setId(comentario.getId());
-            comentarioDTO.setClasificacion(comentario.getClasificacion());
-            comentarioDTO.setMensaje(comentario.getMensaje());
-
-            comentarioDTO.setIdUsuario(comentario.getUsuario().getId());
-            comentarioDTO.setNombreUsuario(comentario.getUsuario().getNombre());
-            comentarioDTO.setImagenUsuario(comentario.getUsuario().getImagen());
-
-            if(comentario.getMascota() != null){
-                comentarioDTO.setIdMascota(comentario.getMascota().getId());
-            }
-            if(comentario.getCuidado() != null){
-                comentarioDTO.setIdCuidado(comentario.getCuidado().getId());
-            }
-            comentarioDTO.setFecha(comentario.getFecha());
-
-            Comentario comentarioPadre = comentario.getComentarioPadre();
-            if (comentarioPadre != null) {
-                for (DTOComentario elemento : comentariosDTO) {
-                    if (elemento.getId() == comentarioPadre.getId()) {
-                        var subcomentarios = elemento.getSubComentarios();
-                        if(subcomentarios == null) {
-                            subcomentarios = new ArrayList<DTOComentario>();
-                        }
-                        subcomentarios.add(comentarioDTO);
-                        elemento.setSubComentarios(subcomentarios);
-                        break;
-                    }
-                }
-            }else {
-                comentariosDTO.add(comentarioDTO);
-            }
-        }
-        return comentariosDTO;
-    }*/
-
     @Override
     public List<DTOComentario> obtenerSubcomentarios(long id) {
+
+        var comentario = this.repositorioComentario.obtener(id);
+        existeComentario(comentario);
+
         var subcomentarios = this.repositorioComentario.obtenerSubcomentarios(id);
 
         List<DTOComentario> listaDTO = new ArrayList<>();

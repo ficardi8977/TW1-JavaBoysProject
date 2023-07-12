@@ -15,6 +15,8 @@ import ar.edu.unlam.tallerweb1.infrastructure.RepositorioComentario;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -108,6 +110,40 @@ public class ServicioComentariosTest {
         servicioComentario.eliminar(id, idUsuario);
     }
 
+
+    @Test
+    public void obtenerSubcomentario_OK() {
+        long id = 1;
+
+        Comentario comentario = new Comentario();
+        comentario.setUsuario(new Usuario());
+
+        var subComentarios = new ArrayList<Comentario>();
+        subComentarios.add(comentario);
+        subComentarios.add(comentario);
+        subComentarios.add(comentario);
+
+        when(repositorioComentario.obtener(id)).thenReturn(comentario);
+        when(repositorioComentario.obtenerSubcomentarios(id)).thenReturn(subComentarios);
+
+        var result = this.servicioComentario.obtenerSubcomentarios(id);
+
+        verify(repositorioComentario, atLeastOnce()).obtener(id);
+        verify(repositorioComentario, atLeastOnce()).obtenerSubcomentarios(id);
+        assertThat(result.size()).isEqualTo(3);
+    }
+
+    @Test(expected = ComentarioInexistenteExcepcion.class)
+    public void obtenerSubcomentario_NoExisteComentario() {
+        long id = 1;
+
+        var result = this.servicioComentario.obtenerSubcomentarios(id);
+
+        verify(repositorioComentario, atLeastOnce()).obtener(id);
+        verify(repositorioComentario, never()).obtenerSubcomentarios(id);
+        assertThat(result.size()).isEqualTo(0);
+    }
+
     private void dadoUnUsuarioInexistente(long idUsuario) {
         when(servicioUsuario.consultarUsuario(idUsuario)).thenReturn(null);
     }
@@ -122,6 +158,8 @@ public class ServicioComentariosTest {
 
         this.servicioComentario.eliminar(id, idUsuario);
     }
+
+
 
     private void dadoUnComentarioInexistente(long id) {
         when(repositorioComentario.obtener(id)).thenReturn(null);

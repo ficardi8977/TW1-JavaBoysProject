@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Repository
 @Transactional
 public class RepositorioCuidadoImpl implements  RepositorioCuidado{
@@ -42,7 +44,10 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
                 .add(Restrictions.eq("id", id)).uniqueResult();
 
         if(cuidado != null) {
-            var comentarios = cuidado.getComentarios();
+            var  comentarios = cuidado.getComentarios().stream()
+                    .filter(comentario -> comentario.getComentarioPadre() == null)
+                    .collect(Collectors.toList());
+
             Hibernate.initialize(comentarios); // sin esta linea se cierra la sesion antes de levantar los comentarios
             cuidado.setComentarios(comentarios);
         }
@@ -67,7 +72,10 @@ public class RepositorioCuidadoImpl implements  RepositorioCuidado{
                 .add(Restrictions.eq("id", id)).uniqueResult();
 
         if(cuidado != null) {
-            var comentarios = cuidado.getComentarios();
+            var  comentarios = cuidado.getComentarios().stream()
+                    .filter(comentario -> comentario.getComentarioPadre() == null)
+                    .collect(Collectors.toList());
+
             Hibernate.initialize(comentarios); // sin esta linea se cierra la sesion antes de levantar los comentarios
             cuidado.setComentarios(comentarios);
         }

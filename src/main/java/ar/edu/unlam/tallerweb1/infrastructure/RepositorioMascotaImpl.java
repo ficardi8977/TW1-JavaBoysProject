@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Transactional
@@ -48,7 +49,9 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
                 .add(Restrictions.eq("id", id)).uniqueResult();
 
         if(mascota != null) {
-            var comentarios = mascota.getComentarios();
+            var  comentarios = mascota.getComentarios().stream()
+                    .filter(comentario -> comentario.getComentarioPadre() == null)
+                    .collect(Collectors.toList());
             Hibernate.initialize(comentarios); // inicializa los comentarios , al mantener la seccion
             mascota.setComentarios(comentarios);
         }

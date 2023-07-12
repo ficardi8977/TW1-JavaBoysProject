@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,6 +36,7 @@ public class RepositorioCuidadoImplTest  extends SpringTest {
         cuidado.setNombre("Refugio-1");
         cuidado.setEmail("refu1@refu1.com");
         cuidado.setTipocuidado(tipocuidadoResult);
+        cuidado.setComentarios(Collections.emptyList());
         this.repositorioCuidado.Guardar(cuidado);
         return cuidado;
     }
