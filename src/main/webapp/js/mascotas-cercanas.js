@@ -1,11 +1,28 @@
 var mapa;
-var btnPermitirUbicacion = document.getElementById("btnPermitirUbicacion");
 const perdido = "Perdido";
 const enAdopcion = "EnAdopcion";
+var aceptoPermisos = "false";
+    aceptoPermisos = localStorage.getItem("aceptoPermisos") != null;
+var canceloPermisos = "false";
+    canceloPermisos = localStorage.getItem("canceloPermisos") != null;
 
 function solicitarUbicacion() {
-    if (confirm("Se solicitará tu ubicación. ¿Deseas continuar?")) {
-        obtenerUbicacion();
+    if (!aceptoPermisos){
+        if(confirm("¡Encuentra mascotas cercanas! Permítenos acceder a tu ubicación.")){
+            obtenerUbicacion();
+            aceptoPermisos = "true";
+            localStorage.setItem("aceptoPermisos", "true");
+        }else{
+            aceptoPermisos = "true";
+            localStorage.setItem("aceptoPermisos", "true");
+            localStorage.setItem("canceloPermisos", "true");
+            canceloPermisos = "true";
+        }
+
+    }else{
+        if (!canceloPermisos) {
+            obtenerUbicacion();
+        }
     }
 }
 
@@ -78,6 +95,7 @@ function inicializarMapa(latitud, longitud, radio) {
 
     // Mostrar la ubicación en el mapa
     mostrarUbicacionEnMapa(latitud, longitud, radio);
+    agregarReferenciasEnMapa();
 }
 
 function agregarMarcadoresMascotasPerdidas(mascotasPerdidas) {
@@ -98,6 +116,14 @@ function agregarMarcadoresMascotasPerdidas(mascotasPerdidas) {
             map: mapa,
             title: nombre,
             icon: Object.assign({}, iconoPerdidas) // Clonar el objeto de ícono para evitar la referencia compartida
+        });
+
+        // Agregar evento click al marcador
+        google.maps.event.addListener(marker, "click", function() {
+            var idMascota = mascota.id; // Obtener el ID de la mascota asociada al marcador
+
+            // Redirigir al controlador de detalle de mascota con el ID
+            window.location.href = "/mascota/detalle?id=" + idMascota;
         });
     });
 }
@@ -121,6 +147,14 @@ function agregarMarcadoresMascotasAdopcion(mascotasAdopcion) {
             map: mapa,
             title: nombre,
             icon: Object.assign({}, iconoAdopcion) // Clonar el objeto de ícono para evitar la referencia compartida
+        });
+
+        // Agregar evento click al marcador
+        google.maps.event.addListener(marker, "click", function() {
+            var idMascota = mascota.id; // Obtener el ID de la mascota asociada al marcador
+
+            // Redirigir al controlador de detalle de mascota con el ID
+            window.location.href = "/mascota/detalle?id=" + idMascota;
         });
     });
 }
@@ -159,6 +193,20 @@ function mostrarUbicacionEnMapa(latitud, longitud, radio) {
         fillOpacity: 0.2,
         map: mapa
     });
+}
+
+function agregarReferenciasEnMapa() {
+    var perdidoColor = "red";
+    var adopcionColor = "green";
+
+    var referenciaHTML = '<div class="referencia-item"><span class="referencia-color" style="background-color: ' + perdidoColor + ';"></span> Perdido</div>';
+    referenciaHTML += '<div class="referencia-item"><span class="referencia-color" style="background-color: ' + adopcionColor + ';"></span> En adopción</div>';
+
+    var referenciaContainer = document.createElement("div");
+    referenciaContainer.innerHTML = referenciaHTML;
+
+    referenciaContainer.classList.add("referencia-container");
+    mapa.controls[google.maps.ControlPosition.LEFT_TOP].push(referenciaContainer);
 }
 
 $(document).ready(function() {

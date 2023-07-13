@@ -1,0 +1,57 @@
+#map{
+    height: 280px;
+}
+
+.card-img-top{
+    height: auto;
+}
+
+.share-button{
+    display: flex;
+    flex-direction: column-reverse;
+}
+h1, h2{
+    margin: 15px 0;
+    text-align: center;
+}
+.puntaje{
+    margin: 5px 0;
+}
+.avatar{
+    width: 40px;
+}
+.btn-share{
+    display: flex;
+    justify-content: end;
+    margin:10px;
+    padding:0;
+}
+.lista-compartir div{
+    text-align: center;
+}
+
+.cuerpo-card{
+    display: block;
+}
+
+@media (min-width: 768px){
+    .card-img-top, #map{
+        height: auto;
+    }
+    .cuerpo-card{
+        display: flex;
+    }
+    .card-encabezado{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .share-button{
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 1024px){
+    .card-img-top, #map{
+        height: auto;
+    }
+}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -69,7 +70,7 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/usuario")
-    public ModelAndView getMascotaPorIdUsuario(int idUsuario) {
+    public ModelAndView getMascotaPorIdUsuario(Long idUsuario) {
         ModelMap model = new ModelMap();
         List<Mascota> result = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         model.put("mascotas", result);
@@ -83,11 +84,11 @@ public class ControladorMascotas {
     }
 
     @RequestMapping(path = "/mascotas/mis-mascotas")
-    public ModelAndView getMascotasUsuario(int idUsuario) {
+    public ModelAndView getMascotasUsuario(Long idUsuario) {
         ModelMap model = new ModelMap();
         List<Mascota> mascotas = this.servicioMascota.obtenerMascotaPorIdUsuario(idUsuario);
         model.put("mascotas", mascotas);
-        return new ModelAndView("mis-mascotas", model);
+        return new ModelAndView("mis-mascotas-mdq", model);
     }
 
     @RequestMapping(value = "/mascotas/cercanas", method = RequestMethod.GET)
@@ -116,13 +117,16 @@ public class ControladorMascotas {
 
     @RequestMapping(path = "/registrar-mascota")
     public ModelAndView registrarMascota() {
-        return new ModelAndView("registrar-mascota");
+        return new ModelAndView("registrar-mascota-mdq");
     }
 
     @RequestMapping(path = "/alta-mascota", method = RequestMethod.POST)
-    public ModelAndView altaMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas, RedirectAttributes redirectAttributes) {
+    public ModelAndView altaMascota(@ModelAttribute("datosMascotas") DatosMascotas datosMascotas, @RequestParam("img") MultipartFile img, RedirectAttributes redirectAttributes) {
 
         try{
+            if(!img.isEmpty()){
+                datosMascotas.setImagen(this.servicioMascota.registrarImagen(img));
+            }
             this.servicioMascota.registrarMascota(datosMascotas);
             redirectAttributes.addFlashAttribute("error", "Mascota registrada!");
         } catch (Exception e){
@@ -134,5 +138,17 @@ public class ControladorMascotas {
         return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + datosMascotas.getIdUsuario() + ""));
     }
 
+    @RequestMapping(path = "/registrar-vacuna")
+    public ModelAndView registrarVacuna(@RequestParam("nuevaVacuna") String nuevaVacuna, @RequestParam("idMascota") Long idMascota, @RequestParam("idUsuario") Long idUsuario){
+        this.servicioMascota.registrarVacuna(nuevaVacuna, idMascota);
+
+        return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + idUsuario + ""));
+    }
+
+    @RequestMapping(path = "/eliminar-vacuna")
+    public ModelAndView eliminarVacuna(@RequestParam("idVacuna") Long idVacuna, @RequestParam("idMascota") Long idMascota, @RequestParam("idUsuario") Long idUsuario){
+        this.servicioMascota.eliminarVacuna(idVacuna, idMascota);
+        return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + idUsuario + ""));
+    }
 
 }

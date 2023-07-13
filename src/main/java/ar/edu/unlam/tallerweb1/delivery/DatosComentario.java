@@ -3,11 +3,11 @@ package ar.edu.unlam.tallerweb1.delivery;
 public class DatosComentario {
     private int clasificacion;
     private String mensaje;
-    private int idUsuario;
-    private Integer idCuidado;
-    private Integer idMascota;
+    private Long idUsuario;
+    private Long idCuidado;
+    private Long idMascota;
 
-    private Integer idComentarioPadre;
+    private Long idComentarioPadre;
 
     public void setClasificacion(int clasificacion) {
         this.clasificacion = clasificacion;
@@ -25,35 +25,35 @@ public class DatosComentario {
         this.mensaje = mensaje;
     }
 
-    public int getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public void setIdCuidado(Integer idCuidado) {
+    public void setIdCuidado(Long idCuidado) {
         this.idCuidado = idCuidado;
     }
 
-    public void setIdMascota(Integer idMascota) {
+    public void setIdMascota(Long idMascota) {
         this.idMascota = idMascota;
     }
 
-    public Integer getIdComentarioPadre() {
+    public Long getIdComentarioPadre() {
         return idComentarioPadre;
     }
 
-    public void setIdComentarioPadre(Integer idComentarioPadre) {
+    public void setIdComentarioPadre(Long idComentarioPadre) {
         this.idComentarioPadre = idComentarioPadre;
     }
 
-    public Integer getIdCuidado() {
+    public Long getIdCuidado() {
         return idCuidado;
     }
 
-    public Integer getIdMascota() {
+    public Long getIdMascota() {
         return idMascota;
     }
 }

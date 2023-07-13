@@ -1,0 +1,169 @@
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 0 0 18rem;
+    margin: 10px;
+}
+/*
+.mis-mascotas{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+}
+ */
+
+.mis-mascotas h2{
+    text-align: center;
+}
+
+.mensaje-centrado {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-registrar img{
+    display: none;
+}
+
+.registrar-titulo{
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.contenedor-img{
+    text-align: center;
+    font-size: 20px;
+}
+
+.div-img img{
+    margin-bottom: 10px;
+}
+
+.div-ubicacion{
+    margin: 0;
+}
+
+.div-telefono{
+    font-size: 20px;
+    text-align: center;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.card-body-img{
+    padding: 20px 20px 0 20px;
+}
+
+#tipoMascotaSelector {
+    width: 100%; /* Ancho al 100% por defecto */
+}
+
+/* Media query para dispositivos de escritorio */
+@media screen and (min-width: 768px) {
+    #tipoMascotaSelector {
+        width: 30%; /* Ancho al 50% en dispositivos de escritorio */
+    }
+}
+
+#mapa {
+    width: 100%;
+    height: 600px; /* Puedes ajustar la altura según tus necesidades */
+}
+
+.vacunas{
+    margin-left: 45px;
+}
+
+@media (min-width: 768px){
+    .vacunas, .vacunas:first-child{
+        margin: 0 0 0 30px;
+    }
+    .card-img-top{
+        height: 350px;
+        width: 350px;
+    }
+    .card-body-img{
+        text-align: center;
+    }
+    .logo-registrar img{
+        display: block;
+    }
+    .div-ubicacion{
+        display: flex;
+        align-items: center;
+    }
+    .div-ubicacion input{
+        margin-left: 10px;
+    }
+    .div-ubicacion label{
+        margin-bottom: 0;
+    }
+    .contenedor-info{
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 0;
+    }
+    .contenedor-info div{
+        margin: 0 5px;
+    }
+    .contenedor-img{
+        text-align: left;
+    }
+    .contenedor-img div{
+        display: flex;
+    }
+    .contenedor-img label{
+        font-size: 15.42px;
+        margin-left: 10px;
+    }
+    .contenedor-img img{
+        margin-left: 15px;
+    }
+    .div-img img{
+        margin: 0 10px 0 0;
+    }
+    .logo-registrar{
+        margin-bottom: 5px;
+    }
+    .div-telefono{
+        font-size: 15.42px;
+        text-align: left;
+    }
+}
+
+@media (min-width: 1024px){
+    .vacunas, .vacunas:first-child{
+        margin: 0;
+    }
+    .card-img-top {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+    .card-body-img{
+        padding: 20px;
+    }
+    .mis-mascotas{
+        display: grid;
+        grid-template-columns: 1fr 2fr 2fr;
+    }
+    .mis-mascotas-encabezado{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px auto auto auto;
+        width: 90%;
+    }
+    .registrar-titulo{
+        text-align: left;
+        padding-left: 10px;
+    }
+}

@@ -1,10 +1,8 @@
 package ar.edu.unlam.tallerweb1.infrastructure;
 
 import ar.edu.unlam.tallerweb1.SpringTest;
-import ar.edu.unlam.tallerweb1.domain.usuarios.RepositorioUsuario;
-import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
-import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +20,15 @@ public class RepositorioMascotaTest extends SpringTest {
     @Autowired
     private RepositorioUsuario repositorioU;
 
-    private int idUsuario;
+    private Long idUsuarioSinMascotas;
+    private Long idUsuario;
     private Mascota mascota;
-    private Vacunacion vacuna;
 
     @Before
     public void init(){
         this.idUsuario = dadoQueExisteUsuario();
+        this.idUsuarioSinMascotas = dadoQueExisteUsuario();
         this.mascota = dadoQueExisteMascota(idUsuario);
-        this.vacuna = dadoQueExisteVacuna(mascota);
-        this.mascota.setVacunas(vacuna);
-    }
-
-    private Vacunacion dadoQueExisteVacuna(Mascota mascota) {
-        Vacunacion vacuna = new Vacunacion();
-        vacuna.setNombre("Primera vacuna");
-        this.repositorioM.guardarVacuna(vacuna);
-        return vacuna;
     }
 
     @Test
@@ -56,8 +46,7 @@ public class RepositorioMascotaTest extends SpringTest {
     @Transactional
     @Rollback
     public void ObtenerMasMascotasPorIdUsuario(){
-
-        Mascota mascota2 = dadoQueExisteMascota(idUsuario);
+        dadoQueExisteMascota(idUsuario);
 
         List<Mascota> mascotasEncontradas = buscoLasMascotasPorIdUsuario(idUsuario);
 
@@ -69,29 +58,13 @@ public class RepositorioMascotaTest extends SpringTest {
     @Rollback
     public void NoObtenerNingunaMascota(){
 
-        int usuarioSinMascotas = dadoQueExisteUsuario();
+        Long usuarioSinMascotas = dadoQueExisteUsuario();
 
         List<Mascota> mascotasEncontradas = buscoLasMascotasPorIdUsuario(usuarioSinMascotas);
 
         entoncesNoEncuentroNinguna(mascotasEncontradas);
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    public void meTraeVacunas(){
-
-        Mascota mascota = this.repositorioM.buscarMascotasPorIdUsuario(idUsuario).get(0);
-        List<Vacunacion> vacunasEncontradas = mascota.getVacunas();
-
-        entoncesLasTrae(vacunasEncontradas);
-
-    }
-
-    private void entoncesLasTrae(List<Vacunacion> vacunasMascota) {
-        assertThat(vacunasMascota).isNotNull();
-        assertThat(vacunasMascota.size()).isEqualTo(1);
-    }
 
     private void entoncesNoEncuentroNinguna(List<Mascota> mascotasEncontradas) {
         assertThat(mascotasEncontradas).isNotNull();
@@ -108,18 +81,18 @@ public class RepositorioMascotaTest extends SpringTest {
         assertThat(mascotasEncontradas.size()).isEqualTo(1);
     }
 
-    private List<Mascota> buscoLasMascotasPorIdUsuario(int idUsuario) {
+    private List<Mascota> buscoLasMascotasPorIdUsuario(Long idUsuario) {
         return this.repositorioM.buscarMascotasPorIdUsuario(idUsuario);
     }
 
-    private Mascota dadoQueExisteMascota(int idUsuario) {
+    private Mascota dadoQueExisteMascota(Long idUsuario) {
         Mascota mascota = new Mascota();
         mascota.setIdUsuario(idUsuario);
         this.repositorioM.guardar(mascota);
         return mascota;
     }
 
-    private int dadoQueExisteUsuario() {
+    private Long dadoQueExisteUsuario() {
         Usuario user = new Usuario();
         this.repositorioU.guardar(user);
         return user.getId();

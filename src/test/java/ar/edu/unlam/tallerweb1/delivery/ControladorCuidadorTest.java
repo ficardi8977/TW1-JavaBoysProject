@@ -71,7 +71,7 @@ public class ControladorCuidadorTest {
 
     private void entoncesMeMuestraLosDetalles(ModelAndView mav) {
         assertThat(mav.getModel().get("cuidado")).isNotNull();
-        assertThat(mav.getViewName().toString()).isEqualTo("detalle-cuidador");
+        assertThat(mav.getViewName().toString()).isEqualTo("detalle-cuidador-mdq");
     }
 
     private void entoncesNoMeLosMuestra(ModelAndView mav) {

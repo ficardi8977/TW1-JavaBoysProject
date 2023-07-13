@@ -20,7 +20,7 @@ public interface RepositorioMascota {
     //void modificar(Mascota mascota);
     void guardar(Mascota mascota);
 
-    List<Mascota> buscarMascotasPorIdUsuario(int idUsuario);
+    List<Mascota> buscarMascotasPorIdUsuario(Long idUsuario);
 
     List<Mascota> ObtenerMascotasFiltradas(DatosMascotasFiltradas request);
 
@@ -31,4 +31,9 @@ public interface RepositorioMascota {
 
     Boolean registrarMascota(DatosMascotas datosMascotas);
 
+    void registrarVacuna(String nuevaVacuna, Long idMascota);
+
+    Mascota buscarPorId(Long idMascota);
+
+    void eliminarVacuna(Long idVacuna, Long idMascota);
 }

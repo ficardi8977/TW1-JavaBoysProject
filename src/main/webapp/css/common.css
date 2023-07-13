@@ -1,8 +1,17 @@
 body {
-    background-image: url("../img/mascotasHome.jpg");
+    background-color: #FFD2B6!important;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
+    min-height: 100vh;
+}
+
+#contenido-home {
+    min-height: calc(100vh - 190px);
+}
+
+#contenido-home h3{
+
 }
 
 button{

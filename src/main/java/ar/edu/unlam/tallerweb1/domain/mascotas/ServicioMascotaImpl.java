@@ -6,18 +6,29 @@ import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirRaza;
 import ar.edu.unlam.tallerweb1.domain.excepciones.ElegirTipo;
 import ar.edu.unlam.tallerweb1.domain.excepciones.NombreInvalido;
+import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioMascota;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class ServicioMascotaImpl implements ServicioMascota {
 
     private RepositorioMascota repositorioMascota;
+    @Autowired
+    private ServletContext servletContext;
 
     @Autowired
     public ServicioMascotaImpl(RepositorioMascota repositorioMascota) {
@@ -40,7 +51,7 @@ public class ServicioMascotaImpl implements ServicioMascota {
         return repositorioMascota.BuscarDetalle(id);
     }
 
-    public List<Mascota> obtenerMascotaPorIdUsuario(int idUsuario) {
+    public List<Mascota> obtenerMascotaPorIdUsuario(Long idUsuario) {
         return this.repositorioMascota.buscarMascotasPorIdUsuario(idUsuario);
     }
 
@@ -59,6 +70,48 @@ public class ServicioMascotaImpl implements ServicioMascota {
         validarDatos(datosMascotas);
         return this.repositorioMascota.registrarMascota(datosMascotas);
     }
+/*
+    @Override
+    public String registrarImagen(MultipartFile img) throws IOException {
+        // String rutaImagen = "C:\\Taller Web\\TW1-JavaBoysProject\\src\\main\\resources\\imgs\\" + img.getOriginalFilename();
+        String directorioImagenes = servletContext.getRealPath("/img/");
+        String rutaImagen = directorioImagenes + img.getOriginalFilename();
+        byte[] bytes = img.getBytes();
+        Path path = Paths.get(rutaImagen);
+        Files.write(path, bytes);
+
+        return img.getOriginalFilename();
+    }
+
+ */
+
+    @Override
+    public String registrarImagen(MultipartFile img) throws IOException {
+        String directorioImagenes = servletContext.getRealPath("/img/");
+        String nombreOriginal = img.getOriginalFilename();
+        String extension = obtenerExtension(nombreOriginal);
+        String nombreUnico = generarNombreUnico(nombreOriginal, extension);
+        String rutaImagen = directorioImagenes + nombreUnico;
+        byte[] bytes = img.getBytes();
+        Path path = Paths.get(rutaImagen);
+        Files.write(path, bytes);
+
+        return nombreUnico;
+    }
+
+    private String obtenerExtension(String nombreArchivo) {
+        int ultimoPunto = nombreArchivo.lastIndexOf(".");
+        if (ultimoPunto != -1) {
+            return nombreArchivo.substring(ultimoPunto);
+        }
+        return "";
+    }
+
+    private String generarNombreUnico(String nombreOriginal, String extension) {
+        String uuid = UUID.randomUUID().toString();
+        return nombreOriginal + "_" + uuid + extension;
+    }
+
     @Override
     public Boolean validarDatos(DatosMascotas datosMascotas){
         Boolean datosValidos = false;
@@ -78,6 +131,17 @@ public class ServicioMascotaImpl implements ServicioMascota {
             datosValidos = true;
         return datosValidos;
     }
+
+    @Override
+    public void registrarVacuna(String nuevaVacuna, Long idMascota) {
+        this.repositorioMascota.registrarVacuna(nuevaVacuna, idMascota);
+    }
+
+    @Override
+    public void eliminarVacuna(Long idVacuna, Long idMascota) {
+        this.repositorioMascota.eliminarVacuna(idVacuna, idMascota);
+    }
+
     @Override
     public List<Mascota> obtenerMascotasCercanas(DatosMascotasFiltradas request) {
         EstadoMascotasEnum perdido = EstadoMascotasEnum.Perdido;

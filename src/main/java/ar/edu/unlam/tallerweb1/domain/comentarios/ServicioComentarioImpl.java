@@ -1,24 +1,31 @@
 package ar.edu.unlam.tallerweb1.domain.comentarios;
 
+import ar.edu.unlam.tallerweb1.delivery.DTOComentario;
 import ar.edu.unlam.tallerweb1.delivery.DatosComentario;
+import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
-import ar.edu.unlam.tallerweb1.domain.excepciones.mascotas.UsuarioExcepcion;
-import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
+import ar.edu.unlam.tallerweb1.domain.excepciones.ComentarioInexistenteExcepcion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.CuidadoNoExistenteExcepcion;
+import ar.edu.unlam.tallerweb1.domain.excepciones.PermisosExcepcion;
 import ar.edu.unlam.tallerweb1.domain.excepciones.UsuarioNoExistenteExcepcion;
-import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
 import ar.edu.unlam.tallerweb1.domain.excepciones.mascotas.EncontrarMascotaExcepcion;
+import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
+import ar.edu.unlam.tallerweb1.domain.mascotas.ServicioMascota;
+import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioUsuario;
+import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioComentario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ServicioComentarioImpl implements ServicioComentario
 {
-
     private RepositorioComentario repositorioComentario;
     private ServicioCuidado servicioCuidado;
 
@@ -47,19 +54,13 @@ public class ServicioComentarioImpl implements ServicioComentario
         }
 
         var cuidado = this.servicioCuidado.ObtenerDetalle(request.getIdCuidado());
-        if(cuidado == null)
-        {
-            throw new CuidadoNoExistenteExcepcion();
-        }
+        existeCuidado(cuidado);
         comentario.setCuidado(cuidado);
 
-        //obtener cuidador
         var usuario = this.servicioUsuario.consultarUsuario(request.getIdUsuario());
-        if(usuario == null)
-        {
-            throw new UsuarioNoExistenteExcepcion();
-        }
+        esUsuarioValidoParaComentario(usuario);
         comentario.setUsuario(usuario);
+
         var idComentario = this.repositorioComentario.guardar(comentario);
 
         return idComentario;
@@ -73,23 +74,89 @@ public class ServicioComentarioImpl implements ServicioComentario
         comentario.setMensaje(request.getMensaje());
         comentario.setFecha(Date.from(Instant.now()));
 
-        //obtener mascota
+        if(request.getIdComentarioPadre() != null)
+        {
+            comentario.setComentarioPadre(this.repositorioComentario.obtener(request.getIdComentarioPadre()));
+        }
+
         var mascota = this.servicioMascota.ObtenerDetalle(request.getIdMascota());
+        existeMascota(mascota);
+        comentario.setMascota(mascota);
+
+        var usuario = this.servicioUsuario.consultarUsuario(request.getIdUsuario());
+        esUsuarioValidoParaComentario(usuario);
+        comentario.setUsuario(usuario);
+
+        var idComentario = this.repositorioComentario.guardar(comentario);
+
+        return idComentario;
+    }
+
+    @Override
+    public void eliminar(long id, long idUsuario) {
+
+        var usuario = this.servicioUsuario.consultarUsuario(idUsuario);
+        esUsuarioValidoParaComentario(usuario);
+        esUsuarioValidoParaBorrarComentario(usuario);
+
+        var comentario = this.repositorioComentario.obtener(id);
+        existeComentario(comentario);
+
+        this.repositorioComentario.eliminar(comentario);
+    }
+
+    private void existeComentario(Comentario comentario) {
+        if(comentario == null)
+        {
+            throw new ComentarioInexistenteExcepcion();
+        }
+    }
+
+    private void esUsuarioValidoParaComentario(Usuario usuario)
+    {
+        if(usuario == null)
+        {
+            throw new UsuarioNoExistenteExcepcion();
+        }
+    }
+
+    private void esUsuarioValidoParaBorrarComentario(Usuario usuario)
+    {
+        if(!usuario.getTipoUsuario().getNombre().equals("Administrador"))
+        {
+            throw new PermisosExcepcion();
+        }
+    }
+    private void existeCuidado(Cuidado cuidado)
+    {
+        if(cuidado == null)
+        {
+            throw new CuidadoNoExistenteExcepcion();
+        }
+    }
+    private void existeMascota(Mascota mascota)
+    {
         if(mascota == null)
         {
             throw new EncontrarMascotaExcepcion();
         }
-        comentario.setMascota(mascota);
+    }
 
-        //obtener usuario
-        var usuario = this.servicioUsuario.consultarUsuario(request.getIdUsuario());
-        if(usuario == null)
-        {
-            throw new UsuarioExcepcion();
+    @Override
+    public List<DTOComentario> obtenerSubcomentarios(long id) {
+
+        var comentario = this.repositorioComentario.obtener(id);
+        existeComentario(comentario);
+
+        var subcomentarios = this.repositorioComentario.obtenerSubcomentarios(id);
+
+        List<DTOComentario> listaDTO = new ArrayList<>();
+
+        if (!subcomentarios.isEmpty()) {
+            for (Comentario elemento : subcomentarios) {
+                listaDTO.add(new DTOComentario(elemento));
+            }
         }
-        comentario.setUsuario(usuario);
-        var idComentario = this.repositorioComentario.guardar(comentario);
-
-        return idComentario;
+        return listaDTO;
     }
 }

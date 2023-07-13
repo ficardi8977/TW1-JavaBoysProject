@@ -16,7 +16,7 @@
 </jsp:include>
 
 <div class="container pt-4 pb-2 px-4 m-4 w-80 rounded-4 mx-auto" style="background-color: white">
-    <form action="/alta-mascota" method="post" >
+    <form action="/alta-mascota" method="post" enctype="multipart/form-data" >
         <div class="d-flex align-items-center mb-3 pb-1">
             <img class="img-fluid img-thumbnail border-0 rounded mx-auto d-block" style="width: 20%; height: auto;" src="img/AMIPETS2.PNG" alt="AmiPets">
         </div>
@@ -61,6 +61,17 @@
             </div>
         </div>
 
+        <div class="h6">
+            <label for="img" class="mb-2">Imagen</label>
+            <div class="d-flex align-items-center mb-2">
+                <img src="../img/huellita.jpg" id="profile-pic" style="height: 100px;">
+                <input type="file" id="img" name="img" accept="image/jpeg, image/png, image/jpg" class="form-control form-control-lg ml-2">
+            </div>
+        </div>
+
+        <input type="hidden" id="telefono" name="telefono" value="${sessionScope.TELEFONO}">
+        <input type="hidden" id="nombreUsuario" name="nombreUsuario" value="${sessionScope.NOMBRE}">
+
         <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">
             <label for="address" class="m-0 mr-2">Ubicación</label>
             <input type="text" class="form-control form-control-lg" id="address" placeholder="Introduce una ubicación o haz clic en el mapa"><br>
@@ -84,8 +95,6 @@
             <button type="submit" class="btn btn-dark btn-lg btn-block">Agregar Mascota</button>
         </div>
     </form>
-
-
 </div>
 
 
@@ -96,7 +105,7 @@
 
 <script src="../js/mapa-registro.js"></script>
 <script src="../js/mascotas.js"></script>
+<script src="../js/registro-imagen.js"></script>
 </body>
 </html>
-
 

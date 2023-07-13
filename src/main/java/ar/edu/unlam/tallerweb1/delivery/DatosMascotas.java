@@ -7,14 +7,16 @@ public class DatosMascotas {
     private String descripcion;
     private String latitud;
     private String longitud;
+    private String nombreUsuario;
+    private String telefono;
     private Long estado;
 
     private String imagen;
 
     private Long tipo;
-    private int idUsuario;
+    private Long idUsuario;
 
-    public DatosMascotas(String nombre, String descripcion, String imagen, String raza, Long estado, Long tipo, int idUsuario){
+    public DatosMascotas(String nombre, String descripcion, String imagen, String raza, Long estado, Long tipo, Long idUsuario){
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagen = imagen;
@@ -84,11 +86,11 @@ public class DatosMascotas {
     }
 
 
-    public int getIdUsuario() {
+    public Long getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -98,6 +100,22 @@ public class DatosMascotas {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 }
 

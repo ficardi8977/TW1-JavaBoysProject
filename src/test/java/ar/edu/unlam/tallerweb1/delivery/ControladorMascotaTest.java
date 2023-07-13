@@ -7,6 +7,7 @@ import ar.edu.unlam.tallerweb1.domain.tipoMascota.TipoMascota;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
@@ -26,14 +27,18 @@ public class ControladorMascotaTest {
     private ServicioMascota servicioMascota;
     private DatosMascotas datos;
     private DatosMascotas datosInvalidos;
+    private RedirectAttributes redirectAttributes;
+    private MultipartFile img;
 
     @Before
     public void init(){
         this.servicioMascota = mock(ServicioMascota.class);
         controladorMascotas = new ControladorMascotas(this.servicioMascota);
         this.datosInvalidos = new DatosMascotas();
+        this.redirectAttributes = new RedirectAttributesModelMap();
+        this.img = mock(MultipartFile.class);
         this.datos = new DatosMascotas();
-        datos.setIdUsuario(1);
+        datos.setIdUsuario(1l);
         when(this.servicioMascota.validarDatos(datos)).thenReturn(true);
         when(this.servicioMascota.registrarMascota(datos)).thenReturn(true);
         when(this.servicioMascota.validarDatos(datosInvalidos)).thenReturn(false);
@@ -78,8 +83,8 @@ public class ControladorMascotaTest {
     }
     @Test
     public void buscarMascotaPorIdUsuarioIncorrecto(){
-        int idUsuario = 1;
-        int idUsuarioIncorrecto = 2;
+        Long idUsuario = 1l;
+        Long idUsuarioIncorrecto = 2l;
         dadoQueExisteMascota(idUsuario);
         ModelAndView mav = this.controladorMascotas.getMascotaPorIdUsuario(idUsuarioIncorrecto);
         assertThat(mav.getModel().get("mascotas").toString()).isEqualTo("[]");
@@ -115,14 +120,12 @@ public class ControladorMascotaTest {
     @Test
     public void cuandoQuieroRegistrarUnaMascotaQueMeLleveAlFormulario() {
         ModelAndView mav = quieroRegistrarMiMascota();
-        assertThat(mav.getViewName()).isEqualTo("registrar-mascota");
+        assertThat(mav.getViewName()).isEqualTo("registrar-mascota-mdq");
     }
 
     @Test
     public void cuandoRegistroMiMascotaMeDevuelveALaVistaMisMascotas() {
-        RedirectAttributes redirectAttributes = mock(RedirectAttributes.class);
-
-        ModelAndView mav = registroMiMascota(datos, redirectAttributes);
+        ModelAndView mav = registroMiMascota(datos, img, redirectAttributes);
         Object view = mav.getView();
         String url = ((RedirectView) view).getUrl();
 
@@ -132,9 +135,7 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoRegistroMiMascotaMeDevuelveUnMensajeExitoso() {
-        RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
-
-        ModelAndView mav = registroMiMascota(datos, redirectAttributes);
+        ModelAndView mav = registroMiMascota(datos, img, redirectAttributes);
         Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
         String mensaje = (String) flashAttributes.get("error");
 
@@ -143,16 +144,14 @@ public class ControladorMascotaTest {
 
     @Test
     public void cuandoNoLogroRegistrarMiMascotaMeDevuelveAlFormConMensaje() {
-        RedirectAttributes redirectAttributes = new RedirectAttributesModelMap();
-
-        ModelAndView mav = registroMiMascota(datosInvalidos, redirectAttributes);
+        ModelAndView mav = registroMiMascota(datosInvalidos, img, redirectAttributes);
 
         assertThat(mav.getViewName()).isEqualTo("registrar-mascota");
         assertThat(mav.getModel().get("error")).isEqualTo("No se pudo registrar a la mascota");
     }
 
-    private ModelAndView registroMiMascota(DatosMascotas datos, RedirectAttributes redirectAttributes) {
-        return this.controladorMascotas.altaMascota(datos, redirectAttributes);
+    private ModelAndView registroMiMascota(DatosMascotas datos, MultipartFile img, RedirectAttributes redirectAttributes) {
+        return this.controladorMascotas.altaMascota(datos, img, redirectAttributes);
     }
 
 
@@ -161,7 +160,7 @@ public class ControladorMascotaTest {
     }
 
 
-    private void dadoQueExisteMascota(int idUsuario) {
+    private void dadoQueExisteMascota(Long idUsuario) {
         List<Mascota> mascotas = new ArrayList<>();
         Mascota mascota = new Mascota();
         mascota.setIdUsuario(idUsuario);
@@ -213,7 +212,7 @@ public class ControladorMascotaTest {
     }
     @Test
     public void buscarMascotaPorIdUsuario(){
-        int idUsuario = 1;
+        Long idUsuario = 1l;
         dadoQueExisteMascota(idUsuario);
         ModelAndView mav = this.controladorMascotas.getMascotaPorIdUsuario(idUsuario);
         assertThat(mav.getModel().get("mascotas")).isNotNull();

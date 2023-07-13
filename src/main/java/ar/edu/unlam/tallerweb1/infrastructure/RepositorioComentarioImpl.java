@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -26,8 +27,25 @@ public class RepositorioComentarioImpl implements RepositorioComentario{
         return  Math.toIntExact(comentario.getId());
     }
     @Override
-    public Comentario obtener(int id){
+    public Comentario obtener(long id){
         return  (Comentario) this.sessionFactory.getCurrentSession().createCriteria(Comentario.class)
                 .add(Restrictions.eq("id",id)).uniqueResult();
+    }
+
+    @Override
+    public void eliminar(Comentario comentario){
+        this.sessionFactory.getCurrentSession().delete(comentario);
+    }
+
+    @Override
+    public List<Comentario> obtenerPorIdCuidado(long idCuidado) {
+        return  (List<Comentario>) this.sessionFactory.getCurrentSession().createCriteria(Comentario.class)
+                .add(Restrictions.eq("cuidado.id",idCuidado)).list();
+    }
+
+    @Override
+    public List<Comentario> obtenerSubcomentarios(long id) {
+        return  (List<Comentario>) this.sessionFactory.getCurrentSession().createCriteria(Comentario.class)
+                .add(Restrictions.eq("comentarioPadre.id",id)).list();
     }
 }

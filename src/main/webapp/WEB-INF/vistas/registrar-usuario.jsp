@@ -16,7 +16,7 @@
 
   <div class="container p-4 m-4 w-80 rounded-4 mx-auto" style="background-color: white;">
 
-    <form action="/registrar-usuario" method="post">
+    <form action="/registrar-usuario" method="post" enctype="multipart/form-data">
 
       <div class="d-flex align-items-center mb-3 pb-1">
         <img class="img-fluid img-thumbnail border-0 rounded mx-auto d-block" style="width: 20%; height: auto;" src="img/AMIPETS2.PNG" alt="AmiPets">
@@ -46,10 +46,18 @@
 
           <div class="col form-outline mb-4">
             <label class="form-label" for="password">Contraseña</label>
-            <input type="password" name="password" id="password" class="form-control form-control-lg" required/>
+            <input type="password" name="password" id="password" class="form-control form-control-lg" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$" title="Formato de contraseña: al menos una mayúscula, al menos una minúscula, al menos un digito y que sea de entre 4 y 8 caracteres de largo" required/>
           </div>
         </div>
 
+      </div>
+
+      <div class="h6">
+        <label for="img" class="mb-2">Imagen</label>
+        <div class="d-flex align-items-center mb-2">
+          <img src="../img/defaultUser.png" id="profile-pic" style="height: 100px;">
+          <input type="file" id="img" name="img" accept="image/jpeg, image/png, image/jpg" class="form-control form-control-lg ml-2">
+        </div>
       </div>
 
       <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">
@@ -64,7 +72,7 @@
 
       <div class="form-outline my-3 h6">
         <label class="form-label" for="telefono">Telefono</label>
-        <input type="tel" name="telefono" id="telefono" class="form-control form-control-lg" pattern="^\d{7,8}$" maxlength="8" title="Ingrese un número de teléfono de 7 u 8 digitos" required/>
+        <input type="tel" name="telefono" id="telefono" class="form-control form-control-lg" pattern="^\d{7,11}$" maxlength="11" title="Ingrese un número de teléfono de 7 u 11 digitos" placeholder="1112345678" required/>
       </div>
 
       <div>
@@ -90,6 +98,7 @@
   </jsp:include>
 
   <script src="../js/mapa-registro.js"></script>
+  <script src="../js/registro-imagen.js"></script>
 </body>
 </html>
 
@@ -97,5 +106,7 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&libraries=places&callback=initAutocomplete"></script>
 -->
+
+
 
 

@@ -38,3 +38,25 @@
     width: 100%;
     height: 600px; /* Puedes ajustar la altura según tus necesidades */
 }
+.referencia-container {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px; /* Ajusta el tamaño de la fuente según tus necesidades */
+    margin-top: 30px; /* Agrega margen superior para alinearlo con el control "Mapa Satélite" */
+    margin-left: 10px;
+}
+
+.referencia-item {
+    margin-bottom: 5px;
+}
+
+.referencia-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    vertical-align: middle;
+}

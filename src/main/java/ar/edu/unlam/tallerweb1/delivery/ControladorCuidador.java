@@ -29,7 +29,7 @@ public class ControladorCuidador {
         ModelMap model = new ModelMap();
         List<Cuidado> cuidadores = this.servicioCuidador.ObtenerTodosLosCuidadores();
         model.put("cuidadores", cuidadores);
-        return new ModelAndView("todos-los-cuidadores", model);
+        return new ModelAndView("todos-los-cuidadores-mdq", model);
     }
 
     @RequestMapping(path = "/cuidador/detalle", method = RequestMethod.GET)
@@ -37,7 +37,7 @@ public class ControladorCuidador {
         ModelMap model = new ModelMap();
         Cuidado result = this.servicioCuidador.ObtenerDetalle(id);
         model.put("cuidado", result);
-        return new ModelAndView("detalle-cuidador", model);
+        return new ModelAndView("detalle-cuidador-mdq", model);
     }
 
 

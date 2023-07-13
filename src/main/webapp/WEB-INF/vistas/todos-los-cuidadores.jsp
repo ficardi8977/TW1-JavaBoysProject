@@ -7,6 +7,7 @@
     <jsp:include page="head.jsp">
         <jsp:param name="head" value="head" />
     </jsp:include>
+    <link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
 
@@ -14,8 +15,18 @@
     <jsp:param name="nav" value="nav" />
 </jsp:include>
 
-<div class = "container">
-    <h1>Nuestros Cuidadores</h1>
+<div class="banners-pagina-cuidadores" style='background-image: url("img/banner-todos-cuidadores.jpg");'>
+    <div>
+        <h1>Cuidadores</h1>
+    </div>
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cuidadores</li>
+            </ol>
+        </nav>
+    </div>
 </div>
 
 <div id="contenido-home">
