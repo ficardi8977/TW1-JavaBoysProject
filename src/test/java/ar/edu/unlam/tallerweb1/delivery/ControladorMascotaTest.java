@@ -146,7 +146,7 @@ public class ControladorMascotaTest {
     public void cuandoNoLogroRegistrarMiMascotaMeDevuelveAlFormConMensaje() {
         ModelAndView mav = registroMiMascota(datosInvalidos, img, redirectAttributes);
 
-        assertThat(mav.getViewName()).isEqualTo("registrar-mascota");
+        assertThat(mav.getViewName()).isEqualTo("registrar-mascota-mdq");
         assertThat(mav.getModel().get("error")).isEqualTo("No se pudo registrar a la mascota");
     }
 
@@ -196,7 +196,7 @@ public class ControladorMascotaTest {
     }
 
     private void entoncesMeLlevaALaPantallaDeTodasLasMascotas(ModelAndView mav) {
-        assertThat(mav.getViewName()).isEqualTo("todas-las-mascotas");
+        assertThat(mav.getViewName()).isEqualTo("todas-las-mascotas-mdq");
     }
 
     private ModelAndView cuandoMeVoyATodasLasMascotas() {
