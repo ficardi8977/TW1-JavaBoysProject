@@ -32,7 +32,6 @@
   </div>
 </div>
 
-
 <div class="container-fluid">
   <div class="filtros">
     <div class="col-md-3">
@@ -70,15 +69,13 @@
 
   </div>
   <div id="mapa"></div>
-
+  <jsp:include page="foot.jsp">
+    <jsp:param name="foot" value="foot"/>
+  </jsp:include>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
+  <script src="../js/mascotas.js"></script>
+  <script src="../js/mascotas-cercanas.js"></script>
 
 </div>
-
-<jsp:include page="foot.jsp">
-  <jsp:param name="foot" value="foot"/>
-</jsp:include>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4"></script>
-<script src="../js/mascotas.js"></script>
-<script src="../js/mascotas-cercanas.js"></script>
 </body>
 </html>
