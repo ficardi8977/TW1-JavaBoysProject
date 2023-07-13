@@ -47,7 +47,7 @@
             </div>
           </div>
           <c:if test="${mascota.estado.nombre eq 'Perdido' || mascota.estado.nombre eq 'EnAdopcion'}">
-            <div class="share-button">
+            <div class="share-button-masc">
               <div class="copy-link m-2">
                 <ul style="list-style:none;border-radius: 10px;overflow: hidden" class="p-0">
                   <li class="lista-compartir copiar">
@@ -126,7 +126,7 @@
         </c:if>
 
         <c:if test="${mascota.estado.nombre eq 'Perdido' || mascota.estado.nombre eq 'EnAdopcion'}">
-          <div class="share-button-res">
+          <div class="share-button-masc-res">
             <div class="copy-link m-2">
               <ul style="list-style:none;border-radius: 10px;overflow: hidden" class="p-0">
                 <li class="lista-compartir copiar">

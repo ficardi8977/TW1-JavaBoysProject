@@ -8,6 +8,11 @@
   <jsp:include page="head.jsp">
     <jsp:param name="head" value="head"/>
   </jsp:include>
+  <style>
+    h5, form{
+      text-align: center;
+    }
+  </style>
   <link rel="stylesheet" href="../css/lista-todos.css">
 </head>
 <body>

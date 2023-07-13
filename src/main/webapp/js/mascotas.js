@@ -192,33 +192,7 @@ function actualizarRazas() {
 const botonesAgregar = document.querySelectorAll('.agregarBtn');
 const formularios = document.querySelectorAll('.formVacuna');
 
-
-/* fix-filtro-por-estado-mascota
-
-function mostrarFormularioVacuna() {
-    var vacunasDiv = document.getElementById('vacunas');
-    if (vacunasDiv.style.display === 'block') {
-        vacunasDiv.style.display = 'none';
-    } else {
-        vacunasDiv.style.display = 'block';
-    }
-}
-
-function agregarVacuna() {
-    var nombreVacunaInput = document.getElementById('nombre-vacuna');
-    var nombreVacuna = nombreVacunaInput.value;
-
-    if (nombreVacuna !== '') {
-        var listaVacunas = document.getElementById('listaVacunas');
-        var nuevaVacuna = document.createElement('li');
-        nuevaVacuna.textContent = "- " + nombreVacuna;
-        nuevaVacuna.setAttribute("value", nombreVacuna);
-        nuevaVacuna.setAttribute("name", "vacuna");
-        listaVacunas.appendChild(nuevaVacuna);
-
-        nombreVacunaInput.value = '';
-    }
-}
+/* fix-filtro-por-estado-mascota */
 
 // Agrega eventos de clic a todos los botones "Agregar vacuna"
 botonesAgregar.forEach((boton, index) => {
@@ -235,10 +209,8 @@ botonesAgregar.forEach((boton, index) => {
     });
 });
 
-mostrarTiposMascotas();
-mostrarEstadosMascotas();
 
-*/
+
 
 mostrarTiposMascotas();
 mostrarEstadosMascotas();

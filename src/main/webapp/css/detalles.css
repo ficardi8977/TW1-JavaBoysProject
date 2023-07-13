@@ -14,10 +14,15 @@
  */
 
 .share-button{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.share-button-masc{
     display: none;
 }
 
-.share-button-res{
+.share-button-masc-res{
     display: flex;
     flex-direction: column-reverse;
 }
@@ -73,16 +78,19 @@ h1, h2{
     }
     .cuerpo-card{
         display: flex;
-        flex-direction: column;
+    }
+    .share-button{
+        display: flex;
+        flex-direction: row;
     }
     .card-encabezado{
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-    .share-button-res{
+    .share-button-masc-res{
         display: none;
     }
-    .share-button{
+    .share-button-masc{
         display: flex;
     }
     .contenedorSubC{

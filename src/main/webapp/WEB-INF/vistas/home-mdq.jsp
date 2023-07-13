@@ -8,6 +8,7 @@
   <jsp:include page="head.jsp">
     <jsp:param name="head" value="head" />
   </jsp:include>
+  <link href="../css/mascotas.css" rel="stylesheet" >
   <link rel="stylesheet" href="../css/lista-todos.css">
 </head>
 <body>
@@ -50,14 +51,14 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-<h2 style="text-align: center;"> Mascotas perdidas </h2>
-<div class="items m-0 card-container">
+<h2 style="text-align: center;margin-top:15px;"> Mascotas perdidas </h2>
+<div class="items card-container">
   <c:forEach  var="mascotaPerdida" items="${carruseles.perdidos}">
     <div class="card carrusel-card">
       <img src="img/${mascotaPerdida.imagen}" class="card-img-top" alt="Mascota....">
       <div class="card-body">
         <h5 class="card-title full-name text-center">${mascotaPerdida.nombre}</h5>
-        <form action="/mascota/detalle" method="GET" style="text-align: center">
+        <form action="/mascota/detalle" method="GET" style="text-align: center; margin-top:5px;">
           <input name="id" value=${mascotaPerdida.id} id=${mascotaPerdida.id} type="hidden" class="form-control"/>
           <button class="dog-paw-button">Detalle</button>
         </form>
@@ -67,15 +68,13 @@
 </div>
 
 <h2 style="text-align: center;"> Cuidadadores </h2>
-<div class="items m-2 card-container">
+<div class="items card-container">
   <c:forEach  var="cuidador" items="${carruseles.cuidadores}">
     <div class="card carrusel-card">
       <img src="img/${cuidador.imagen}" class="card-img-top" alt="Mascota....">
       <div class="card-body">
         <h5 class="card-title full-name text-center">${cuidador.nombre}</h5>
-        <br>
-        <br>
-        <form action="/cuidador/detalle" method="GET" style="text-align: center">
+        <form action="/cuidador/detalle" method="GET" style="text-align: center; margin-top:5px;">
           <input name="id" value=${cuidador.id} id=${cuidador.id} type="hidden" class="form-control"/>
           <button class="dog-paw-button">Detalle</button>
         </form>
@@ -84,13 +83,13 @@
   </c:forEach>
 </div>
 <h2 style="text-align: center;"> Refugios </h2>
-<div class="items m-0 card-container">
+<div class="items card-container">
   <c:forEach  var="refugio" items="${carruseles.refugios}">
     <div class="card carrusel-card">
       <img src="img/${refugio.imagen}" class="card-img-top" alt="Mascota....">
       <div class="card-body" style="height: 150px;">
         <h5 class="card-title text-center">${refugio.nombre}</h5>
-        <form action="refugio/${refugio.id}" method="GET" style="text-align: center">
+        <form action="refugio/${refugio.id}" method="GET" style="text-align: center; margin-top:5px">
           <input name="id" value=${refugio.id} id=${refugio.id} type="hidden" class="form-control"/>
           <button class="dog-paw-button">Detalle</button>
         </form>
@@ -103,17 +102,9 @@
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />
 </jsp:include>
-<link href="../css/mascotas.css" rel="stylesheet" >
+
 <link href="../css/carruseles.css" rel="stylesheet" >
 <script src="../js/carruseles.js"></script>
 </body>
 </html>
 
-<script>
-  const fullNames = document.querySelectorAll('.full-name');
-  fullNames.forEach(fullName => {
-    const nameParts = fullName.textContent.split(' ');
-    const firstName = nameParts[0];
-    fullName.textContent = firstName;
-  });
-</script>
