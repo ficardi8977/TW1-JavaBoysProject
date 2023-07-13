@@ -128,7 +128,7 @@ function cargarHomeConFiltros(idTipoMascota, idEstado) {
             var contenidoHtml ='<div class="cards-container">'
             $.each(mascotas, function(index, mascota) {
                 var cardHtml = `<div class="card">
-                    <img src="img/${mascota.imagen}" class="card-img-top" alt="Mascota...">
+                    <img src="img/${mascota.imagen}" class="card-img" alt="Mascota...">
                     <div class="card-body">
                       <h5 class="card-title">${mascota.nombre}</h5>
                       <form action="mascota/detalle" method="GET">

@@ -43,7 +43,7 @@ public class ControladorMascotas {
         ModelMap model = new ModelMap();
         List<Mascota> result = this.servicioMascota.ObtenerTodasLasMascotas();
         model.put("mascotas", result);
-        return new ModelAndView("todas-las-mascotas",model);
+        return new ModelAndView("todas-las-mascotas-mdq",model);
     }
 
     @RequestMapping(path = "/mascotas/tipoMascota", method = RequestMethod.GET)
@@ -53,7 +53,7 @@ public class ControladorMascotas {
         model.put("mascotas", result);
 
         // mapeada con la home pero faltaria definir con cual es
-        return new ModelAndView("todas-las-mascotas", model);
+        return new ModelAndView("todas-las-mascotas-mdq", model);
     }
 
     @RequestMapping(path = "/mascota/detalle", method = RequestMethod.GET)

@@ -16,6 +16,16 @@
     margin-bottom: 10px;
 }
 
+.banners-pagina-mascotas{
+    background-image: url("../img/banner-todas-las-mascotas.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+    position: relative;
+    margin-bottom: 10px;
+
+}
+
 .titulos-todos{
     position: absolute;
     top:80px;
@@ -28,7 +38,15 @@
 
 h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.active::before {
     color:white;
-    text-shadow: black 1px 1px 2px;
+    text-shadow: black 1px 1px 3px;
+}
+
+.container-fluid label{
+    white-space: nowrap;
+}
+
+#estadosMascotasContainer:first-child, #tiposMascotasContainer:first-child{
+    text-align: center;
 }
 
 .breadcrumb a:hover{
@@ -43,8 +61,13 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
 
 .card-img {
     width: 100%;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
+}
+
+.filtros{
+    display: flex;
+    align-items: center;
 }
 
 .cards-container {
@@ -66,12 +89,15 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
 }
 
 @media (min-width: 768px) {
-    .banners-pagina-cuidadores, .banners-pagina-refugios{
+    .banners-pagina-cuidadores, .banners-pagina-refugios, .banners-pagina-mascotas{
         height: 300px;
     }
     .titulos-todos{
         top:110px;
         left: 100px;
+    }
+    .card-img{
+        height: 200px;
     }
     .cards-container {
         display: flex;
@@ -81,13 +107,27 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     .card {
         flex-basis: calc(33.33% - 10px);
     }
+    /* Distribución uniforme en todas las filas */
+    .cards-container::after {
+        content: "";
+        flex-basis: 33.33%;
+        /* Ajusta el espacio entre las tarjetas según tus necesidades */
+    }
+
+    /* Ajuste especial para la última fila */
+    .cards-container:last-child::after {
+        flex-basis: calc(33.33% - 10px);
+    }
+    .filtros{
+        justify-content: space-around;
+    }
 }
 
 @media (min-width: 1024px) {
     h1{
         font-size: 60px;
     }
-    .banners-pagina-cuidadores, .banners-pagina-refugios{
+    .banners-pagina-cuidadores, .banners-pagina-refugios, .banners-pagina-mascotas{
         height: 450px;
     }
     .titulos-todos{
@@ -97,10 +137,24 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     .cards-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
     .card {
         flex-basis: calc(25% - 10px);
+        margin-right: 10px;
+    }
+    .card-img{
+        height: 250px;
+    }
+
+    .cards-container:last-child::after {
+        display: none;
+    }
+}
+
+@media (min-width: 1440px){
+    .banners-pagina-cuidadores, .banners-pagina-refugios, .banners-pagina-mascotas{
+        height: 450px;
     }
 }
 

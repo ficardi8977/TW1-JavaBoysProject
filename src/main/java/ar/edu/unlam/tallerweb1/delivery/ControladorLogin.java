@@ -38,6 +38,7 @@ public class ControladorLogin {
 			request.getSession().setAttribute("NOMBRE", usuarioBuscado.getNombre());
 			request.getSession().setAttribute("IDUSUARIO", usuarioBuscado.getId());
 			request.getSession().setAttribute("TELEFONO", usuarioBuscado.getTelefono());
+			request.getSession().setAttribute("IMAGEN", usuarioBuscado.getImagen());
 			return new ModelAndView("redirect:/home");
 		} catch (Exception e){
 			model.put("error", e.getMessage());

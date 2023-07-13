@@ -153,7 +153,7 @@
                   <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                     <div class="d-flex flex-start w-100">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                           src="../img/${sessionScope.IMAGEN}" alt="avatar" width="40"
                            height="40" />
                       <div class="form-outline w-100">
                         <div>
