@@ -12,6 +12,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -73,6 +76,44 @@ public class ControladorComentariosTest{
 
         assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
+
+    @Test
+    public void getSubComentarios_OK(){
+
+        long idComentario = 1;
+        this.dadoqueExisteSubcomentario(idComentario);
+        var result = this.controladorComentarios.getSubComentarios(idComentario);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    public void getSubComentarios_ComentarioNoEncontrado(){
+
+        long idComentario = 1;
+        this.dadoQueNoExisteComentarioParaObtener(idComentario);
+        var result = this.controladorComentarios.getSubComentarios(idComentario);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    public void getSubComentarios_ErrorServicio(){
+
+        long idComentario = 1;
+        this.dadoQueFallaServicioObtenerSub();
+        var result = this.controladorComentarios.getSubComentarios(idComentario);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private void dadoqueExisteSubcomentario(long idComentario) {
+        when(this.servicioComentario.obtenerSubcomentarios(idComentario)).thenReturn(new ArrayList<DTOComentario>());
+    }
+    private void dadoQueNoExisteComentarioParaObtener(long idComentario){
+        Mockito.doThrow(new ComentarioInexistenteExcepcion()).when(servicioComentario).obtenerSubcomentarios(idComentario);
+    }
+
     @Test
     public void BorradoComentario_NoExisteUsuarioExcepcion(){
         long idComentario = 1;
@@ -133,6 +174,9 @@ public class ControladorComentariosTest{
     }
     private void dadoQueFallaServicio() {
         doAnswer(invocation -> {throw new Exception("Error al eliminar");}).when(this.servicioComentario).eliminar(anyLong(), anyLong());
+    }
+    private void dadoQueFallaServicioObtenerSub() {
+        doAnswer(invocation -> {throw new Exception("Error al obtener");}).when(this.servicioComentario).obtenerSubcomentarios(anyLong());
     }
 
 }

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 
 public class RepositorioComentarioTest extends SpringTest {
     @Autowired
@@ -82,9 +82,51 @@ public class RepositorioComentarioTest extends SpringTest {
         assertNotNull(comentarioObtenidoAntes);
         assertNull(comentarioObtenidoDespues);
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void obtenerSubComentario() {
+
+        Cuidado cuidado = dadoUnCuidadoExistente();
+        Usuario usuario = dadoUnUsuarioExistente();
+
+        dadoUnComentarioQueQuieroGuardar(usuario, cuidado);
+        dadoQueExisteUnComentario();
+        dadoQueExisteUnSubComentario(this.comentario);
+
+
+        var result = repositorioComentario.obtenerSubcomentarios(this.comentario.getId());
+
+        assertThat(result.size()).isEqualTo(1);
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void NoObtenerSubComentario() {
+
+        Cuidado cuidado = dadoUnCuidadoExistente();
+        Usuario usuario = dadoUnUsuarioExistente();
+
+        dadoUnComentarioQueQuieroGuardar(usuario, cuidado);
+        dadoQueExisteUnComentario();
+
+        var result = repositorioComentario.obtenerSubcomentarios(this.comentario.getId());
+
+        assertThat(result.size()).isEqualTo(0);
+    }
     private int dadoQueExisteUnComentario()
     {
         return repositorioComentario.guardar(comentario);
     }
+
+    private int dadoQueExisteUnSubComentario(Comentario comentario){
+
+        var subcomentario = new Comentario();
+        subcomentario.setComentarioPadre(comentario);
+        return this.repositorioComentario.guardar(subcomentario);
+    }
+
 
 }

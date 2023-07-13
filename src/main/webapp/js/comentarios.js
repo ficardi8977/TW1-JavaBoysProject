@@ -1,19 +1,29 @@
-const diccionarioUrl = {};
+const diccionarioUrlDELETE = {};
 
-diccionarioUrl["mascotas"] = "/mascota/detalle?id=";
-diccionarioUrl["cuidadores"] = "/cuidador/detalle?id=";
-diccionarioUrl["refugios"] = "/refugio/";
+diccionarioUrlDELETE["mascotas"] = "/mascota/detalle?id=";
+diccionarioUrlDELETE["cuidadores"] = "/cuidador/detalle?id=";
+diccionarioUrlDELETE["refugios"] = "/refugio/";
 
-function agregarSubcomentario(idComentario, idUsuario, idCuidado) {
+const diccionarioUrlPOST = {};
+
+diccionarioUrlPOST["mascotas"] = "/comentario/mascota";
+diccionarioUrlPOST["cuidadores"] = "/comentario/cuidador";
+diccionarioUrlPOST["refugios"] = "/comentario/refugio";
+
+
+
+function agregarSubcomentario(idComentario, idUsuario, idCuidado,funcionalidad) {
     var contenedorSubcomentarios = document.getElementById('contenedorSubcomentarios' + idComentario);
-    contenedorSubcomentarios.appendChild(cargarFormularioComentario(idComentario, idUsuario, idCuidado));
+    contenedorSubcomentarios.appendChild(cargarFormularioComentario(idComentario, idUsuario, idCuidado,funcionalidad));
 }
 
-function cargarFormularioComentario(idComentario, idUsuario, idCuidado){
+function cargarFormularioComentario(idComentario, idUsuario, idCuidado, funcionalidad){
+
+    let urlDeFuncionalidad = diccionarioUrlPOST[funcionalidad];
 
     var formulario = document.createElement("form");
     formulario.setAttribute("method", "post");
-    formulario.setAttribute("action", "/comentario/cuidador");
+    formulario.setAttribute("action", urlDeFuncionalidad);
 
     var divCardFooter = document.createElement("div");
     divCardFooter.setAttribute("class", "card-footer py-3 border-0");
@@ -33,11 +43,17 @@ function cargarFormularioComentario(idComentario, idUsuario, idCuidado){
     var divFormOutline = document.createElement("div");
     divFormOutline.setAttribute("class", "form-outline w-100");
 
+    var idFuncionalidad;
+    if(funcionalidad == "mascotas") {
+         idFuncionalidad = "idMascota";
+    }else{
+        idFuncionalidad = "idCuidado";
+    }
 // mensaje que envia en el comentario + parametros que va a enviar en el POST
     divFormOutline.innerHTML =
 `<textarea class="form-control" id="mensaje" name="mensaje" value="mensaje" rows="4" style="background: #fff;"></textarea>
     <input type="hidden" name="idUsuario" value="${idUsuario}">
-    <input type="hidden" name="idCuidado" value="${idCuidado}">
+    <input type="hidden" name="${idFuncionalidad}" value="${idCuidado}">
     <input type="hidden" name="idComentarioPadre" value="${idComentario}">
     <label class="form-label" for="mensaje">Mensaje</label>
     <div class="float-end mt-2 pt-1">
@@ -52,7 +68,7 @@ function cargarFormularioComentario(idComentario, idUsuario, idCuidado){
 }
 function borrarComentario(idComentario, idUsuario, idFuncionalidad, funcionalidad)
 {
-    let urlDeFuncionalidad = diccionarioUrl[funcionalidad];
+    let urlDeFuncionalidad = diccionarioUrlDELETE[funcionalidad];
 
     fetch(`/comentario/${idComentario}?idUsuario=${idUsuario}`, {
         method: 'DELETE'
@@ -67,4 +83,63 @@ function borrarComentario(idComentario, idUsuario, idFuncionalidad, funcionalida
         .catch(error => {
             console.error('Error en la solicitud:', error);
         });
+}
+
+function obtenerComentarios(idCuidado) {
+    fetch(`/comentarios/cuidado/${idCuidado}`)
+        .then(response => response.json())
+        .then(data => {
+            cargarComentario(data);
+        })
+        .catch(error => {
+            console.error('Error al cargar los subcomentarios:', error);
+        });
+}
+function obtenerSubcomentarios(idComentario, sessionUsuarioId, sessionRol) {
+    fetch(`/subcomentarios/comentario/${idComentario}`)
+        .then(response => response.json())
+        .then(data => {
+            cargarSubComentarios(data,sessionUsuarioId, sessionRol, idComentario);
+        })
+        .catch(error => {
+            console.error('Error al cargar los subcomentarios:', error);
+        });
+}
+
+function cargarSubComentarios(data,sessionUsuarioId, sessionRol,idComentarioPadre){
+    let html = '';
+
+    data.forEach(comentario => {
+        html += `
+        <div class="card-body mx-5">
+            <div class="d-flex flex-start align-items-center">
+                ${comentario.imagenUsuario ? `
+                    <img class="rounded-circle shadow-1-strong me-3" src="../img/${comentario.imagenUsuario}" alt="avatar" width="60" height="60" />
+                ` : `
+                    <img class="rounded-circle shadow-1-strong me-3" src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="60" height="60" />
+                `}
+                <div>
+                    <h6 class="fw-bold text-primary mb-1">${comentario.nombreUsuario}</h6>
+                    <p class="text-muted small mb-0">
+                        publicado ${comentario.fecha}
+                    </p>
+                </div>
+            </div>
+            <p class="mt-3 mb-4 pb-2">
+                ${comentario.mensaje}
+            </p>
+            <div class="small d-flex justify-content-start">
+                ${sessionRol === 'Administrador' ? `
+                    <a href="#!" onclick="borrarComentario(${comentario.id}, ${sessionUsuarioId}, ${comentario.idCuidado}, 'cuidadores')" class="d-flex align-items-center me-3">
+                        <i class="fa fa-light fa-trash me-2"></i>
+                        <p class="mb-0">eliminar</p>
+                    </a>
+                ` : ''}
+            </div>
+        </div>
+    `;
+        var contenedorSubcomentarios = document.getElementById('contenedorSubcomentarios' + idComentarioPadre);
+        contenedorSubcomentarios.innerHTML = html;
+    });
+
 }
