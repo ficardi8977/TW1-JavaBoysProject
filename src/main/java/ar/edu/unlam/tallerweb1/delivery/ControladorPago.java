@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,11 +29,13 @@ public class ControladorPago {
         this.servicioMercadoPago = servicioMercadoPago;
     }
 
-    @RequestMapping(path = "/pago/preferencia",method = RequestMethod.POST)
-    public ResponseEntity<String> getComentariosDeCuidado() throws MPException, MPApiException, IOException {
-
-        // este lo genere previamente con la api de crear preferencia de mercado pago
-        String  idPreferencia =  this.servicioMercadoPago.crearPedido();
-        return new ResponseEntity<>(idPreferencia, HttpStatus.OK);
+    @RequestMapping(value = "/pago/preferencia", method = RequestMethod.POST)
+    public ResponseEntity<String> generarPreferencia(@RequestBody String nombreRefugio) {
+        try {
+            String  idPreferencia =  this.servicioMercadoPago.crearPedido(nombreRefugio);
+            return new ResponseEntity<>(idPreferencia, HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity<>("", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

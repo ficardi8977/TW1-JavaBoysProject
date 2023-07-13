@@ -32,7 +32,7 @@
       <div class="card">
         <div class="cuerpo-card">
           <div class="card-body">
-            <h5 class="card-title">${refugio.nombre}</h5>
+            <h5 id="detallenombreRefugio" class="card-title">${refugio.nombre}</h5>
             <p class="card-text">Email: ${refugio.email}</p>
             <p class="card-text mb-2">Direccion: ${refugio.direccion}</p>
             <div class="d-flex align-items-center mb-2">

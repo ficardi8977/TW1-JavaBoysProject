@@ -7,5 +7,5 @@ import java.io.IOException;
 
 public interface ServicioMercadoPago {
 
-    String crearPedido() throws MPException, MPApiException, IOException;
+    String crearPedido(String nombreRefugio) throws MPException, MPApiException, IOException;
 }
