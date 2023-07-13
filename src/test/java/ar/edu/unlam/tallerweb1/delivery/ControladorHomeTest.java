@@ -43,7 +43,7 @@ public class ControladorHomeTest {
     }
 
     private void validarExistenciaDeCarruseles(ModelAndView result) {
-        assertThat(result.getViewName()).isEqualTo("home");
+        assertThat(result.getViewName()).isEqualTo("home-mdq");
         assertThat(result.getModelMap().get("carruseles")).isNotNull();
     }
 
@@ -52,7 +52,7 @@ public class ControladorHomeTest {
         when(this.servicioHome.ListCarruseles()).thenReturn(dtoHome);
     }
     private void validarqueNoExisteDeCarruseles(ModelAndView result) {
-        assertThat(result.getViewName()).isEqualTo("home");
+        assertThat(result.getViewName()).isEqualTo("home-mdq");
         assertThat(result.getModelMap().get("carruseles")).isNull();
     }
 

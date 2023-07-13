@@ -38,7 +38,7 @@
             <p class="card-text mb-2">Direccion: ${cuidado.direccion}</p>
             <div class="d-flex align-items-center mb-2">
               <p class="card-text m-0">Telefono: ${cuidado.telefono}</p>
-              <button class="compartir ml-3" style="width: 40px;height: 40px">
+              <button class="compartir ml-3" style="width: 40px;height: 40px; margin:0;">
                 <a href="http://wa.me/${cuidado.telefono}" class="d-flex" style="text-decoration: none" target="_blank" title="Contactar por WhatsApp">
                   <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
                 </a>
@@ -159,7 +159,7 @@
                   <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
                     <div class="d-flex flex-start w-100">
                       <img class="rounded-circle shadow-1-strong me-3"
-                           src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).webp" alt="avatar" width="40"
+                           src="../img/${sessionScope.IMAGEN}" alt="avatar" width="40"
                            height="40" />
                       <div class="form-outline w-100">
                         <div>

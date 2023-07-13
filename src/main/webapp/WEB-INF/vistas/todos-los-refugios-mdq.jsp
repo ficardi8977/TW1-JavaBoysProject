@@ -43,7 +43,7 @@
             <p class="card-text">${cuidado.direccion}</p>
             <h6>Telefono:</h6>
             <p class="card-text">${cuidado.telefono}</p>
-            <div style="padding:10px">
+            <div style="padding:10px; text-align: center">
               <a href="refugio/${cuidado.id}" class="dog-paw-button">Detalles</a>
             </div>
           </div>

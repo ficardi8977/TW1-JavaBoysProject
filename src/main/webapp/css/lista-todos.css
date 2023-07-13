@@ -16,6 +16,62 @@
     margin-bottom: 10px;
 }
 
+.banners-pagina-mascotas{
+    background-image: url("../img/banner-todas-las-mascotas.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 250px;
+    position: relative;
+    margin-bottom: 10px;
+
+}
+
+h2{
+    margin:10px;
+    text-align: center;
+}
+
+h5{
+    text-align: center;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 auto auto auto;
+}
+
+.carrusel-card {
+    height: 100%; /* Establece la altura deseada para las tarjetas */
+}
+#mapa {
+    width: 100%;
+    height: 300px; /* Puedes ajustar la altura según tus necesidades */
+}
+.referencia-container {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px; /* Ajusta el tamaño de la fuente según tus necesidades */
+    margin-top: 30px; /* Agrega margen superior para alinearlo con el control "Mapa Satélite" */
+    margin-left: 10px;
+}
+
+.referencia-item {
+    margin-bottom: 5px;
+}
+
+.referencia-color {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
 .titulos-todos{
     position: absolute;
     top:80px;
@@ -28,7 +84,15 @@
 
 h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.active::before {
     color:white;
-    text-shadow: black 1px 1px 2px;
+    text-shadow: black 1px 1px 3px;
+}
+
+.container-fluid label{
+    white-space: nowrap;
+}
+
+#estadosMascotasContainer:first-child, #tiposMascotasContainer:first-child{
+    text-align: center;
 }
 
 .breadcrumb a:hover{
@@ -41,10 +105,20 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     margin-bottom: 20px;
 }
 
+.card-img-top{
+    height: 170px;
+}
+
+
 .card-img {
     width: 100%;
-    height: 200px;
+    height: 150px;
     object-fit: cover;
+}
+
+.filtros{
+    display: flex;
+    align-items: center;
 }
 
 .cards-container {
@@ -52,12 +126,12 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     flex-wrap: wrap;
     justify-content: space-between;
     width: 95%;
-    margin: auto;
-    text-align: center;
+    margin:auto;
 }
 
 .card {
     flex-basis: calc(50% - 10px);
+    /* Ajusta el espacio entre las tarjetas según tus necesidades */
 }
 
 .card a:hover{
@@ -66,12 +140,15 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
 }
 
 @media (min-width: 768px) {
-    .banners-pagina-cuidadores, .banners-pagina-refugios{
+    .banners-pagina-cuidadores, .banners-pagina-refugios, .banners-pagina-mascotas{
         height: 300px;
     }
     .titulos-todos{
         top:110px;
         left: 100px;
+    }
+    .card-img{
+        height: 200px;
     }
     .cards-container {
         display: flex;
@@ -81,13 +158,30 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     .card {
         flex-basis: calc(33.33% - 10px);
     }
+    /* Distribución uniforme en todas las filas */
+    .cards-container::after {
+        content: "";
+        flex-basis: 33.33%;
+        /* Ajusta el espacio entre las tarjetas según tus necesidades */
+    }
+
+    /* Ajuste especial para la última fila */
+    .cards-container:last-child::after {
+        flex-basis: calc(33.33% - 10px);
+    }
+    .filtros{
+        justify-content: space-around;
+    }
+    #mapa{
+        height: 400px;
+    }
 }
 
 @media (min-width: 1024px) {
     h1{
         font-size: 60px;
     }
-    .banners-pagina-cuidadores, .banners-pagina-refugios{
+    .banners-pagina-cuidadores, .banners-pagina-refugios, .banners-pagina-mascotas{
         height: 450px;
     }
     .titulos-todos{
@@ -97,10 +191,30 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     .cards-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
     }
     .card {
         flex-basis: calc(25% - 10px);
+        margin-right: 10px;
+    }
+    .card-img{
+        height: 250px;
+    }
+
+    .cards-container:last-child::after {
+        display: none;
+    }
+    #mapa{
+        height: 500px;
+    }
+}
+
+@media (min-width: 1440px){
+    .banners-pagina-cuidadores, .banners-pagina-refugios, .banners-pagina-mascotas{
+        height: 450px;
+    }
+    #mapa{
+        height: 500px;
     }
 }
 
