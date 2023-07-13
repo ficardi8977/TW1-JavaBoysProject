@@ -1,0 +1,9 @@
+#navbarSupportedContent, .dropdown-menu.show{
+    text-align: center;
+}
+.dropdown-menu.show{
+    margin-right: 5px;
+}
+.dropleft .dropdown-toggle::before {
+    display: none;
+}

@@ -49,14 +49,17 @@
         <div class="form-outline mb-4">
           <label class="form-label" for="tipo" style="display:block">Tipo</label>
           <select name="tipo" id="tipo" onchange="actualizarRazas()" class="form-control form-control-lg">
-            <option value="0" selected>Seleccionar tipo de mascota</option>
+            <option value="def" selected>Seleccionar tipo de mascota</option>
             <option value="1">Perro</option>
             <option value="2">Gato</option>
           </select>
         </div>
 
         <div class="form-outline mb-4">
-          <label class="form-label" for="raza" style="display:block">Raza</label>
+          <div class="d-flex">
+            <label class="form-label" for="raza" style="display:block">Raza</label>
+            <span style="opacity: 65%; margin-left: 5px">(Selecciona el tipo de mascota primero)</span>
+          </div>
           <select name="raza" id="raza" class="form-control form-control-lg"></select>
         </div>
       </div>

@@ -128,7 +128,7 @@ function cargarHomeConFiltros(idTipoMascota, idEstado) {
             var contenidoHtml ='<div class="cards-container">'
             $.each(mascotas, function(index, mascota) {
                 var cardHtml = `<div class="card">
-                    <img src="img/${mascota.imagen}" class="card-img-top" alt="Mascota...">
+                    <img src="img/${mascota.imagen}" class="card-img" alt="Mascota...">
                     <div class="card-body">
                       <h5 class="card-title">${mascota.nombre}</h5>
                       <form action="mascota/detalle" method="GET">
@@ -192,6 +192,8 @@ function actualizarRazas() {
 const botonesAgregar = document.querySelectorAll('.agregarBtn');
 const formularios = document.querySelectorAll('.formVacuna');
 
+/* fix-filtro-por-estado-mascota */
+
 // Agrega eventos de clic a todos los botones "Agregar vacuna"
 botonesAgregar.forEach((boton, index) => {
     boton.addEventListener('click', function() {
@@ -206,6 +208,9 @@ botonesAgregar.forEach((boton, index) => {
         }
     });
 });
+
+
+
 
 mostrarTiposMascotas();
 mostrarEstadosMascotas();

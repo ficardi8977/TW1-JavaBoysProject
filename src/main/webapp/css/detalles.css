@@ -1,15 +1,53 @@
 #map{
-    height: 280px;
+    height: 360px;
 }
 
 .card-img-top{
     height: auto;
 }
 
+/*
 .share-button{
     display: flex;
     flex-direction: column-reverse;
 }
+ */
+
+.share-button{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.share-button-masc{
+    display: none;
+}
+
+.share-button-masc-res{
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.mensaje-estado{
+    display: block;
+}
+
+.mensaje-estado a{
+    margin: 10px;
+}
+
+.compartir{
+    margin-top:10px;
+}
+
+.boton-compartir{
+    display: flex;
+    justify-content: center;
+}
+
+.contenedorSubC{
+    margin: 0;
+}
+
 h1, h2{
     margin: 15px 0;
     text-align: center;
@@ -41,12 +79,32 @@ h1, h2{
     .cuerpo-card{
         display: flex;
     }
+    .share-button{
+        display: flex;
+        flex-direction: row;
+    }
     .card-encabezado{
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-    .share-button{
-        flex-direction: row;
+    .share-button-masc-res{
+        display: none;
+    }
+    .share-button-masc{
+        display: flex;
+    }
+    .contenedorSubC{
+        margin: 0 25px;
+    }
+    .mensaje-estado{
+        display: flex;
+        align-items: center;
+    }
+    .mensaje-estado a{
+        margin:0;
+    }
+    .compartir{
+        margin:0;
     }
 }
 

@@ -14,3 +14,10 @@ $(document).ready(function(){
         slidesToScroll: slidesToScroll
     });
 });
+
+const fullNames = document.querySelectorAll('.full-name');
+fullNames.forEach(fullName => {
+    const nameParts = fullName.textContent.split(' ');
+    const firstName = nameParts[0];
+    fullName.textContent = firstName;
+});
