@@ -92,7 +92,7 @@
       <h2>Comentarios</h2>
       <div class="row d-flex justify-content-center">
         <div class="col-md-12 col-lg-10 col-xl-8">
-          <div class="card">
+          <div class="card" style="padding:15px">
             <c:if test="${empty cuidado.comentarios}">
               <h3><span>No hay comentarios</span></h3>
               <br>

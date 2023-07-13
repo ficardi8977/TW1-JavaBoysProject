@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -90,12 +91,17 @@
       </c:forEach>
     </div>
   </c:if>
+
+  <c:if test="${empty mascotas}">
+    <div class="mensaje-centrado">
+      <h3 style="text-align: center; margin:15px;"><span>No se encontraron mascotas, podés empezar a agregar tus mascotas dándole clic al botón "Agregar Mascota"</span></h3>
+      <br>
+    </div>
+
+  </c:if>
 </div>
 
-<c:if test="${empty mascotas}">
-  <h3><span>No hay Mascotas</span></h3>
-  <br>
-</c:if>
+
 
 <jsp:include page="foot.jsp">
   <jsp:param name="foot" value="foot" />

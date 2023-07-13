@@ -18,6 +18,12 @@
     text-align: center;
 }
 
+.mensaje-centrado {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .logo-registrar img{
     display: none;
