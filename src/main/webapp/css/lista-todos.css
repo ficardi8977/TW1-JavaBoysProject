@@ -191,7 +191,7 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     .cards-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
+        justify-content: center;
     }
     .card {
         flex-basis: calc(25% - 10px);
