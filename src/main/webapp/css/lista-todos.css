@@ -153,9 +153,10 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
     .cards-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
     }
     .card {
+        margin:5px;
         flex-basis: calc(33.33% - 10px);
     }
     /* Distribución uniforme en todas las filas */
