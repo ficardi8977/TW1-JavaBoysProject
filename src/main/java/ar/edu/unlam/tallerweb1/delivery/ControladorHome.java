@@ -21,6 +21,6 @@ public class ControladorHome {
         ModelMap model = new ModelMap();
         var carruseles = this.servicioHome.ListCarruseles();
         model.put("carruseles", carruseles);
-        return new ModelAndView("home",model);
+        return new ModelAndView("home-mdq",model);
     }
 }

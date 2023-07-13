@@ -26,6 +26,15 @@
 
 }
 
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.carrusel-card {
+    height: 100%; /* Establece la altura deseada para las tarjetas */
+}
 #mapa {
     width: 100%;
     height: 300px; /* Puedes ajustar la altura según tus necesidades */
@@ -186,6 +195,9 @@ h1, .breadcrumb a, .breadcrumb li, .breadcrumb-item.active, .breadcrumb-item.act
 @media (min-width: 1440px){
     .banners-pagina-cuidadores, .banners-pagina-refugios, .banners-pagina-mascotas{
         height: 450px;
+    }
+    #mapa{
+        height: 500px;
     }
 }
 

@@ -61,7 +61,7 @@ public class ControladorMascotas {
         ModelMap model = new ModelMap();
         Mascota result = this.servicioMascota.ObtenerDetalle(id);
         model.put("mascota", result);
-        return new ModelAndView("detalle-mascota", model);
+        return new ModelAndView("detalle-mascota-mdq", model);
     }
 
     @RequestMapping(path = "/buscar-mascotas")
@@ -132,7 +132,7 @@ public class ControladorMascotas {
         } catch (Exception e){
             ModelMap model = new ModelMap();
             model.put("error", e.getMessage());
-            return new ModelAndView("registrar-mascota", model);
+            return new ModelAndView("registrar-mascota-mdq", model);
         }
 
         return new ModelAndView(new RedirectView("/mascotas/mis-mascotas?idUsuario=" + datosMascotas.getIdUsuario() + ""));
