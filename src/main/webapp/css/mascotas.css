@@ -45,7 +45,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     font-size: 16px; /* Ajusta el tamaño de la fuente según tus necesidades */
-    margin-top: 10px; /* Agrega margen superior para alinearlo con el control "Mapa Satélite" */
+    margin-top: 30px; /* Agrega margen superior para alinearlo con el control "Mapa Satélite" */
     margin-left: 10px;
 }
 
