@@ -38,8 +38,8 @@
                 <div class="card">
                     <img src="img/${cuidado.imagen}" class="card-img" alt="Cuidador....">
                     <div class="card-body">
-                        <h5 class="card-title" style="white-space: nowrap">${cuidado.nombre}</h5>
-                        <form:form action="cuidador/detalle" method="GET">
+                        <h5 class="card-title full-name">${cuidado.nombre}</h5>
+                        <form:form action="cuidador/detalle" method="GET" style="text-align:center;">
                             <input name="id" value=${cuidado.id} id=${cuidado.id} type="hidden" class="form-control"/>
                             <button class="dog-paw-button">Detalles</button>
                         </form:form>
@@ -58,5 +58,7 @@
 <jsp:include page="foot.jsp">
     <jsp:param name="foot" value="foot" />
 </jsp:include>
+
+<script src="../js/carruseles.js"></script>
 </body>
 </html>

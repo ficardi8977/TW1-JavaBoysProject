@@ -10,10 +10,6 @@ body {
     min-height: calc(100vh - 190px);
 }
 
-#contenido-home h3{
-
-}
-
 button{
     position: relative;
     display: inline-block;

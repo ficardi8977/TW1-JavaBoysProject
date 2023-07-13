@@ -29,10 +29,7 @@
 
 .mensaje-estado{
     display: block;
-}
-
-.mensaje-estado a{
-    margin: 10px;
+    margin:10px;
 }
 
 .compartir{
@@ -111,5 +108,8 @@ h1, h2{
 @media (min-width: 1024px){
     .card-img-top, #map{
         height: auto;
+    }
+    .compartir{
+        margin-left: 5px;
     }
 }

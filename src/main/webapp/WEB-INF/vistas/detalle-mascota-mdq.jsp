@@ -104,7 +104,7 @@
           <c:if test="${not empty mascota.telefono}">
             <div class="mensaje-estado" style="margin:20px;">
               <p class="m-0">Si tenés información del paradero de ${mascota.nombre}, por favor contactate con ${mascota.nombreUsuario} (${mascota.telefono})</p>
-                <button class="compartir ml-2" style="width: 40px;height: 40px;">
+                <button class="compartir" style="width: 40px;height: 40px;">
                   <a href="http://wa.me/${mascota.telefono}" class="d-flex" style="text-decoration: none" target="_blank" title="Contactar por WhatsApp">
                     <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
                   </a>
@@ -116,7 +116,7 @@
           <c:if test="${not empty mascota.telefono}">
             <div class="mensaje-estado">
               <p class="m-0">Si estás interesado/a en adoptar a ${mascota.nombre}, por favor contactate con ${mascota.nombreUsuario} (${mascota.telefono})</p>
-                <button class="compartir ml-2" style="width: 40px;height: 40px">
+                <button class="compartir" style="width: 40px;height: 40px">
                   <a href="http://wa.me/${mascota.telefono}" class="d-flex" style="text-decoration: none" target="_blank" title="Contactar por WhatsApp">
                     <i class="fa fa-whatsapp" style="font-size:20px;text-align: center;color:black;"></i>
                   </a>
