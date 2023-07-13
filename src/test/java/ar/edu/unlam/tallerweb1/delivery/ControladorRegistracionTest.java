@@ -52,7 +52,7 @@ ControladorRegistracionTest {
     @Test
     public void alIngresarARegistrarmeMeMuestraLaPantallaDeRegistro() {
         ModelAndView mav = cuandoMeQuieroRegistrar();
-        assertThat(mav.getViewName()).isEqualTo("registrar-usuario");
+        assertThat(mav.getViewName()).isEqualTo("registrar-usuario-mdq");
 
     }
 

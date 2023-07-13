@@ -120,7 +120,7 @@ public class ControladorMascotaTest {
     @Test
     public void cuandoQuieroRegistrarUnaMascotaQueMeLleveAlFormulario() {
         ModelAndView mav = quieroRegistrarMiMascota();
-        assertThat(mav.getViewName()).isEqualTo("registrar-mascota");
+        assertThat(mav.getViewName()).isEqualTo("registrar-mascota-mdq");
     }
 
     @Test
