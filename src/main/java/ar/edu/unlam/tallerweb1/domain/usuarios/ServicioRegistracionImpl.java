@@ -5,15 +5,25 @@ import ar.edu.unlam.tallerweb1.domain.excepciones.*;
 import ar.edu.unlam.tallerweb1.infrastructure.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 @Service
 public class ServicioRegistracionImpl implements ServicioRegistracion {
 
     private RepositorioUsuario repositorioUsuario;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @Autowired
     public ServicioRegistracionImpl (RepositorioUsuario repositorioUsuario) {
@@ -85,5 +95,45 @@ public class ServicioRegistracionImpl implements ServicioRegistracion {
         datosRegistracion.setPassword(nuevaPassword);
 
         return this.repositorioUsuario.registroUsuario(datosRegistracion);
+    }
+
+    /*
+        @Override
+    public String registrarImagen(MultipartFile img) throws IOException {
+        String directorioImagenes = servletContext.getRealPath("/img/");
+        String rutaImagen = directorioImagenes + img.getOriginalFilename();
+        byte[] bytes = img.getBytes();
+        Path path = Paths.get(rutaImagen);
+        Files.write(path, bytes);
+
+        return img.getOriginalFilename();
+    }
+     */
+
+    @Override
+    public String registrarImagen(MultipartFile img) throws IOException {
+        String directorioImagenes = servletContext.getRealPath("/img/");
+        String nombreOriginal = img.getOriginalFilename();
+        String extension = obtenerExtension(nombreOriginal);
+        String nombreUnico = generarNombreUnico(nombreOriginal, extension);
+        String rutaImagen = directorioImagenes + nombreUnico;
+        byte[] bytes = img.getBytes();
+        Path path = Paths.get(rutaImagen);
+        Files.write(path, bytes);
+
+        return nombreUnico;
+    }
+
+    private String obtenerExtension(String nombreArchivo) {
+        int ultimoPunto = nombreArchivo.lastIndexOf(".");
+        if (ultimoPunto != -1) {
+            return nombreArchivo.substring(ultimoPunto);
+        }
+        return "";
+    }
+
+    private String generarNombreUnico(String nombreOriginal, String extension) {
+        String uuid = UUID.randomUUID().toString();
+        return nombreOriginal + "_" + uuid + extension;
     }
 }

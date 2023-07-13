@@ -3,6 +3,7 @@ package ar.edu.unlam.tallerweb1.delivery;
 import ar.edu.unlam.tallerweb1.domain.excepciones.EmailInvalido;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracion;
 import ar.edu.unlam.tallerweb1.domain.usuarios.ServicioRegistracionImpl;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,12 +31,14 @@ ControladorRegistracionTest {
     private DatosRegistracion formularioInvalido;
 
     private RedirectAttributes redirectAttributes;
+    private MultipartFile img;
 
     @Before
     public void init() throws UnsupportedEncodingException, NoSuchAlgorithmException {
         this.servicioRegistracion = mock(ServicioRegistracionImpl.class);
         this.controladorRegistracion = new ControladorRegistracion(servicioRegistracion);
         this.redirectAttributes = new RedirectAttributesModelMap();
+        this.img = mock(MultipartFile.class);
         formulario = new DatosRegistracion();
         formulario.setEmail(CORREO);
         formulario.setPassword(CLAVE);
@@ -49,13 +52,13 @@ ControladorRegistracionTest {
     @Test
     public void alIngresarARegistrarmeMeMuestraLaPantallaDeRegistro() {
         ModelAndView mav = cuandoMeQuieroRegistrar();
-        assertThat(mav.getViewName()).isEqualTo("registrar-usuario");
+        assertThat(mav.getViewName()).isEqualTo("registrar-usuario-mdq");
 
     }
 
     @Test
     public void alIngresarCredencialesCorrectasMeRegistroYMeDevuelveAlLogin() {
-        ModelAndView mav = meRegistro(formulario, redirectAttributes);
+        ModelAndView mav = meRegistro(formulario, img, redirectAttributes);
         Object view = mav.getView();
         String url = ((RedirectView) view).getUrl();
 
@@ -65,27 +68,27 @@ ControladorRegistracionTest {
 
     @Test
     public void alIngresarCredencialesIncorrectasNoMeRegistro() {
-        ModelAndView mav = meRegistro(formularioInvalido, redirectAttributes);
+        ModelAndView mav = meRegistro(formularioInvalido, img, redirectAttributes);
         assertThat(mav.getViewName()).isEqualTo("registrar-usuario");
     }
 
     @Test
     public void alIngresarCredencialesIncorrectasNoMeRegistroYMeDevuelveUnMensajeDeError() {
-        ModelAndView mav = meRegistro(formularioInvalido, redirectAttributes);
+        ModelAndView mav = meRegistro(formularioInvalido, img, redirectAttributes);
         assertThat(mav.getModel().get("error")).isEqualTo("Formato de email invalido");
     }
 
     @Test
     public void alRegistrarmeMeDevuelveUnMensajeDeExito(){
-        ModelAndView mav = meRegistro(formulario, redirectAttributes);
+        ModelAndView mav = meRegistro(formulario, img,  redirectAttributes);
         Map<String, ?> flashAttributes = redirectAttributes.getFlashAttributes();
         String mensaje = (String) flashAttributes.get("error");
 
         assertThat(mensaje).isEqualTo("Usuario registrado");
     }
 
-    private ModelAndView meRegistro(DatosRegistracion datos, RedirectAttributes redirectAttributes) {
-        return controladorRegistracion.registrarUsuario(datos, redirectAttributes);
+    private ModelAndView meRegistro(DatosRegistracion datos, MultipartFile img,RedirectAttributes redirectAttributes) {
+        return controladorRegistracion.registrarUsuario(datos, img, redirectAttributes);
     }
 
     private ModelAndView cuandoMeQuieroRegistrar() {

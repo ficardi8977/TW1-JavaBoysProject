@@ -31,4 +31,9 @@ public interface RepositorioMascota {
 
     Boolean registrarMascota(DatosMascotas datosMascotas);
 
+    void registrarVacuna(String nuevaVacuna, Long idMascota);
+
+    Mascota buscarPorId(Long idMascota);
+
+    void eliminarVacuna(Long idVacuna, Long idMascota);
 }

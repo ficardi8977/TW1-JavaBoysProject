@@ -93,6 +93,12 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 				datosRegistracion.getLongitud()
 		);
 
+		if(datosRegistracion.getImagen()!=null){
+			user.setImagen(datosRegistracion.getImagen());
+		} else {
+			user.setImagen("defaultUser.png");
+		}
+
 		user.setTipoUsuario(tu);
 
 		// Se guarda el objeto en la sesión

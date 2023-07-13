@@ -7,6 +7,8 @@ public class DatosRegistracion {
     private String apellido;
     private String telefono;
 
+    private String imagen;
+
     private String latitud;
 
     private String longitud;
@@ -80,5 +82,13 @@ public class DatosRegistracion {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

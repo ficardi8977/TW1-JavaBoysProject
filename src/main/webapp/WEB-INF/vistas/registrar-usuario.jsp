@@ -16,7 +16,7 @@
 
   <div class="container p-4 m-4 w-80 rounded-4 mx-auto" style="background-color: white;">
 
-    <form action="/registrar-usuario" method="post">
+    <form action="/registrar-usuario" method="post" enctype="multipart/form-data">
 
       <div class="d-flex align-items-center mb-3 pb-1">
         <img class="img-fluid img-thumbnail border-0 rounded mx-auto d-block" style="width: 20%; height: auto;" src="img/AMIPETS2.PNG" alt="AmiPets">
@@ -50,6 +50,14 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="h6">
+        <label for="img" class="mb-2">Imagen</label>
+        <div class="d-flex align-items-center mb-2">
+          <img src="../img/defaultUser.png" id="profile-pic" style="height: 100px;">
+          <input type="file" id="img" name="img" accept="image/jpeg, image/png, image/jpg" class="form-control form-control-lg ml-2">
+        </div>
       </div>
 
       <div class="form-outline mb-4 h5 text-center" style="margin:10px!important;display: flex; align-items: center">
@@ -90,6 +98,7 @@
   </jsp:include>
 
   <script src="../js/mapa-registro.js"></script>
+  <script src="../js/registro-imagen.js"></script>
 </body>
 </html>
 
@@ -97,5 +106,7 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&callback=initMap"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIdTKseyia8vgxVs7Mmdz34MI4zUIkLY4&libraries=places&callback=initAutocomplete"></script>
 -->
+
+
 
 

@@ -35,7 +35,7 @@ public class ControladorCuidadoTest {
     }
 
     private void entoncesMeLlevaALaPantallaDeTodosLosRefugios(ModelAndView mav) {
-        assertThat(mav.getViewName()).isEqualTo("todos-los-refugios");
+        assertThat(mav.getViewName()).isEqualTo("todos-los-refugios-mdq");
     }
 
     @Test
@@ -43,7 +43,7 @@ public class ControladorCuidadoTest {
         long id = 1;
         this.dadoQueExisteRefugio(id);
         ModelAndView result = this.controladorCuidado.getDetalleRefugio(id);
-        assertThat(result.getViewName()).isEqualTo("refugios-detalle");
+        assertThat(result.getViewName()).isEqualTo("refugios-detalle-mdq");
     }
 
     private void dadoQueExisteRefugio(long idRefugio) {

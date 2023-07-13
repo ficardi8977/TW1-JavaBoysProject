@@ -6,14 +6,25 @@
   <jsp:include page="head.jsp">
     <jsp:param name="head" value="head" />
   </jsp:include>
+  <link rel="stylesheet" href="../css/common.css">
 </head>
 <body>
 <jsp:include page="nav.jsp">
   <jsp:param name="nav" value="nav" />
 </jsp:include>
 
-<div class = "container">
-  <h1>Bienvenidos a  todos los Refugios</h1>
+<div class="banners-pagina-refugios" style='background-image: url("img/banner-todos-refugios.jpg");'>
+  <div>
+    <h1>Refugios</h1>
+  </div>
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" style="color:black;"><a href="/home" style="color:black;">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page" style="color:black;">Refugios</li>
+      </ol>
+    </nav>
+  </div>
 </div>
 
 <div id="contenido-home">

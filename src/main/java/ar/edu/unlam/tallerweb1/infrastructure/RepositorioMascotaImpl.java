@@ -11,8 +11,10 @@ import ar.edu.unlam.tallerweb1.delivery.DatosUbicacion;
 import ar.edu.unlam.tallerweb1.domain.estado.Estado;
 import ar.edu.unlam.tallerweb1.domain.usuarios.Usuario;
 import ar.edu.unlam.tallerweb1.domain.vacunas.Vacunacion;
+import ar.edu.unlam.tallerweb1.domain.vacunas_mascota.Vacunas_Mascota;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ar.edu.unlam.tallerweb1.domain.mascotas.Mascota;
 import org.hibernate.criterion.Disjunction;
@@ -44,6 +46,31 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
     }
 
     @Override
+    public void eliminarVacuna(Long idVacuna, Long idMascota) {
+
+        Session sesion = sessionFactory.getCurrentSession();
+
+        Vacunacion vacunaBuscada = (Vacunacion) this.sessionFactory.getCurrentSession().createCriteria(Vacunacion.class)
+                .add(Restrictions.eq("id", idVacuna)).uniqueResult();
+
+        Vacunas_Mascota vacunasMascota = (Vacunas_Mascota) this.sessionFactory.getCurrentSession().createCriteria(Vacunas_Mascota.class)
+                .add(Restrictions.eq("idVacuna", idVacuna))
+                .add(Restrictions.eq("idMascota", idMascota))
+                .uniqueResult();
+
+        List vacunasEncontradas = this.sessionFactory.getCurrentSession().createCriteria(Vacunas_Mascota.class)
+                .add(Restrictions.eq("idVacuna", idVacuna)).list();
+
+        if(vacunasEncontradas.size()==1){
+            sesion.delete(vacunaBuscada);
+            sesion.delete(vacunasMascota);
+        } else if (vacunasEncontradas.size()>1){
+            sesion.delete(vacunasMascota);
+        }
+    }
+
+
+    @Override
     public Mascota BuscarDetalle(long id) {
         var  mascota=  (Mascota)this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
                 .add(Restrictions.eq("id", id)).uniqueResult();
@@ -65,7 +92,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
     @Override
     public List<Mascota> TodasLasMascotas() {
-        return (List<Mascota>) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class).list();
+        return (List<Mascota>) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 
     @Override
@@ -94,7 +121,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
                 .createAlias("tipoRaza.tipoMascota", "tipoMascota")
                 .add(Restrictions.eq("tipoMascota.id", request.getIdTipoMascota()));
         }
-        var result =  session.list();
+        var result =  session.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
         return result;
     }
@@ -119,7 +146,7 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
         criteria.add(disjunction);
 
         // Obtener el resultado de la búsqueda
-        return criteria.list();
+        return criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
     }
 
 
@@ -168,5 +195,39 @@ public class RepositorioMascotaImpl implements  RepositorioMascota{
 
         return registrado;
 
+    }
+
+    @Override
+    public void registrarVacuna(String nuevaVacuna, Long idMascota) {
+
+        Mascota mascota = buscarPorId(idMascota);
+        Vacunacion vacunaExistente = (Vacunacion) this.sessionFactory.getCurrentSession().createCriteria(Vacunacion.class)
+                .add(Restrictions.eq("nombre", nuevaVacuna)).uniqueResult();
+
+        if(vacunaExistente!=null){
+
+            Vacunas_Mascota vacunaRelacionada = (Vacunas_Mascota) this.sessionFactory.getCurrentSession().createCriteria(Vacunas_Mascota.class)
+                    .add(Restrictions.eq("idVacuna", vacunaExistente.getId()))
+                    .add(Restrictions.eq("idMascota", idMascota)).uniqueResult();
+
+            if(vacunaRelacionada==null)
+                mascota.setVacunas(vacunaExistente);
+
+        } else {
+
+            Vacunacion vacuna = new Vacunacion();
+            vacuna.setNombre(nuevaVacuna);
+            this.sessionFactory.getCurrentSession().save(vacuna);
+            mascota.setVacunas(vacuna);
+
+        }
+    }
+
+    @Override
+    public Mascota buscarPorId(Long idMascota) {
+        Mascota mascotaBuscada = (Mascota) this.sessionFactory.getCurrentSession().createCriteria(Mascota.class)
+                .add(Restrictions.eq("id", idMascota)).uniqueResult();
+
+        return mascotaBuscada;
     }
 }
