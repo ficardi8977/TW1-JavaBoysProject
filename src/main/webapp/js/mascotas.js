@@ -189,7 +189,9 @@ function actualizarRazas() {
 }
 
 
+
 /* fix-filtro-por-estado-mascota
+
 function mostrarFormularioVacuna() {
     var vacunasDiv = document.getElementById('vacunas');
     if (vacunasDiv.style.display === 'block') {
@@ -214,8 +216,14 @@ function agregarVacuna() {
         nombreVacunaInput.value = '';
     }
 }
+
+
+mostrarTiposMascotas();
+mostrarEstadosMascotas();
+
 */
 
 mostrarTiposMascotas();
 mostrarEstadosMascotas();
+
 
