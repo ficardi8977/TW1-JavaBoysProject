@@ -124,10 +124,15 @@
                 <p class="mt-3 mb-4 pb-2">
                     ${comentario.mensaje}
                 </p>
+                <c:if test="${not empty sessionScope.IDUSUARIO}">
                 <div class="small d-flex justify-content-start">
-                  <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${cuidado.id})" class="d-flex align-items-center me-3">
+                  <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${refugio.id},'refugios')" class="d-flex align-items-center me-3">
                     <i class="far fa-comment-dots me-2"></i>
                     <p class="mb-0">comentar</p>
+                  </a>
+                  <a href="#!" onclick="obtenerSubcomentarios(${comentario.id},${sessionScope.IDUSUARIO},'${sessionScope.ROL}')" class="d-flex align-items-center me-3">
+                    <i class="far fa-comment-dots me-2"></i>
+                    <p class="mb-0">ver respuestas</p>
                   </a>
                   <c:if test="${sessionScope.ROL eq 'Administrador'}">
                     <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.cuidado.id},'refugios')" class="d-flex align-items-center me-3">
@@ -136,7 +141,9 @@
                     </a>
                   </c:if>
                 </div>
+                </c:if>
               </div>
+              <div class="mx-5" id="contenedorSubcomentarios${comentario.id}"></div>
             </c:forEach>
             <c:choose>
               <c:when test="${empty sessionScope.IDUSUARIO}">
