@@ -95,6 +95,7 @@ function inicializarMapa(latitud, longitud, radio) {
 
     // Mostrar la ubicación en el mapa
     mostrarUbicacionEnMapa(latitud, longitud, radio);
+    agregarReferenciasEnMapa();
 }
 
 function agregarMarcadoresMascotasPerdidas(mascotasPerdidas) {
@@ -192,6 +193,20 @@ function mostrarUbicacionEnMapa(latitud, longitud, radio) {
         fillOpacity: 0.2,
         map: mapa
     });
+}
+
+function agregarReferenciasEnMapa() {
+    var perdidoColor = "red";
+    var adopcionColor = "green";
+
+    var referenciaHTML = '<div class="referencia-item"><span class="referencia-color" style="background-color: ' + perdidoColor + ';"></span> Perdido</div>';
+    referenciaHTML += '<div class="referencia-item"><span class="referencia-color" style="background-color: ' + adopcionColor + ';"></span> En adopción</div>';
+
+    var referenciaContainer = document.createElement("div");
+    referenciaContainer.innerHTML = referenciaHTML;
+
+    referenciaContainer.classList.add("referencia-container");
+    mapa.controls[google.maps.ControlPosition.LEFT_TOP].push(referenciaContainer);
 }
 
 $(document).ready(function() {
