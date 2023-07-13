@@ -125,19 +125,26 @@
                             <p class="mt-3 mb-4 pb-2">
                                     ${comentario.mensaje}
                             </p>
-                            <div class="small d-flex justify-content-start">
-                                <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${cuidado.id})" class="d-flex align-items-center me-3">
-                                    <i class="far fa-comment-dots me-2"></i>
-                                    <p class="mb-0">comentar</p>
-                                </a>
-                                <c:if test="${sessionScope.ROL eq 'Administrador'}">
-                                    <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.cuidado.id},'refugios')" class="d-flex align-items-center me-3">
-                                        <i class="fa fa-light fa-trash me-2"></i>
-                                        <p class="mb-0">eliminar</p>
+                            <c:if test="${not empty sessionScope.IDUSUARIO}">
+                                <div class="small d-flex justify-content-start">
+                                    <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${refugio.id},'refugios')" class="d-flex align-items-center me-3">
+                                        <i class="far fa-comment-dots me-2"></i>
+                                        <p class="mb-0">comentar</p>
                                     </a>
-                                </c:if>
-                            </div>
+                                    <a href="#!" onclick="obtenerSubcomentarios(${comentario.id},${sessionScope.IDUSUARIO},'${sessionScope.ROL}')" class="d-flex align-items-center me-3">
+                                        <i class="far fa-comment-dots me-2"></i>
+                                        <p class="mb-0">ver respuestas</p>
+                                    </a>
+                                    <c:if test="${sessionScope.ROL eq 'Administrador'}">
+                                        <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.cuidado.id},'refugios')" class="d-flex align-items-center me-3">
+                                            <i class="fa fa-light fa-trash me-2"></i>
+                                            <p class="mb-0">eliminar</p>
+                                        </a>
+                                    </c:if>
+                                </div>
+                            </c:if>
                         </div>
+                        <div class="mx-5" id="contenedorSubcomentarios${comentario.id}"></div>
                     </c:forEach>
                     <c:choose>
                         <c:when test="${empty sessionScope.IDUSUARIO}">
@@ -160,6 +167,7 @@
                                         <div class="form-outline w-100">
                                             <div>
                                                 <p id="calificacion" class="clasificacion">
+
                                                     <input id="radio1" type="radio" name="clasificacion" value="5">
                                                     <label for="radio1">&#9733;</label>
 
@@ -172,8 +180,8 @@
                                                     <input id="radio4" type="radio" name="clasificacion" value="2">
                                                     <label for="radio4">&#9733;</label>
 
-                                                    <label for="radio5">&#9733;</label>
                                                     <input id="radio5" type="radio" name="clasificacion" value="1">
+                                                    <label for="radio5">&#9733;</label>
                                                 </p>
                                                 <label class="form-label" for="calificacion">Calificación</label>
 

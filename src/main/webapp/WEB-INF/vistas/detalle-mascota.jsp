@@ -165,19 +165,26 @@
                       ${comentario.mensaje}
                   </p>
 
-                  <div class="small d-flex justify-content-start">
-                    <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${mascota.id})" class="d-flex align-items-center me-3">
-                      <i class="far fa-comment-dots me-2"></i>
-                      <p class="mb-0">comentar</p>
-                    </a>
-                    <c:if test="${sessionScope.ROL eq 'Administrador'}">
-                      <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.mascota.id},'mascotas')" class="d-flex align-items-center me-3">
-                        <i class="fa fa-light fa-trash me-2"></i>
-                        <p class="mb-0">eliminar</p>
+                  <c:if test="${not empty sessionScope.IDUSUARIO}">
+                    <div class="small d-flex justify-content-start">
+                      <a href="#!" onclick="agregarSubcomentario(${comentario.id},${sessionScope.IDUSUARIO},${mascota.id},'mascotas')" class="d-flex align-items-center me-3">
+                        <i class="far fa-comment-dots me-2"></i>
+                        <p class="mb-0">comentar</p>
                       </a>
-                    </c:if>
-                  </div>
+                      <a href="#!" onclick="obtenerSubcomentarios(${comentario.id},${sessionScope.IDUSUARIO},'${sessionScope.ROL}')" class="d-flex align-items-center me-3">
+                        <i class="far fa-comment-dots me-2"></i>
+                        <p class="mb-0">ver respuestas</p>
+                      </a>
+                      <c:if test="${sessionScope.ROL eq 'Administrador'}">
+                        <a href="#!" onclick="borrarComentario(${comentario.id},${sessionScope.IDUSUARIO},${comentario.mascota.id},'mascotas')" class="d-flex align-items-center me-3">
+                          <i class="fa fa-light fa-trash me-2"></i>
+                          <p class="mb-0">eliminar</p>
+                        </a>
+                      </c:if>
+                    </div>
+                  </c:if>
                 </div>
+                <div class="mx-5" id="contenedorSubcomentarios${comentario.id}"></div>
               </c:forEach>
               <c:choose>
                 <c:when test="${empty sessionScope.IDUSUARIO}">

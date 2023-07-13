@@ -1,5 +1,6 @@
 package ar.edu.unlam.tallerweb1.domain.comentarios;
 
+import ar.edu.unlam.tallerweb1.delivery.DTOComentario;
 import ar.edu.unlam.tallerweb1.delivery.DatosComentario;
 import ar.edu.unlam.tallerweb1.domain.cuidado.Cuidado;
 import ar.edu.unlam.tallerweb1.domain.cuidado.ServicioCuidado;
@@ -17,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ServicioComentarioImpl implements ServicioComentario
@@ -69,6 +73,11 @@ public class ServicioComentarioImpl implements ServicioComentario
         comentario.setClasificacion(request.getClasificacion());
         comentario.setMensaje(request.getMensaje());
         comentario.setFecha(Date.from(Instant.now()));
+
+        if(request.getIdComentarioPadre() != null)
+        {
+            comentario.setComentarioPadre(this.repositorioComentario.obtener(request.getIdComentarioPadre()));
+        }
 
         var mascota = this.servicioMascota.ObtenerDetalle(request.getIdMascota());
         existeMascota(mascota);
@@ -131,5 +140,23 @@ public class ServicioComentarioImpl implements ServicioComentario
         {
             throw new EncontrarMascotaExcepcion();
         }
+    }
+
+    @Override
+    public List<DTOComentario> obtenerSubcomentarios(long id) {
+
+        var comentario = this.repositorioComentario.obtener(id);
+        existeComentario(comentario);
+
+        var subcomentarios = this.repositorioComentario.obtenerSubcomentarios(id);
+
+        List<DTOComentario> listaDTO = new ArrayList<>();
+
+        if (!subcomentarios.isEmpty()) {
+            for (Comentario elemento : subcomentarios) {
+                listaDTO.add(new DTOComentario(elemento));
+            }
+        }
+        return listaDTO;
     }
 }
